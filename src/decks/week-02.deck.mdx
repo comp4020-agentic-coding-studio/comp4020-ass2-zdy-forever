@@ -1,0 +1,169 @@
+---
+title: How a Stock Trade Actually Happens
+description:
+  Week 2 — exchanges, brokers, account types and order types, and what
+  happens between clicking buy and owning a share
+---
+
+{/* _class: hero */}
+
+# How a Stock Trade Actually Happens
+
+## Week 2 · Stocks, exchanges, brokers, accounts, and order types
+
+---
+
+## The question this week answers
+
+Between clicking "buy" and actually owning a share, several separate
+systems do separate jobs.
+
+What are they — and why can the price you see when you click not be the
+price you pay?
+
+---
+
+## By the end of this lecture
+
+- name the separate roles an exchange and a broker each play in a trade
+- distinguish a cash account from a margin account
+- explain why a market order and a limit order can fill at different
+  prices
+- trace a simulated order from click to fill
+
+---
+
+## Two different jobs
+
+<div class="comparison-grid">
+  <div class="comparison-card">
+    <h3>Broker</h3>
+    <p>Who a trader deals with directly. Takes the order and routes it
+    onward.</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Exchange</h3>
+    <p>Where the order actually meets other orders and gets matched.</p>
+  </div>
+</div>
+
+A single app can make these feel like one step. They aren't.
+
+---
+
+## Two account types
+
+<div class="comparison-grid">
+  <div class="comparison-card">
+    <h3>Cash account</h3>
+    <p>Can only spend money already in it.</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Margin account</h3>
+    <p>Can borrow against what's already held — what makes leverage and
+    short selling possible. Full mechanics in Week 8.</p>
+  </div>
+</div>
+
+---
+
+## Every order quotes two prices at once
+
+<div class="comparison-grid">
+  <div class="comparison-card">
+    <h3>Market order</h3>
+    <p>Fills immediately at the best available price. Price is <em>not</em>
+    guaranteed.</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Limit order</h3>
+    <p>Fills only at a chosen price or better. Price is guaranteed — the
+    order might never fill at all.</p>
+  </div>
+</div>
+
+The **bid** is the highest price a buyer currently offers; the **ask** is
+the lowest a seller currently accepts.
+
+---
+
+## A worked example
+
+Simulated stock "ABC" is quoted:
+
+**bid $50.00 / ask $50.05**
+
+A student places a market buy order for 10 shares. A market buy fills
+against the ask — the price sellers are willing to accept right now — not
+the bid, and not some average of the two.
+
+---
+
+## The numbers
+
+<div class="calc-block">
+  10 shares × $50.05 ask = $500.50
+  <br />
+  <br />
+  Mid-price = ($50.00 + $50.05) ÷ 2 = $50.025
+  <br />
+  10 shares × $50.025 = $500.25
+  <br />
+  <br />
+  $500.50 − $500.25 = $0.25 — the cost of certainty
+</div>
+
+Trivial on 10 shares. It stops looking trivial once Week 7 covers paying
+the same spread dozens of times a day.
+
+---
+
+## What the order book looks like
+
+<div class="comparison-grid">
+  <div class="comparison-card">
+    <h3>Ask ladder (sellers)</h3>
+    <p>$50.05 · $50.08 · $50.12</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Bid ladder (buyers)</h3>
+    <p>$50.00 · $49.97 · $49.93</p>
+  </div>
+</div>
+
+A market order reaches across the gap between the two ladders to hit the
+best price on the other side.
+
+---
+
+{/* _class: activity */}
+
+## Try it yourself
+
+<p class="activity-label">Choose an order</p>
+
+A **simulated** stock is quoted bid $22.10 / ask $22.16.
+
+Work out the cost of a 50-share market buy. Then decide: would a limit
+order at $22.12 suit a trader who wants price certainty more than speed —
+and what has to happen for it to ever fill?
+
+---
+
+## The takeaway
+
+<ol class="recap-list">
+  <li>An exchange matches; a broker routes. Different jobs.</li>
+  <li>A margin account can borrow; a cash account can't.</li>
+  <li>Market orders trade price certainty for execution certainty — limit orders trade the reverse.</li>
+  <li>Neither order type says anything about whether the stock is a good idea.</li>
+</ol>
+
+---
+
+{/* _class: centered */}
+
+## Next week
+
+Week 3 — there is more than one way to trade: investing, swing trading and
+day trading, compared.

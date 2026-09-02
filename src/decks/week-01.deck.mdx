@@ -1,48 +1,142 @@
 ---
-title: Opening lecture
-description: The placeholder deck — replace it with a real deck for your course
+title: Welcome to the Market
+description:
+  Week 1 — what a market is, the five asset classes this course covers, and
+  why the semester moves from simplest to most complex
 ---
 
-# Opening lecture
+{/* _class: hero */}
 
-{/* STARTER_CONTENT: replace this deck, then remove this comment. */}
+# Welcome to the Market
 
-Replace this deck. It is here to show that slides are part of the site, built
-from the same markdown as everything else.
+## Week 1 · Market overview and basic asset classes
 
 ---
 
-## Slides are markdown
+## The question this week answers
 
-A `---` starts a new slide. Everything else is ordinary markdown: headings,
-lists, links, tables, images, fenced code.
+What is a market actually doing when it "sets a price" —
 
-- one idea per slide
-- the fewest words that carry it
-- the deck is a performance artefact, so it can say things a page wouldn't
+and why does this course spend twelve weeks moving from a single stock
+order to leveraged derivatives, instead of teaching every instrument at
+once?
+
+---
+
+## By the end of this lecture
+
+- describe a market as a matching mechanism, not a force with opinions
+- name the five asset classes this course covers, in order
+- explain the one variable the whole semester tracks
+- know what to have ready before Session 1
+
+---
+
+## A market, defined
+
+A **market** is any standing way for buyers and sellers to meet and agree
+on a price.
+
+- a stock exchange
+- a futures or options venue
+- a cryptocurrency app
+
+None of them guarantee a "correct" price. Each only produces the price the
+last willing buyer and seller agreed to.
+
+---
+
+{/* _class: centered */}
+
+## Watching a price get made
+
+<div class="timeline">
+  <div class="timeline-step">
+    <h3>Seller</h3>
+    <p>Will sell "Northbank Traders" for $37.50</p>
+  </div>
+  <div class="timeline-step">
+    <h3>Buyer</h3>
+    <p>Will pay up to $37.80</p>
+  </div>
+  <div class="timeline-step">
+    <h3>Match</h3>
+    <p>Buyer accepts $37.50 — that is now "the market price"</p>
+  </div>
+</div>
+
+Simulated prices. No committee set $37.50 — and it says nothing yet about
+whether $37.50 is good value.
+
+---
+
+## Five asset classes, in order
+
+1. **Stocks** — Weeks 2–7
+2. **Leveraged stock positions** (margin, short selling) — Week 8
+3. **Futures** — Week 9
+4. **Options** — Week 10
+5. **Cryptocurrency** — Week 11
+
+Each week adds exactly one new piece of complexity on top of what's already
+covered — that's why later weeks keep referring back to earlier ones.
 
 ---
 
 {/* _class: impact */}
 
-# A slide class
-
-`{/* _class: impact */}` fills the slide with the brand colour. `quote`,
-`banner` and `centered` are the others the theme styles.
+## As holding periods shorten and instruments get more complex, which direction the price moves matters less — execution, sizing and risk matter more
 
 ---
 
-## What else is here
+## The numbers
 
-```sh
-pnpm dev
-pnpm check
-```
+<div class="calc-block">
+  $1,000 budget ÷ $37.50 a share = 26.67 shares
+  <br />
+  <br />
+  Shares trade in whole units → 26 shares
+  <br />
+  <br />
+  26 × $37.50 = $975.00 spent
+  <br />
+  <br />
+  $1,000 − $975.00 = $25.00 left over, uninvested
+</div>
 
-The second command proves the deck compiles with the rest of the site. Use the
-first to inspect every slide at the desktop and phone marking viewports; slide
-fit and legibility are visual judgements.
+That leftover cash is an unglamorous, recurring fact of trading whole
+shares — it comes back properly when Week 5 covers position sizing.
 
-The [astromotion](https://github.com/ANUcybernetics/astromotion) README has the
-rest of the syntax: speaker notes, backgrounds, QR codes, fragments, and
-components hydrated per slide.
+---
+
+{/* _class: activity */}
+
+## Try it yourself
+
+<p class="activity-label">Calculate</p>
+
+Pick a **simulated** share price between $10 and $200, and a **simulated**
+budget between $200 and $2,000.
+
+Work out: how many whole shares that budget buys, the total cost, and the
+leftover cash.
+
+---
+
+## The takeaway
+
+<ol class="recap-list">
+  <li>A market is a matching mechanism, not an oracle.</li>
+  <li>Five asset classes, one semester, increasing complexity.</li>
+  <li>Holding period and instrument complexity are what this course tracks.</li>
+  <li>Everything from here is about what happens around that matched price.</li>
+</ol>
+
+---
+
+{/* _class: centered */}
+
+## Next week
+
+Week 2 — how a stock trade actually happens: exchanges, brokers, and order
+types.

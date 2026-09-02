@@ -1,0 +1,159 @@
+---
+title: Reading Price
+description:
+  Week 4 — candlesticks, volume, trends, support/resistance and ranges, the
+  shared vocabulary later weeks build on
+---
+
+import Candles from "./components/Candles.astro";
+
+{/* _class: hero */}
+
+# Reading Price
+
+## Week 4 · Candlesticks, volume, trends, support and resistance
+
+---
+
+## The question this week answers
+
+What is a candlestick chart actually recording —
+
+and what can honestly be said about a pattern in one, as distinct from
+what a lot of trading content implies about it?
+
+---
+
+## By the end of this lecture
+
+- read what a single candlestick records: open, high, low, close
+- explain what volume adds that price alone doesn't show
+- define trend, range, support and resistance
+- explain the difference between observing a pattern and treating it as a
+  signal
+
+---
+
+## What one candlestick records
+
+Four numbers for one time period — this course mostly uses daily candles:
+
+- **open** and **close** — the "body"
+- **high** and **low** — how far price moved beyond that before settling,
+  the "wicks"
+
+A compression of a lot of individual trades into one shape. Nothing more.
+
+---
+
+## Volume: what price alone doesn't show
+
+**Volume** is how many shares changed hands in the period.
+
+The same price move on high volume reflects a lot of agreement. On low
+volume, it might reflect very little. Neither guarantees the move
+continues.
+
+---
+
+{/* _class: impact */}
+
+## Trend, range, support and resistance describe what already happened. They are observations, never reliable standalone buy or sell signals
+
+---
+
+## A worked example
+
+A **simulated** five-day close sequence for "Meridian Supply":
+$51, 53, 52, 55, 54 — a mild uptrend with one down day.
+
+<Candles
+  caption="Simulated daily candles, Meridian Supply"
+  candles={[
+    { open: 50, high: 51.5, low: 49.5, close: 51 },
+    { open: 51.2, high: 53.4, low: 51, close: 53 },
+    { open: 53, high: 53.2, low: 51.7, close: 52 },
+    { open: 52.2, high: 55.3, low: 52, close: 55 },
+    { open: 53.8, high: 54.3, low: 53.6, close: 54 },
+  ]}
+/>
+
+---
+
+## The numbers
+
+<div class="calc-block">
+  5-day simple moving average:
+  <br />
+  (51 + 53 + 52 + 55 + 54) ÷ 5 = 265 ÷ 5 = $53
+</div>
+
+That $53 is a **lagging** summary — it always sits behind the most recent
+move, which is why Week 6 is explicit that a moving average confirms a
+trend after the fact rather than calling one in advance.
+
+---
+
+## Observation, not prediction
+
+<div class="comparison-grid">
+  <div class="comparison-card">
+    <h3>Observation</h3>
+    <p>Price paused near $51 on this chart.</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Assumption (unsupported)</h3>
+    <p>Therefore price will pause there again.</p>
+  </div>
+</div>
+
+Support and resistance describe zones where price has previously paused or
+reversed — not exact lines, and not a promise about what happens next.
+
+---
+
+{/* _class: activity */}
+
+## Try it yourself
+
+<p class="activity-label">Interpret a chart</p>
+
+<Candles
+  caption="Simulated ten-day candlestick series"
+  candles={[
+    { open: 40, high: 40.8, low: 39.6, close: 40.5 },
+    { open: 40.5, high: 41.3, low: 40.1, close: 41 },
+    { open: 41, high: 41.6, low: 40.6, close: 41.2 },
+    { open: 41.2, high: 41.8, low: 40.8, close: 41 },
+    { open: 41, high: 41.6, low: 40.7, close: 41.3 },
+    { open: 41.3, high: 42.5, low: 41.1, close: 42.3 },
+    { open: 42.3, high: 43, low: 42, close: 42.8 },
+    { open: 42.8, high: 43.2, low: 42.3, close: 42.6 },
+    { open: 42.6, high: 43.6, low: 42.4, close: 43.4 },
+    { open: 43.4, high: 44.2, low: 43.1, close: 44 },
+  ]}
+/>
+
+Mark where you observe possible support and resistance zones. Then write
+one sentence about what you'd need to see happen next before treating
+either zone as meaningful.
+
+---
+
+## The takeaway
+
+<ol class="recap-list">
+  <li>A candlestick is a compression of one period's trading — four numbers, nothing mystical.</li>
+  <li>Volume adds how much agreement backed a move.</li>
+  <li>Trend, range, support and resistance are a shared vocabulary, not a rulebook.</li>
+  <li>Weeks 5–7 build risk and entries on top of this vocabulary.</li>
+</ol>
+
+---
+
+{/* _class: centered */}
+
+## Next week
+
+Week 5 — risk before strategy: drawdowns, stops, position sizing and
+expected value.
