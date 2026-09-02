@@ -1,0 +1,118 @@
+---
+// A static profit/loss payoff line for deck slides — a linear futures-style
+// payoff, or a kinked call/put option payoff. `reference` is the entry price
+// for a linear payoff, or the strike price for an option. Server-rendered
+// SVG, no hydration.
+interface Props {
+  kind: "linear" | "call" | "put";
+  reference: number;
+  premium?: number;
+  domainMin: number;
+  domainMax: number;
+  width?: number;
+  height?: number;
+  caption?: string;
+}
+
+const {
+  kind,
+  reference,
+  premium = 0,
+  domainMin,
+  domainMax,
+  width = 640,
+  height = 320,
+  caption,
+} = Astro.props as Props;
+
+const marginX = 32;
+const marginY = 24;
+const plotWidth = width - marginX * 2;
+const plotHeight = height - marginY * 2;
+
+const x = (price: number) => marginX + ((price - domainMin) / (domainMax - domainMin)) * plotWidth;
+
+const maxSwing = Math.max(domainMax - reference, reference - domainMin) || 1;
+const y = (pl: number) => marginY + plotHeight / 2 - (pl / maxSwing) * (plotHeight / 2);
+
+let points: [number, number][];
+if (kind === "linear") {
+  points = [
+    [domainMin, domainMin - reference],
+    [domainMax, domainMax - reference],
+  ];
+} else if (kind === "call") {
+  points = [
+    [domainMin, -premium],
+    [reference, -premium],
+    [domainMax, domainMax - reference - premium],
+  ];
+} else {
+  points = [
+    [domainMin, reference - domainMin - premium],
+    [reference, -premium],
+    [domainMax, -premium],
+  ];
+}
+
+const path = points
+  .map(([price, pl], i) => `${i === 0 ? "M" : "L"} ${x(price).toFixed(1)} ${y(pl).toFixed(1)}`)
+  .join(" ");
+
+const zeroY = y(0).toFixed(1);
+const referenceX = x(reference).toFixed(1);
+const referenceLabel = kind === "linear" ? "entry" : "strike";
+---
+
+<svg
+  class="deck-payoff"
+  viewBox={`0 0 ${width} ${height}`}
+  width={width}
+  height={height}
+  role="img"
+  aria-label={caption ?? `${kind} payoff diagram`}
+>
+  <line class="payoff-axis" x1={marginX} x2={width - marginX} y1={zeroY} y2={zeroY} />
+  <line class="payoff-reference" x1={referenceX} x2={referenceX} y1={marginY} y2={height - marginY} />
+  <text class="payoff-reference-label" x={referenceX} y={marginY - 6} text-anchor="middle">
+    {referenceLabel}
+  </text>
+  <path class="payoff-line" d={path} fill="none" />
+</svg>
+{caption && <p class="deck-payoff-caption">{caption}</p>}
+
+<style>
+  .deck-payoff {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .payoff-axis {
+    stroke: var(--at-text-secondary);
+    stroke-width: 1;
+    stroke-dasharray: 4 4;
+  }
+
+  .payoff-reference {
+    stroke: var(--at-text-secondary);
+    stroke-width: 1;
+    stroke-dasharray: 2 6;
+  }
+
+  .payoff-reference-label {
+    fill: var(--at-text-secondary);
+    font-size: 0.9rem;
+  }
+
+  .payoff-line {
+    stroke: var(--at-primary);
+    stroke-width: 3;
+  }
+
+  .deck-payoff-caption {
+    margin-block-start: 0.5rem;
+    font-size: 1.25rem;
+    color: var(--at-text-secondary);
+  }
+</style>

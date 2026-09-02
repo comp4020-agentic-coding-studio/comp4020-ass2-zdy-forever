@@ -11,3 +11,176 @@
  * slide class you reach for (`_class: quote`), a code-heavy layout, a
  * background. */
 @import url("astro-theme-university/styles/deck.css");
+
+/* Shared slide primitives for this course's decks. Every rule below derives
+ * its colour from the same --at-* tokens the import above already resolves,
+ * so nothing here restates the palette — only layout and structure. None of
+ * these lean on red/green: risk is marked by a secondary-tint fill and a
+ * dashed vs solid border, never by stoplight colouring. */
+
+.reveal .slides section {
+  /* Risk / caution callout — leverage, drawdowns, margin calls, short-selling
+     losses. A tinted fill and accent bar, not a warning colour. */
+  .risk-callout {
+    display: grid;
+    gap: 0.5rem;
+    border-inline-start: 4px solid var(--at-secondary);
+    background: rgb(from var(--at-secondary) r g b / 14%);
+    border-radius: var(--at-border-radius);
+    padding: 1.25rem 1.5rem;
+
+    > :is(p, li) {
+      font-size: 1.5rem;
+      margin: 0;
+    }
+  }
+
+  .risk-callout-label {
+    display: block;
+    font-size: 1.1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--at-secondary);
+    font-weight: 600;
+    margin-block-end: 0.4rem;
+  }
+
+  /* A worked calculation, set apart from prose so the arithmetic reads as
+     something to follow line by line. */
+  .calc-block {
+    font-family: var(--r-code-font);
+    font-size: 1.6rem;
+    line-height: 1.6;
+    background: rgb(255 255 255 / 5%);
+    border: 1px solid var(--at-divider);
+    border-radius: var(--at-border-radius);
+    padding: 1.25rem 1.5rem;
+    white-space: pre-wrap;
+  }
+
+  /* A horizontal sequence of labelled steps: holding periods, an order's
+     path from click to fill, a trade's stages. */
+  .timeline {
+    display: flex;
+    gap: 1.5rem;
+    width: 100%;
+    counter-reset: timeline-step;
+  }
+
+  .timeline-step {
+    flex: 1;
+    position: relative;
+    padding-block-start: 1.75rem;
+    border-block-start: 3px solid var(--at-primary);
+    counter-increment: timeline-step;
+
+    &::before {
+      content: counter(timeline-step);
+      position: absolute;
+      top: -1.1rem;
+      left: 0;
+      width: 2.1rem;
+      height: 2.1rem;
+      border-radius: 50%;
+      background: var(--at-primary);
+      color: var(--at-on-primary);
+      display: grid;
+      place-content: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    :is(h3, h4) {
+      font-size: 1.3rem;
+      margin: 0 0 0.25rem;
+      color: var(--r-heading-color);
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin: 0;
+      color: var(--at-text-secondary);
+    }
+  }
+
+  /* A grid of cards for comparing instruments or styles side by side. */
+  .comparison-grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  .comparison-card {
+    border: 1px solid var(--at-divider);
+    border-radius: var(--at-border-radius);
+    padding: 1.25rem 1.5rem;
+    display: grid;
+    gap: 0.5rem;
+    align-content: start;
+
+    :is(h3, h4) {
+      margin: 0;
+      font-size: 1.4rem;
+      color: var(--at-primary);
+    }
+
+    :is(p, li) {
+      font-size: 1.25rem;
+      margin: 0;
+    }
+  }
+
+  /* The student-interaction slide. A dashed frame (never the risk-callout's
+     solid one) so the two are never confused at a glance. */
+  .activity {
+    display: grid;
+    gap: 0.5rem;
+    border: 2px dashed var(--at-primary);
+    border-radius: var(--at-border-radius);
+    padding: 1.5rem 2rem;
+  }
+
+  .activity-label {
+    display: block;
+    font-size: 1.1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--at-primary);
+    font-weight: 600;
+    margin-block-end: 0.4rem;
+  }
+
+  /* A recap slide's list: numbered chips, so a deck's final slide reads as a
+     closing tally rather than one more bullet list. */
+  .recap-list {
+    list-style: none;
+    margin-inline-start: 0 !important;
+    display: grid;
+    gap: 0.75rem;
+    counter-reset: recap-item;
+
+    li {
+      counter-increment: recap-item;
+      padding-inline-start: 2.75rem;
+      position: relative;
+
+      &::before {
+        content: counter(recap-item);
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1.9rem;
+        height: 1.9rem;
+        border-radius: 50%;
+        border: 2px solid var(--at-primary);
+        color: var(--at-primary);
+        display: grid;
+        place-content: center;
+        font-size: 1rem;
+        font-weight: 600;
+      }
+    }
+  }
+}

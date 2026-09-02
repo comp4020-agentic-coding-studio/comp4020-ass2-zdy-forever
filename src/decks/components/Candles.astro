@@ -1,0 +1,98 @@
+---
+// A small, static candlestick illustration for deck slides. Renders as
+// plain server-side SVG — no client hydration needed, nothing here changes
+// after the page loads. An up candle (close >= open) is filled; a down
+// candle is hollow. Deliberately no red/green: the up/down distinction is
+// fill vs outline, in the same brand colour, per this course's "avoid
+// stoplight colouring" rule.
+interface Candle {
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+}
+
+interface Props {
+  candles: Candle[];
+  width?: number;
+  height?: number;
+  caption?: string;
+}
+
+const { candles, width = 640, height = 360, caption } = Astro.props as Props;
+
+const highs = candles.map((c) => c.high);
+const lows = candles.map((c) => c.low);
+const max = Math.max(...highs);
+const min = Math.min(...lows);
+const pad = (max - min) * 0.15 || 1;
+const domainMax = max + pad;
+const domainMin = min - pad;
+const range = domainMax - domainMin;
+
+const marginX = 24;
+const plotWidth = width - marginX * 2;
+const slot = plotWidth / candles.length;
+const bodyWidth = Math.min(slot * 0.5, 40);
+
+const y = (value: number) => height - ((value - domainMin) / range) * height;
+---
+
+<svg
+  class="deck-candles"
+  viewBox={`0 0 ${width} ${height}`}
+  width={width}
+  height={height}
+  role="img"
+  aria-label={caption ?? "Simulated candlestick chart"}
+>
+  {
+    candles.map((c, i) => {
+      const cx = marginX + slot * i + slot / 2;
+      const up = c.close >= c.open;
+      const bodyTop = y(Math.max(c.open, c.close));
+      const bodyBottom = y(Math.min(c.open, c.close));
+      const bodyHeight = Math.max(bodyBottom - bodyTop, 2);
+      return (
+        <g class={up ? "candle candle--up" : "candle candle--down"}>
+          <line x1={cx} x2={cx} y1={y(c.high)} y2={y(c.low)} />
+          <rect x={cx - bodyWidth / 2} y={bodyTop} width={bodyWidth} height={bodyHeight} />
+        </g>
+      );
+    })
+  }
+</svg>
+{caption && <p class="deck-candles-caption">{caption}</p>}
+
+<style>
+  .deck-candles {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .candle line {
+    stroke: var(--at-text-secondary);
+    stroke-width: 2;
+  }
+
+  .candle rect {
+    stroke: var(--at-primary);
+    stroke-width: 2;
+  }
+
+  .candle--up rect {
+    fill: var(--at-primary);
+  }
+
+  .candle--down rect {
+    fill: none;
+  }
+
+  .deck-candles-caption {
+    margin-block-start: 0.5rem;
+    font-size: 1.25rem;
+    color: var(--at-text-secondary);
+  }
+</style>
