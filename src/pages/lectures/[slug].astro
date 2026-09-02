@@ -16,12 +16,37 @@ export async function getStaticPaths() {
 const { lecture } = Astro.props;
 const { Content } = await render(lecture);
 const title = `Week ${lecture.data.week}: ${lecture.data.title}`;
+const weekSlug = String(lecture.data.week).padStart(2, "0");
+const slidesDownload = `/slides/week-${weekSlug}.pptx`;
 ---
 
 <ContentLayout title={title} description={lecture.data.description} {...siteConfig}>
   <p><strong>{formatCourseDate(lecture.data.date)}</strong></p>
-  {lecture.data.slides && <p><a href={withBase(lecture.data.slides)}>Open the slides</a></p>}
+  {
+    lecture.data.slides && (
+      <p class="lecture-actions">
+        <a class="at-button at-button--outline at-button--small" href={withBase(lecture.data.slides)}>
+          View Slides
+        </a>
+        <a
+          class="at-button at-button--outline at-button--small"
+          href={withBase(slidesDownload)}
+          download
+        >
+          Download PowerPoint
+        </a>
+      </p>
+    )
+  }
   <Content />
   <TeachingTeam teachers={lecture.data.teachers} />
   <RelatedContent entry={lecture} collections={graphCollections} />
 </ContentLayout>
+
+<style>
+  .lecture-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--at-spacing-sm);
+  }
+</style>

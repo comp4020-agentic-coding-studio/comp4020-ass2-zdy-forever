@@ -35,7 +35,16 @@ const { Content } = await render(assessment);
       </Callout>
     )
   }
-  <p><strong>Due:</strong> {formatCourseDate(assessment.data.due)} · <strong>Weight:</strong> {assessment.data.weight}%</p>
+  <dl class="at-meta-bar">
+    <div class="at-meta-item">
+      <dt>Weight</dt>
+      <dd>{assessment.data.weight}%</dd>
+    </div>
+    <div class="at-meta-item">
+      <dt>Due</dt>
+      <dd>{formatCourseDate(assessment.data.due)}</dd>
+    </div>
+  </dl>
   <Content />
   <SpecList spec={assessment.data.spec}>
     The brief poses the problem and leaves room for a response. The spec is the
@@ -45,3 +54,38 @@ const { Content } = await render(assessment);
   {assessment.data.marking && <MarkingModel marking={assessment.data.marking} />}
   <RelatedContent entry={assessment} collections={graphCollections} />
 </ContentLayout>
+
+<style>
+  .at-meta-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--at-spacing-lg);
+    margin-block: var(--at-spacing-md) var(--at-spacing-lg);
+    padding: var(--at-spacing-md) var(--at-spacing-lg);
+    border-block-start: 2px solid var(--at-primary);
+    border-radius: var(--at-border-radius);
+    background: var(--at-bg-alt);
+  }
+
+  .at-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--at-spacing-xs);
+  }
+
+  .at-meta-item dt {
+    margin: 0;
+    color: var(--at-text-secondary);
+    font-size: var(--at-font-size-xs);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .at-meta-item dd {
+    margin: 0;
+    color: var(--at-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+</style>

@@ -22,6 +22,7 @@ const { Content } = await render(session);
   description={session.data.description}
   {...siteConfig}
 >
+  <p class="at-eyebrow">{sessionLabels.singular}</p>
   <p><strong>{formatCourseDate(session.data.date)}</strong></p>
   <Content />
   <SpecList spec={session.data.spec}>
@@ -31,3 +32,14 @@ const { Content } = await render(session);
   <TeachingTeam teachers={session.data.teachers} />
   <RelatedContent entry={session} collections={graphCollections} />
 </ContentLayout>
+
+<style>
+  .at-eyebrow {
+    margin-block: 0 var(--at-spacing-xs);
+    color: var(--at-secondary);
+    font-size: var(--at-font-size-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+</style>
