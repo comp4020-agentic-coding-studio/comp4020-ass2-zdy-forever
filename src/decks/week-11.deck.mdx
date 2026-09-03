@@ -1,0 +1,143 @@
+---
+title: Cryptocurrency Markets
+description:
+  Week 11 — applying Weeks 1-10's market-mechanics and leverage ideas to
+  cryptocurrency, rather than starting over
+---
+
+{/* _class: hero */}
+
+# Cryptocurrency Markets
+
+## Week 11 · Same mechanics, different details
+
+---
+
+## The question this week answers
+
+Which of this semester's ideas about markets, leverage and risk carry
+straight over to cryptocurrency, and which details actually change?
+
+---
+
+## By the end of this lecture
+
+- compare a cryptocurrency exchange's structure to Week 2's stock exchange
+- explain what custody means and why it matters differently here than for
+  stocks
+- explain how leverage in crypto markets relates to Weeks 8-9's margin and
+  leverage mechanics
+- calculate a liquidation price for a simulated leveraged crypto position
+
+---
+
+## The same job, different hours
+
+A cryptocurrency exchange performs the same core job as Week 2's stock
+exchange — matching buyers and sellers.
+
+It typically operates 24/7 with no scheduled close, and often with far less
+standardisation between platforms than regulated stock exchanges have.
+
+---
+
+{/* _class: impact */}
+
+## An asset held "in the app" is often controlled by the exchange, not by the trader — that has no stock-market equivalent
+
+---
+
+## Custody, made concrete
+
+<div class="comparison-grid">
+  <div class="comparison-card">
+    <h3>Exchange custody</h3>
+    <p>The exchange legally and technically controls the asset, not the trader</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Self-custody</h3>
+    <p>The trader alone controls the keys to a wallet holding the asset</p>
+  </div>
+</div>
+
+This distinction changes what "the position is safe" actually means — before
+any question of price.
+
+---
+
+## The same leverage mechanism, a different name
+
+Leverage on crypto exchanges is often offered at ratios far beyond a stock
+broker's margin account — same underlying logic as Weeks 8-9: more leverage
+means a smaller price move triggers forced closure.
+
+Here that forced closure is usually called a **liquidation**, not a margin
+call — the identical mechanism, a new label.
+
+---
+
+## A worked example
+
+A **simulated** trader opens a long position on a cryptocurrency priced at
+$30,000, using 10x leverage — required margin is one-tenth of the position's
+value.
+
+---
+
+## The numbers: liquidation price
+
+<div class="calc-block">
+  liquidation price ≈ entry price × (1 − 1 ÷ leverage)
+  <br />
+  <br />
+  30,000 × (1 − 1 ÷ 10) = 30,000 × 0.9 = <strong>$27,000</strong>
+</div>
+
+A simplified estimate, ignoring fees and funding costs.
+
+---
+
+## Ten times more leverage, a much smaller margin for error
+
+<div class="risk-callout">
+  <span class="risk-callout-label">A 10% drop liquidates this 10x position</span>
+  <p>Week 8's 2x-leveraged stock example needed a 33.3% drop to trigger a margin call</p>
+  <p>The leverage ratio here is five times larger — the required move is much smaller</p>
+</div>
+
+Real platforms' formulas include fees and maintenance-margin buffers this
+simplified version leaves out — the core relationship holds regardless.
+
+---
+
+{/* _class: activity */}
+
+## Try it yourself
+
+<p class="activity-label">Estimate liquidation</p>
+
+A **simulated** long position entered at $2,000 with 5x leverage.
+
+Calculate the approximate liquidation price using the formula above, and
+compare the percentage drop required to the 10x example just worked
+through.
+
+---
+
+## The takeaway
+
+<ol class="recap-list">
+  <li>A cryptocurrency exchange matches buyers and sellers like Week 2's stock exchange, but runs 24/7 with less standardisation.</li>
+  <li>Custody — who actually controls the asset — has no stock-market equivalent and changes what "safe" means.</li>
+  <li>Liquidation is the same forced-closure mechanism as a margin call, at leverage ratios a stock broker rarely offers.</li>
+  <li>Week 12 turns every instrument from this semester, crypto included, into a personal set of rules.</li>
+</ol>
+
+---
+
+{/* _class: centered */}
+
+## Next week
+
+Week 12 — building a personal market rulebook, pulling every instrument and
+risk idea from the semester together.

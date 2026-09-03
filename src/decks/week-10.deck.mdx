@@ -1,0 +1,148 @@
+---
+title: Options
+description:
+  Week 10 — a right instead of an obligation, and the kinked payoff that
+  comes with it, contrasted against Week 9's linear futures payoff
+---
+
+import Payoff from "./components/Payoff.astro";
+
+{/* _class: hero */}
+
+# Options
+
+## Week 10 · A right, not an obligation
+
+---
+
+## The question this week answers
+
+How does trading a *right* instead of an *obligation* change both the payoff
+shape and the risk, compared to Week 9's futures contract?
+
+---
+
+## By the end of this lecture
+
+- distinguish a call option and a put option as rights, not requirements, to
+  act
+- define premium, strike price and expiry
+- calculate a call option's payoff and breakeven price at expiry
+- compare an option's payoff shape to Week 9's linear futures payoff
+- identify where intuition carried over from stocks or futures tends to
+  mislead with options
+
+---
+
+{/* _class: impact */}
+
+## A futures contract obligates both sides. An option's buyer can simply let it expire unused
+
+---
+
+## Calls, puts, and the cost of a right
+
+A **call option** — the right, not the obligation, to buy an underlying at a
+set **strike price** on or before **expiry**.
+
+A **put option** — the same right, to sell instead.
+
+That right isn't free: it costs a **premium**, paid upfront — also the
+buyer's maximum possible loss.
+
+---
+
+## A genuine structural difference, at a cost
+
+If the option expires with no value, the premium is gone and nothing further
+is owed — a bounded loss, unlike Week 8's short position, which had no
+ceiling at all.
+
+The premium is still a real, certain expense regardless of outcome. A
+smaller price move than expected can still mean losing all of it.
+
+---
+
+## A worked example
+
+A **simulated** trader buys one call option contract (100 shares) on a
+stock, strike price $50, premium $2 per share ($200 total).
+
+---
+
+## The numbers: payoff above the strike
+
+<div class="calc-block">
+  Stock at $55 at expiry:
+  <br />
+  (55 − 50) × 100 = $500 intrinsic value − $200 premium
+  <br />
+  = <strong>$300 net profit</strong>
+  <br />
+  <br />
+  Breakeven = strike + premium = 50 + 2 = <strong>$52</strong>
+</div>
+
+---
+
+## The numbers: payoff below the strike
+
+<div class="risk-callout">
+  <span class="risk-callout-label">Stock at $48 at expiry</span>
+  <p>The option has no value — the loss is simply the $200 premium paid</p>
+  <p>The same loss as if the stock had fallen to $30, or to $1</p>
+</div>
+
+Unlike Week 8's short position, the loss doesn't grow as price moves further
+against it — capped at what was paid upfront.
+
+---
+
+## Two payoffs, side by side
+
+<Payoff
+  kind="call"
+  reference={50}
+  premium={2}
+  domainMin={40}
+  domainMax={60}
+  caption="Simulated call option payoff — flat at the premium's cost below the strike, rising above it"
+/>
+
+Flat below the strike, bending upward above it — the kink is the structural
+difference from Week 9's straight futures line.
+
+---
+
+{/* _class: activity */}
+
+## Try it yourself
+
+<p class="activity-label">Compare payoffs</p>
+
+A **simulated** put option, strike $40, premium $1.50 per share.
+
+Calculate the payoff and profit if the stock is at $35 at expiry, and the
+breakeven price below which the position turns a profit. Then say what part
+of the shape would look identical to Week 9's futures line, and what part
+would not.
+
+---
+
+## The takeaway
+
+<ol class="recap-list">
+  <li>An option is a right; a futures contract is an obligation — the buyer can let an option expire unused.</li>
+  <li>The premium is a certain cost, paid whether or not the option is ever exercised.</li>
+  <li>A bounded loss is a real structural difference from a short position — not a reason to treat options as automatically lower-risk.</li>
+  <li>Week 11 applies this same leverage-and-payoff thinking to a market with its own custody and exchange structure.</li>
+</ol>
+
+---
+
+{/* _class: centered */}
+
+## Next week
+
+Week 11 — cryptocurrency markets: the same leverage mathematics, at ratios
+and custody arrangements a stock broker never offers.

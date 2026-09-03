@@ -14,6 +14,12 @@ interface Props {
   caption?: string;
 }
 
+// Same CSS-driven sizing as Candles.astro: width:100%/height:auto means the
+// width/height props only set the viewBox aspect ratio, and rendered height
+// is `contentWidth * (height/width)`. The old 640x320 default rendered
+// ~560px tall alone, against a 592px slide vertical budget shared with a
+// heading and caption --- guaranteed overflow. 640x140 matches the same
+// aspect ratio already verified safe for Candles.
 const {
   kind,
   reference,
@@ -21,7 +27,7 @@ const {
   domainMin,
   domainMax,
   width = 640,
-  height = 320,
+  height = 140,
   caption,
 } = Astro.props as Props;
 
