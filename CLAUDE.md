@@ -44,6 +44,22 @@ transition *individually* fires isn't enough --- check what the combination
 looks like against the clock (`getComputedStyle` sampled every frame, not
 just before/after).
 
+## A `width:100%; height:auto` SVG's rendered height depends on content width, not its `width`/`height` props
+
+On astromotion's fixed 1280x720 deck canvas, a slide has a fixed vertical
+budget (720px minus top/bottom padding) shared by heading, prose, and any
+diagram. An SVG component styled `width:100%; height:auto` uses its
+`width`/`height` props only to fix the *aspect ratio* --- actual rendered
+height is `contentWidth * (height/width)`, not the prop value itself. A
+component authored with a tall default aspect ratio (e.g. 640x320) can render
+far taller than intended once placed at full slide width, overflowing the
+budget --- and this only shows up at viewports with little scale-to-fit slack
+(e.g. exactly 1.5x canvas), not at every viewport, so a quick mobile check can
+miss it. Fixed once in `Candles.astro`, then carried forward as a verified-safe
+640x140 default when writing `Payoff.astro`. When adding a new deck visual
+component: pick an aspect ratio against the actual budget, not an arbitrary
+default, and check it at a no-slack viewport, not just mobile.
+
 ## This file is yours
 
 A starting point, not a rulebook: what you add to it is the harness, and the
