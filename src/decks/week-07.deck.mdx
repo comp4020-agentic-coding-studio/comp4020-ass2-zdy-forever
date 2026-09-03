@@ -1,0 +1,154 @@
+---
+title: Day Trading
+description:
+  Week 7 — liquidity, slippage and VWAP, building on Weeks 4-6 as holding
+  periods compress to hours
+---
+
+import Candles from "./components/Candles.astro";
+
+{/* _class: hero */}
+
+# Day Trading
+
+## Week 7 · Liquidity, slippage and VWAP
+
+---
+
+## The question this week answers
+
+What actually changes, mechanically, when a position is held for hours
+instead of days or weeks?
+
+---
+
+## By the end of this lecture
+
+- explain what changes about execution costs when holding periods shrink
+  to intraday
+- define liquidity and slippage, and how they relate to Week 2's bid/ask
+  spread
+- calculate VWAP from a simulated sequence of intraday prices and volumes
+- build a structured day-trade plan and spot common beginner mistakes
+
+---
+
+## Liquidity and slippage
+
+**Liquidity** — how easily an order fills near the quoted price without
+moving it. High liquidity: large orders barely move price. Low liquidity:
+even modest ones can.
+
+**Slippage** — the gap between the expected price and the price actually
+filled. It grows exactly when liquidity is thin.
+
+---
+
+{/* _class: impact */}
+
+## Week 2's few cents of spread becomes a much bigger factor once it's paid dozens of times in one session
+
+---
+
+## VWAP: a reference, not a signal
+
+**VWAP** (volume-weighted average price) — the average price traded so far
+today, weighted by volume. Unlike Week 4's moving average, it resets every
+day.
+
+Used here as a reference point for where the day's activity has clustered —
+not a buy or sell signal on its own.
+
+---
+
+## A worked morning
+
+A **simulated** stock trades three price/volume pairs in the first hour:
+
+<div class="calc-block">
+  $50.00 at 1,000 shares
+  <br />
+  $50.10 at 1,500 shares
+  <br />
+  $49.90 at 2,000 shares
+</div>
+
+A trader who bought at the day's open quoted at $50.00 gets filled at
+$50.04 — a four-cent slip from thin liquidity at that exact moment.
+
+---
+
+## The numbers: VWAP
+
+<div class="calc-block">
+  VWAP = [(50.00×1,000) + (50.10×1,500) + (49.90×2,000)] ÷ (1,000+1,500+2,000)
+  <br />
+  <br />
+  = (50,000 + 75,150 + 99,800) ÷ 4,500 = 224,950 ÷ 4,500 ≈ <strong>$49.99</strong>
+</div>
+
+---
+
+## The numbers: slippage cost
+
+<div class="risk-callout">
+  <span class="risk-callout-label">On a 500-share order</span>
+  <p>500 × ($50.04 − $50.00) = <strong>$20</strong></p>
+  <p>A real cost paid on entry alone, before the trade has had any chance to work.</p>
+</div>
+
+Exactly why Week 8's leverage makes the same mechanics matter even more.
+
+---
+
+## Above VWAP, below VWAP
+
+<Candles
+  caption="Simulated one-session candles — price drifting from below VWAP to above it"
+  candles={[
+    { open: 49.6, high: 49.9, low: 49.3, close: 49.5 },
+    { open: 49.5, high: 49.8, low: 49.2, close: 49.4 },
+    { open: 49.4, high: 49.95, low: 49.3, close: 49.85 },
+    { open: 49.85, high: 50.3, low: 49.8, close: 50.2 },
+    { open: 50.2, high: 50.5, low: 50.0, close: 50.4 },
+  ]}
+/>
+
+A fill above VWAP paid more than the session's volume-weighted average so
+far. A fill below it paid less — a comparison, not a rule about which side
+is "correct."
+
+---
+
+{/* _class: activity */}
+
+## Try it yourself
+
+<p class="activity-label">Critique a plan</p>
+
+A **simulated** day-trade plan enters purely because "price is above the
+20-day moving average" — with no stated liquidity check, no VWAP reference,
+and no invalidation.
+
+Using this week's concepts, identify what's missing before this counts as
+a complete plan.
+
+---
+
+## The takeaway
+
+<ol class="recap-list">
+  <li>Liquidity and slippage turn Week 2's minor spread into a much larger share of the outcome intraday.</li>
+  <li>VWAP resets daily and describes where trading has clustered — context, not a signal.</li>
+  <li>A day-trade plan still needs all six of Week 5's parts, just compressed to hours.</li>
+  <li>Week 8 is where leverage starts multiplying all of these same costs and risks.</li>
+</ol>
+
+---
+
+{/* _class: centered */}
+
+## Next week
+
+Week 8 — short selling, margin and leverage, on the simplest instrument
+leverage will ever apply to.

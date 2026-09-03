@@ -19,7 +19,17 @@ interface Props {
   caption?: string;
 }
 
-const { candles, width = 640, height = 360, caption } = Astro.props as Props;
+// The SVG is stretched to the slide's full content width via CSS
+// (width:100%; height:auto), so the width/height props only set the
+// viewBox's aspect ratio, not an absolute size --- rendered height is
+// `contentWidth * (height / width)`. Slides render onto a fixed 1280x720
+// design canvas with a 4rem/64px top+bottom padding (see
+// --at-slide-padding), leaving 592px of vertical budget shared with a
+// heading, any intro/caption prose, and this chart. A 640x360 (16:9)
+// default rendered ~630px tall on its own, before a single other element
+// --- guaranteed overflow. 640x140 (~4.6:1) keeps the chart legible while
+// leaving headroom for the rest of a typical slide.
+const { candles, width = 640, height = 140, caption } = Astro.props as Props;
 
 const highs = candles.map((c) => c.high);
 const lows = candles.map((c) => c.low);
