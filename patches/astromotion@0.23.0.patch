@@ -1,0 +1,199 @@
+diff --git a/components/DeckLayout.astro b/components/DeckLayout.astro
+index eef725cafb015ed640ce42c6bd995375e6af6a48..5fcccb3350917a3681b65bbc17c78049b9f0882d 100644
+--- a/components/DeckLayout.astro
++++ b/components/DeckLayout.astro
+@@ -4,6 +4,7 @@ import "reveal.js/reveal.css";
+ import "../theme/base.css";
+ import "../theme/whiteboard.css";
+ import "../theme/clock.css";
++import "../theme/deck-nav.css";
+ import "../theme/help-hint.css";
+ import "../theme/print.css";
+ import "virtual:astromotion/theme";
+diff --git a/pages/[...slug].astro b/pages/[...slug].astro
+index f43267b8fc0ec6551d5d76345b9f0009ac093e25..f34232111c18085a078395ca70bc0617926b4333 100644
+--- a/pages/[...slug].astro
++++ b/pages/[...slug].astro
+@@ -48,6 +48,7 @@ const { Content, frontmatter } = Astro.props;
+   import RevealNotes from "reveal.js/plugin/notes";
+ 
+   import { initClock } from "../src/clock";
++  import { initDeckNav } from "../src/deck-nav";
+   import { initFirstRunHelp } from "../src/first-run-help";
+   import { keepAwakeInFullscreen } from "../src/keep-awake";
+   import { initWhiteboard } from "../src/whiteboard";
+@@ -89,6 +90,7 @@ const { Content, frontmatter } = Astro.props;
+     initWhiteboard(deck);
+     initClock(deck);
+     initFirstRunHelp(deck);
++    initDeckNav(deck);
+   });
+   keepAwakeInFullscreen();
+ </script>
+diff --git a/src/deck-nav.ts b/src/deck-nav.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..52fdf2add3f970fc3d7c781546f3226210526d41
+--- /dev/null
++++ b/src/deck-nav.ts
+@@ -0,0 +1,79 @@
++// Mouse-operable chrome for the two things a keyboard-free viewer can't
++// otherwise do: leave the deck, and turn the page. Reveal's own arrow-key and
++// swipe navigation needs neither, but a deck is normally reached by a single
++// click from a lecture page with no keyboard focus anywhere on it, so a mouse
++// alone is a legitimate way to arrive here.
++//
++// `history.back()` rather than a hardcoded site URL: astromotion doesn't know
++// what site embeds it, so any project-specific route back to "the page that
++// linked here" doesn't belong in this package. The lecture page's "View
++// Slides" link is a normal same-tab `<a>`, so the browser's own history
++// already points at the right place for the ordinary path in; only a deck
++// opened with no history (a bookmarked or shared link, a fresh tab) falls
++// back to the site root.
++
++// Structural slice of the Reveal API, mirroring the clock's and whiteboard's
++// --- keeps this module decoupled from reveal.js's awkward default-export
++// typings. `on`/`off` take the same optional-and-defensive stance as the
++// print/speaker predicates in first-run-help.ts: a version where a slide
++// event never fires degrades to "buttons don't grey out", not "buttons never
++// appear".
++interface RevealNav {
++  next(): void;
++  prev(): void;
++  isFirstSlide?: () => boolean;
++  isLastSlide?: () => boolean;
++  on?: (type: string, listener: () => void) => void;
++  isSpeakerNotes?: () => boolean;
++  isPrintView?: () => boolean;
++}
++
++import { isSuppressedView } from "./first-run-help";
++
++function buildBack(): HTMLAnchorElement {
++  const back = document.createElement("a");
++  back.className = "astromotion-deck-back";
++  back.href = import.meta.env.BASE_URL;
++  back.setAttribute("aria-label", "Back to the page that opened this deck");
++  back.innerHTML = `<span aria-hidden="true">&larr;</span> Back`;
++  back.addEventListener("click", (event) => {
++    if (history.length > 1) {
++      event.preventDefault();
++      history.back();
++    }
++    // Otherwise let the href navigate normally --- no history to return to.
++  });
++  return back;
++}
++
++function buildPager(direction: "prev" | "next"): HTMLButtonElement {
++  const button = document.createElement("button");
++  button.type = "button";
++  button.className = `astromotion-deck-pager astromotion-deck-pager--${direction}`;
++  button.setAttribute("aria-label", direction === "prev" ? "Previous slide" : "Next slide");
++  button.innerHTML = `<span aria-hidden="true">${direction === "prev" ? "&lsaquo;" : "&rsaquo;"}</span>`;
++  return button;
++}
++
++export function initDeckNav(deck: RevealNav): void {
++  // Same suppression as the first-run help card: neither the speaker-notes
++  // iframe nor a print/PDF export wants extra chrome painted over the slide.
++  if (deck.isSpeakerNotes?.() || deck.isPrintView?.()) return;
++  if (isSuppressedView(location.search)) return;
++
++  const back = buildBack();
++  const prev = buildPager("prev");
++  const next = buildPager("next");
++
++  prev.addEventListener("click", () => deck.prev());
++  next.addEventListener("click", () => deck.next());
++
++  const syncDisabled = () => {
++    prev.disabled = deck.isFirstSlide?.() ?? false;
++    next.disabled = deck.isLastSlide?.() ?? false;
++  };
++  deck.on?.("slidechanged", syncDisabled);
++  syncDisabled();
++
++  document.body.append(back, prev, next);
++}
+diff --git a/theme/deck-nav.css b/theme/deck-nav.css
+new file mode 100644
+index 0000000000000000000000000000000000000000..9b7f755e3b481113ec16a7dc82b8c3219baf8955
+--- /dev/null
++++ b/theme/deck-nav.css
+@@ -0,0 +1,76 @@
++/* Mouse-operable back/prev/next chrome. Same quiet register as the clock:
++   translucent dark scrim, white glyph, out of the reading area, restyled by
++   consuming themes via the custom properties below. Unlike the clock these
++   are meant to be clicked, so pointer-events stays on and the hit target is
++   sized for a fingertip, not just a cursor. */
++
++.astromotion-deck-back,
++.astromotion-deck-pager {
++  position: fixed;
++  z-index: 55;
++  display: flex;
++  align-items: center;
++  justify-content: center;
++  border: none;
++  background: var(--astromotion-nav-bg, rgb(0 0 0 / 45%));
++  color: var(--astromotion-nav-color, #fff);
++  font-family: var(--astromotion-nav-font-family, var(--r-main-font, sans-serif));
++  cursor: pointer;
++  opacity: var(--astromotion-nav-opacity, 0.55);
++  transition:
++    opacity 0.15s ease,
++    background-color 0.15s ease;
++}
++
++.astromotion-deck-back:hover,
++.astromotion-deck-back:focus-visible,
++.astromotion-deck-pager:hover,
++.astromotion-deck-pager:focus-visible {
++  opacity: var(--astromotion-nav-opacity-active, 0.9);
++}
++
++.astromotion-deck-back {
++  top: 1rem;
++  left: 1rem;
++  gap: 0.4em;
++  padding: 0.5em 0.9em;
++  border-radius: var(--astromotion-nav-radius, 1.5rem);
++  text-decoration: none;
++  font-size: var(--astromotion-nav-font-size, 0.95rem);
++}
++
++.astromotion-deck-pager {
++  top: 50%;
++  width: var(--astromotion-nav-pager-size, 2.75rem);
++  height: var(--astromotion-nav-pager-size, 2.75rem);
++  border-radius: 50%;
++  font-size: 1.5rem;
++  line-height: 1;
++  transform: translateY(-50%);
++}
++
++.astromotion-deck-pager--prev {
++  left: 1rem;
++}
++
++.astromotion-deck-pager--next {
++  right: 1rem;
++}
++
++.astromotion-deck-pager:disabled {
++  opacity: var(--astromotion-nav-opacity-disabled, 0.15);
++  cursor: default;
++}
++
++@media (prefers-reduced-motion: reduce) {
++  .astromotion-deck-back,
++  .astromotion-deck-pager {
++    transition: none;
++  }
++}
++
++/* Narrow viewports get the full canvas width for the slide; a 2.75rem
++   circle at each edge already sits clear of the 1280x720 content since
++   Reveal centers and scales the canvas within the viewport, so no override
++   is needed here --- unlike the in-SVG diagrams, this chrome lives outside
++   the scaled canvas entirely. */

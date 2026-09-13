@@ -1,0 +1,367 @@
+---
+/**
+ * Week 10 — the payoff diagram the lecture's own "what a diagram would
+ * show" section describes: a bent line, flat below the strike and rising
+ * at a constant slope above it, plotted against the straight futures-style
+ * payoff from Week 9 so the kink reads as the structural difference.
+ *
+ * The "price at expiry" control is a range input, not a drag-only handle,
+ * so it stays fully keyboard- and touch-accessible; it drives a marker on
+ * the SVG rather than the other way around. Defaults match the lecture's
+ * own worked example exactly: call, strike $50, premium $2, price $55.
+ */
+const WIDTH = 640;
+const HEIGHT = 280;
+const MULTIPLIER = 100;
+
+function payoff(type: "call" | "put", strike: number, premium: number, price: number) {
+  const intrinsic = type === "call" ? Math.max(0, price - strike) : Math.max(0, strike - price);
+  const net = intrinsic - premium;
+  return { intrinsic, net, total: net * MULTIPLIER };
+}
+
+const initial = { type: "call" as const, strike: 50, premium: 2, price: 55 };
+const initialResult = payoff(initial.type, initial.strike, initial.premium, initial.price);
+const initialBreakeven = initial.strike + initial.premium;
+---
+
+<div class="viz-panel viz-panel--wide" data-options-payoff>
+  <div class="viz-panel-head">
+    <span class="viz-panel-title">Option payoff, next to a straight futures line</span>
+    <span class="sim-tag">Simulated contract</span>
+  </div>
+  <div class="viz-panel-body">
+    <div class="opt-controls">
+      <fieldset class="opt-type" data-opt-type>
+        <legend>Type</legend>
+        <label><input type="radio" name="opt-type" value="call" checked /> Call</label>
+        <label><input type="radio" name="opt-type" value="put" /> Put</label>
+      </fieldset>
+      <div>
+        <label for="opt-strike">Strike price</label>
+        <input id="opt-strike" type="range" min="20" max="80" step="1" value={initial.strike} data-opt-strike />
+      </div>
+      <div>
+        <label for="opt-premium">Premium (per share)</label>
+        <input id="opt-premium" type="range" min="0.5" max="10" step="0.5" value={initial.premium} data-opt-premium />
+      </div>
+      <div>
+        <label for="opt-price">Price at expiry</label>
+        <input id="opt-price" type="range" min="10" max="100" step="1" value={initial.price} data-opt-price />
+      </div>
+      <label class="opt-overlay-toggle">
+        <input type="checkbox" checked data-opt-overlay /> Compare with a straight futures position
+      </label>
+    </div>
+
+    <svg
+      class="opt-svg"
+      viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
+      role="img"
+      aria-label="Option payoff at expiry, compared with a straight futures payoff"
+      data-opt-svg
+    >
+      <line x1="0" x2={WIDTH} y1={HEIGHT / 2} y2={HEIGHT / 2} class="opt-zero" />
+      <line class="opt-marker" data-opt-strike-line x1="0" x2="0" y1="0" y2={HEIGHT} />
+      <line class="opt-marker opt-marker--breakeven" data-opt-breakeven-line x1="0" x2="0" y1="0" y2={HEIGHT} />
+      <text class="opt-marker-label" data-opt-strike-label x="0" y="14" text-anchor="middle">strike</text>
+      <text
+        class="opt-marker-label opt-marker-label--breakeven"
+        data-opt-breakeven-label
+        x="0"
+        y="28"
+        text-anchor="middle"
+      >
+        breakeven
+      </text>
+      <polyline class="opt-line opt-line--linear" data-opt-linear points="" />
+      <polyline class="opt-line opt-line--option" data-opt-kinked points="" />
+      <line class="opt-cursor" data-opt-cursor x1="0" x2="0" y1="0" y2={HEIGHT} />
+      <circle class="opt-dot opt-dot--linear" data-opt-linear-dot r="4" />
+      <circle class="opt-dot opt-dot--option" data-opt-option-dot r="5" />
+    </svg>
+
+    <p class="calc-line" data-opt-calc>
+      (55 − 50) × 100 = $500 intrinsic value, minus the $200 premium paid, for a net profit of $300.
+    </p>
+
+    <dl class="viz-readout">
+      <div><dt>Intrinsic value</dt><dd data-opt-out="intrinsic">${(initialResult.intrinsic * MULTIPLIER).toFixed(0)}</dd></div>
+      <div><dt>Premium paid</dt><dd data-opt-out="premium">${(initial.premium * MULTIPLIER).toFixed(0)}</dd></div>
+      <div><dt>Net P/L</dt><dd data-opt-out="net">${initialResult.total.toFixed(0)}</dd></div>
+      <div><dt>Breakeven price</dt><dd data-opt-out="breakeven">${initialBreakeven.toFixed(0)}</dd></div>
+    </dl>
+  </div>
+</div>
+
+<style>
+  .opt-controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: 0.75rem 1.25rem;
+    align-items: end;
+    margin-block-end: 1rem;
+  }
+
+  .opt-controls label {
+    display: block;
+    margin-block-end: 0.25rem;
+  }
+
+  .opt-type {
+    border: 1px solid var(--at-divider);
+    border-radius: var(--at-border-radius);
+    padding: 0.4rem 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .opt-type legend {
+    font-family: var(--rm-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--at-text-muted);
+    padding-inline-end: 0.5rem;
+  }
+
+  .opt-type label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    margin: 0;
+    font-family: var(--rm-mono);
+    font-size: 0.85rem;
+    text-transform: none;
+    letter-spacing: normal;
+  }
+
+  .opt-overlay-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    font-family: var(--rm-mono);
+    font-size: 0.8rem;
+    color: var(--at-text-secondary);
+  }
+
+  .opt-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-block: 0.5rem;
+  }
+
+  .opt-zero {
+    stroke: var(--at-divider);
+    stroke-width: 1;
+  }
+
+  .opt-marker {
+    stroke: var(--at-text-muted);
+    stroke-width: 1;
+    stroke-dasharray: 3 4;
+  }
+
+  .opt-marker--breakeven {
+    stroke: var(--at-primary);
+  }
+
+  .opt-marker-label {
+    font-family: var(--rm-mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    fill: var(--at-text-muted);
+  }
+
+  .opt-marker-label--breakeven {
+    fill: var(--at-primary);
+  }
+
+  /*
+   * .opt-svg is width:100%/height:auto against a fixed viewBox, so its
+   * rendered CSS-pixel size (and everything scaled with it, including
+   * this in-SVG font-size) tracks the panel's width, not the 9px number
+   * above. Below 640px the panel is narrower than the viewBox, so the
+   * declared 9px would otherwise render at well under half that size --
+   * this override keeps the on-screen size close to what it is at
+   * desktop widths. See CLAUDE.md's SVG scaling note.
+   */
+  @media (width < 640px) {
+    .opt-marker-label {
+      font-size: 25px;
+    }
+  }
+
+  .opt-line {
+    fill: none;
+  }
+
+  .opt-line--option {
+    stroke: var(--at-primary);
+    stroke-width: 2.5;
+  }
+
+  .opt-line--linear {
+    stroke: var(--at-text-muted);
+    stroke-width: 1.5;
+    stroke-dasharray: 6 5;
+  }
+
+  .opt-cursor {
+    stroke: var(--at-text-secondary);
+    stroke-width: 1;
+    stroke-dasharray: 2 3;
+    opacity: 0.6;
+  }
+
+  .opt-dot--linear {
+    fill: var(--at-bg-elevated);
+    stroke: var(--at-text-muted);
+    stroke-width: 1.5;
+  }
+
+  .opt-dot--option {
+    fill: var(--at-primary);
+  }
+
+  .calc-line {
+    font-family: var(--rm-mono);
+    font-size: 0.85rem;
+    color: var(--at-text-secondary);
+    background: var(--at-bg-elevated);
+    border: 1px solid var(--at-divider);
+    border-radius: var(--at-border-radius);
+    padding: 0.6rem 0.9rem;
+    margin-block: 0.5rem;
+  }
+</style>
+
+<script>
+  function setupOptionsPayoff() {
+    const panels = document.querySelectorAll<HTMLElement>("[data-options-payoff]");
+    for (const panel of panels) {
+      if (panel.dataset.optInit === "true") continue;
+      panel.dataset.optInit = "true";
+
+      const MULTIPLIER = 100;
+      const $ = <T extends Element>(sel: string) => panel.querySelector<T>(sel)!;
+
+      const typeInputs = Array.from(panel.querySelectorAll<HTMLInputElement>('input[name="opt-type"]'));
+      const strikeInput = $<HTMLInputElement>("[data-opt-strike]");
+      const premiumInput = $<HTMLInputElement>("[data-opt-premium]");
+      const priceInput = $<HTMLInputElement>("[data-opt-price]");
+      const overlayInput = $<HTMLInputElement>("[data-opt-overlay]");
+
+      const svg = $<SVGSVGElement>("[data-opt-svg]");
+      const width = svg.viewBox.baseVal.width || 640;
+      const height = svg.viewBox.baseVal.height || 280;
+      const marginX = 20;
+      const marginY = 30;
+      const plotWidth = width - marginX * 2;
+
+      function currentType(): "call" | "put" {
+        return (typeInputs.find((i) => i.checked)?.value as "call" | "put") ?? "call";
+      }
+
+      function payoffAt(type: "call" | "put", strike: number, premium: number, price: number) {
+        const intrinsic = type === "call" ? Math.max(0, price - strike) : Math.max(0, strike - price);
+        const net = intrinsic - premium;
+        return { intrinsic, net, total: net * MULTIPLIER };
+      }
+
+      function update() {
+        const type = currentType();
+        const strike = Number(strikeInput.value);
+        const premium = Number(premiumInput.value);
+        const price = Number(priceInput.value);
+        const showOverlay = overlayInput.checked;
+
+        const domainMin = Math.max(0, strike - 30);
+        const domainMax = strike + 30;
+        const x = (p: number) => marginX + ((p - domainMin) / (domainMax - domainMin)) * plotWidth;
+
+        // Vertical scale: fit the worst-case payoff magnitude across the domain.
+        const worstLoss = premium * MULTIPLIER;
+        const bestGain = Math.max(
+          Math.abs(payoffAt(type, strike, premium, domainMin).total),
+          Math.abs(payoffAt(type, strike, premium, domainMax).total),
+        );
+        const scaleMax = Math.max(worstLoss, bestGain, 100);
+        const plotHalf = height / 2 - marginY;
+        const y = (payoffValue: number) => height / 2 - (payoffValue / scaleMax) * plotHalf;
+
+        const steps = 40;
+        const kinkedPoints: string[] = [];
+        const linearPoints: string[] = [];
+        for (let i = 0; i <= steps; i++) {
+          const p = domainMin + (i / steps) * (domainMax - domainMin);
+          const { total } = payoffAt(type, strike, premium, p);
+          kinkedPoints.push(`${x(p)},${y(Math.max(-scaleMax * 1.05, Math.min(scaleMax * 1.05, total)))}`);
+          const linear = type === "call" ? (p - strike) * MULTIPLIER : (strike - p) * MULTIPLIER;
+          linearPoints.push(`${x(p)},${y(Math.max(-scaleMax * 1.05, Math.min(scaleMax * 1.05, linear)))}`);
+        }
+        $<SVGPolylineElement>("[data-opt-kinked]").setAttribute("points", kinkedPoints.join(" "));
+        $<SVGPolylineElement>("[data-opt-linear]").setAttribute("points", showOverlay ? linearPoints.join(" ") : "");
+
+        const strikeLine = $<SVGLineElement>("[data-opt-strike-line]");
+        strikeLine.setAttribute("x1", String(x(strike)));
+        strikeLine.setAttribute("x2", String(x(strike)));
+        const strikeLabel = $<SVGTextElement>("[data-opt-strike-label]");
+        strikeLabel.setAttribute("x", String(x(strike)));
+        strikeLabel.textContent = `strike $${strike}`;
+
+        const breakeven = type === "call" ? strike + premium : strike - premium;
+        const breakevenLine = $<SVGLineElement>("[data-opt-breakeven-line]");
+        breakevenLine.setAttribute("x1", String(x(breakeven)));
+        breakevenLine.setAttribute("x2", String(x(breakeven)));
+        const breakevenLabel = $<SVGTextElement>("[data-opt-breakeven-label]");
+        breakevenLabel.setAttribute("x", String(x(breakeven)));
+        breakevenLabel.textContent = `breakeven $${breakeven.toFixed(2)}`;
+
+        const result = payoffAt(type, strike, premium, price);
+        const cursor = $<SVGLineElement>("[data-opt-cursor]");
+        cursor.setAttribute("x1", String(x(price)));
+        cursor.setAttribute("x2", String(x(price)));
+
+        const optionDot = $<SVGCircleElement>("[data-opt-option-dot]");
+        optionDot.setAttribute("cx", String(x(price)));
+        optionDot.setAttribute("cy", String(y(Math.max(-scaleMax * 1.05, Math.min(scaleMax * 1.05, result.total)))));
+
+        const linearDot = $<SVGCircleElement>("[data-opt-linear-dot]");
+        if (showOverlay) {
+          const linearValue = type === "call" ? (price - strike) * MULTIPLIER : (strike - price) * MULTIPLIER;
+          linearDot.setAttribute("cx", String(x(price)));
+          linearDot.setAttribute("cy", String(y(Math.max(-scaleMax * 1.05, Math.min(scaleMax * 1.05, linearValue)))));
+          linearDot.setAttribute("opacity", "1");
+        } else {
+          linearDot.setAttribute("opacity", "0");
+        }
+
+        $('[data-opt-out="intrinsic"]').textContent = `$${(result.intrinsic * MULTIPLIER).toFixed(0)}`;
+        $('[data-opt-out="premium"]').textContent = `$${(premium * MULTIPLIER).toFixed(0)}`;
+        $('[data-opt-out="net"]').textContent = `${result.total >= 0 ? "+" : "−"}$${Math.abs(result.total).toFixed(0)}`;
+        $('[data-opt-out="breakeven"]').textContent = `$${breakeven.toFixed(2)}`;
+
+        const verb = type === "call" ? "above" : "below";
+        $("[data-opt-calc]").textContent =
+          result.intrinsic > 0
+            ? `|${price} − ${strike}| × 100 = $${(result.intrinsic * MULTIPLIER).toFixed(0)} intrinsic value, minus the ` +
+              `$${(premium * MULTIPLIER).toFixed(0)} premium paid, for a net ${result.total >= 0 ? "profit" : "loss"} of ` +
+              `$${Math.abs(result.total).toFixed(0)}.`
+            : `Price is not ${verb} the strike, so the option has no intrinsic value: the loss is simply the ` +
+              `$${(premium * MULTIPLIER).toFixed(0)} premium paid, no matter how far the price moves the other way.`;
+      }
+
+      for (const input of typeInputs) input.addEventListener("change", update);
+      for (const input of [strikeInput, premiumInput, priceInput, overlayInput]) {
+        input.addEventListener("input", update);
+      }
+      update();
+    }
+  }
+
+  setupOptionsPayoff();
+  document.addEventListener("astro:page-load", setupOptionsPayoff);
+</script>

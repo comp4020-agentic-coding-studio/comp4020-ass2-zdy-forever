@@ -1,99 +1,239 @@
 ---
-import Card from "astro-theme-university/components/Card.astro";
-import CardGrid from "astro-theme-university/components/CardGrid.astro";
-import ContentLayout from "astro-theme-university/layouts/ContentLayout.astro";
+import BaseLayout from "astro-theme-university/layouts/BaseLayout.astro";
 import { withBase } from "astro-theme-university/url";
-import heroImage from "../assets/images/hero-home.avif";
+import StageProgression from "../components/homepage/StageProgression.astro";
 import { courseMeta } from "../course-config";
+import { stages } from "../lib/stages";
 import { sessionLabels, siteConfig } from "../site-config";
+import "../styles/system.css";
 ---
 
-<ContentLayout
+<BaseLayout
   title={`${courseMeta.code}: ${courseMeta.title}`}
   description={courseMeta.description}
-  heroImage={heroImage}
-  heroImageAlt="A rising sequence of flat gold and black candlestick shapes climbing left to right across a warm cream ground, in a two-ink risograph style"
   {...siteConfig}
 >
-  <ul class="course-tags" aria-label="Course tags">
-    {courseMeta.tags.map((tag) => <li>{tag}</li>)}
-  </ul>
+  <section class="masthead" slot="hero" aria-label="Course overview">
+    <div class="masthead-lede">
+      <p class="field-label masthead-code">
+        {courseMeta.code} · {courseMeta.session}, {courseMeta.year}
+      </p>
+      <h1>{courseMeta.title}</h1>
+      <p class="masthead-thesis">{courseMeta.description}</p>
+      <ul class="masthead-tags" aria-label="Course tags">
+        {courseMeta.tags.map((tag) => <li class="status-tag">{tag}</li>)}
+      </ul>
+      <p class="masthead-cta">
+        <a class="at-button at-button--large" href={withBase("/lectures/week-01/")}>
+          Start with Week 1
+        </a>
+      </p>
+      <p class="masthead-caption">
+        Twelve teaching weeks, three assessments, and no promise that any of it makes you money — see the
+        {" "}<a href={withBase("/policies/")}>course policies</a> for what this course is and isn't.
+      </p>
+    </div>
+    <nav class="masthead-contents" aria-label="The five stages of the course">
+      <p class="field-label">Contents</p>
+      <ol>
+        {
+          stages.map((stage) => (
+            <li>
+              <a href={`#stage-${stage.key}`}>
+                <span class="masthead-contents-num">{String(stage.index + 1).padStart(2, "0")}</span>
+                <span class="masthead-contents-label">{stage.label}</span>
+                <span class="masthead-contents-range">{stage.range}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+  </section>
 
-  <p class="hero-cta">
-    <a class="at-button at-button--large" href={withBase("/lectures/week-01/")}>
-      Start with Week 1
-    </a>
-  </p>
+  <StageProgression />
 
-  <h2>What you will do</h2>
-  <p>
-    Place simulated stock orders and trace why they filled where they did.
-    Read charts, size positions against a fixed risk percentage, and build
-    swing and day-trading plans that separate what you observed from what
-    you're assuming. Work the arithmetic behind margin, leverage, futures and
-    options by hand, then apply the same risk logic to a simulated crypto
-    position. You walk out with a personal rulebook: the instrument, sizing
-    and stop-trading rules you'd actually use before risking real money.
-  </p>
-
-  <h2>Who it is for</h2>
-  <p>
-    Anyone starting from zero — no prior finance, trading or investing
-    knowledge assumed. The course is aimed at whoever wants to understand how
-    retail markets actually work before deciding whether, and how, to use
-    them; it does not assume you already trade, and it will not tell you to
-    start.
-  </p>
-
-  <h2>How the semester builds</h2>
-  <p>
-    Twelve weeks in one progression, not twelve unrelated topics: stock
-    mechanics and trading styles first, then chart reading and risk, then
-    swing and day trading, then leverage, futures, options and crypto, closing
-    with a synthesis week. Each week assumes the ones before it. Three pieces
-    of graded work track the same arc: the{" "}
-    <strong>Market Mechanics Notebook</strong> (20%) checks the early
-    mechanics, the <strong>Strategy Lab</strong> (35%) turns chart reading and
-    risk into two trade plans, and the <strong>Personal Market Rulebook</strong>{" "}
-    (45%) asks you to commit to rules across every instrument covered.
-  </p>
-
-  <h2>Where to go next</h2>
-  <CardGrid columns={2}>
-    <Card title="Start with Week 1" href="/lectures/week-01/">
-      <p>The first lecture: market overview and basic asset classes.</p>
-    </Card>
-    <Card title={sessionLabels.plural} href="/sessions/">
-      <p>The weekly schedule and what happens in each teaching session.</p>
-    </Card>
-    <Card title="Assessment" href="/assessments/">
-      <p>What is marked, what it is worth, and when it is due.</p>
-    </Card>
-    <Card title="People" href="/people/">
-      <p>Who teaches the course and how to reach them.</p>
-    </Card>
-  </CardGrid>
-</ContentLayout>
+  <section class="home-next" aria-label="Where to go next">
+    <p class="field-label">Where to go next</p>
+    <ol class="home-next-list">
+      <li>
+        <a href={withBase("/sessions/")}>
+          <span class="home-next-index">01</span>
+          <span class="home-next-body">
+            <span class="home-next-title">{sessionLabels.plural}</span>
+            <span class="home-next-desc">The weekly schedule and what happens in each teaching session.</span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a href={withBase("/assessments/")}>
+          <span class="home-next-index">02</span>
+          <span class="home-next-body">
+            <span class="home-next-title">Assessment</span>
+            <span class="home-next-desc">What is marked, what it is worth, and when it is due.</span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a href={withBase("/people/")}>
+          <span class="home-next-index">03</span>
+          <span class="home-next-body">
+            <span class="home-next-title">People</span>
+            <span class="home-next-desc">Who teaches the course and how to reach them.</span>
+          </span>
+        </a>
+      </li>
+    </ol>
+  </section>
+</BaseLayout>
 
 <style>
-  .course-tags {
+  .masthead {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(14rem, 18rem);
+    gap: var(--at-spacing-2xl);
+    padding-block: var(--at-spacing-2xl);
+    border-block-end: 1px solid var(--at-divider);
+  }
+
+  .masthead-code {
+    margin-block-end: 1rem;
+  }
+
+  .masthead h1 {
+    margin-block: 0 0.85rem;
+    font-size: clamp(1.9rem, 3.4vw, 2.65rem);
+  }
+
+  .masthead-thesis {
+    color: var(--at-text-secondary);
+    max-width: 38rem;
+    font-size: 1.05rem;
+  }
+
+  .masthead-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-block: 0 2rem;
+    margin-block: 1.25rem;
     padding: 0;
     list-style: none;
   }
 
-  .course-tags li {
-    padding: 0.25rem 0.65rem;
-    border-radius: 999px;
-    color: var(--at-text-secondary);
-    background: var(--at-bg-alt);
+  .masthead-cta {
+    margin-block: 0.5rem 1.25rem;
+  }
+
+  .masthead-caption {
+    max-width: 34rem;
+    font-size: 0.85rem;
+    color: var(--at-text-muted);
+  }
+
+  .masthead-contents {
+    border-inline-start: 1px solid var(--at-divider);
+    padding-inline-start: var(--at-spacing-lg);
+  }
+
+  .masthead-contents ol {
+    list-style: none;
+    margin: 0.85rem 0 0;
+    padding: 0;
+  }
+
+  .masthead-contents li + li {
+    border-block-start: 1px solid var(--at-divider);
+  }
+
+  .masthead-contents a {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 0.6rem;
+    padding-block: 0.6rem;
+    text-decoration: none;
+    color: var(--at-text);
+    transition: color 0.15s;
+  }
+
+  .masthead-contents a:hover {
+    color: var(--at-primary);
+  }
+
+  .masthead-contents-num {
+    color: var(--at-text-muted);
+    font-size: 0.75rem;
+  }
+
+  .masthead-contents-label {
+    font-weight: 600;
     font-size: 0.9rem;
   }
 
-  .hero-cta {
-    margin-block: 0 2rem;
+  .masthead-contents-range {
+    grid-column: 2;
+    color: var(--at-text-muted);
+    font-size: 0.7rem;
+  }
+
+  @media (width < 720px) {
+    .masthead {
+      grid-template-columns: 1fr;
+    }
+
+    .masthead-contents {
+      border-inline-start: none;
+      border-block-start: 1px solid var(--at-divider);
+      padding-inline-start: 0;
+      padding-block-start: var(--at-spacing-lg);
+    }
+  }
+
+  .home-next {
+    margin-block: var(--at-spacing-2xl) var(--at-spacing-xl);
+  }
+
+  .home-next-list {
+    list-style: none;
+    margin: 0.75rem 0 0;
+    padding: 0;
+    border-block-start: 1px solid var(--at-divider);
+  }
+
+  .home-next-list a {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding-block: 1.1rem;
+    border-block-end: 1px solid var(--at-divider);
+    text-decoration: none;
+    color: var(--at-text);
+    transition: padding-inline-start 0.15s, color 0.15s;
+  }
+
+  .home-next-list a:hover {
+    padding-inline-start: 0.5rem;
+    color: var(--at-primary);
+  }
+
+  .home-next-index {
+    font-family: var(--rm-mono);
+    font-size: 0.8rem;
+    color: var(--at-text-muted);
+    flex-shrink: 0;
+  }
+
+  .home-next-body {
+    display: grid;
+    gap: 0.15rem;
+  }
+
+  .home-next-title {
+    font-weight: 600;
+    font-size: 1.05rem;
+  }
+
+  .home-next-desc {
+    color: var(--at-text-secondary);
+    font-size: 0.9rem;
   }
 </style>

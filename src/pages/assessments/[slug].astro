@@ -1,13 +1,14 @@
 ---
 import { render } from "astro:content";
 import { getPublishedCollection } from "astro-course-university/content";
-import RelatedContent from "astro-course-university/components/RelatedContent.astro";
 import SpecList from "astro-course-university/components/SpecList.astro";
 import Callout from "astro-theme-university/components/Callout.astro";
 import ContentLayout from "astro-theme-university/layouts/ContentLayout.astro";
 import MarkingModel from "../../components/MarkingModel.astro";
+import RelatedContent from "../../components/RelatedContent.astro";
 import { formatCourseDate } from "../../lib/dates";
 import { graphCollections, siteConfig } from "../../site-config";
+import "../../styles/system.css";
 
 export async function getStaticPaths() {
   const assessments = await getPublishedCollection("assessments");
@@ -45,7 +46,9 @@ const { Content } = await render(assessment);
       <dd>{formatCourseDate(assessment.data.due)}</dd>
     </div>
   </dl>
-  <Content />
+  <div class="field-manual">
+    <Content />
+  </div>
   <SpecList spec={assessment.data.spec}>
     The brief poses the problem and leaves room for a response. The spec is the
     fixed part: what a marker checks. Some lines can be checked mechanically;
@@ -84,7 +87,7 @@ const { Content } = await render(assessment);
 
   .at-meta-item dd {
     margin: 0;
-    color: var(--at-heading);
+    color: var(--at-primary);
     font-size: 1.25rem;
     font-weight: 600;
   }

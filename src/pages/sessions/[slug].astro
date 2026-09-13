@@ -1,12 +1,13 @@
 ---
 import { render } from "astro:content";
 import { getPublishedCollection } from "astro-course-university/content";
-import RelatedContent from "astro-course-university/components/RelatedContent.astro";
 import SpecList from "astro-course-university/components/SpecList.astro";
 import ContentLayout from "astro-theme-university/layouts/ContentLayout.astro";
+import RelatedContent from "../../components/RelatedContent.astro";
 import TeachingTeam from "../../components/TeachingTeam.astro";
 import { formatCourseDate } from "../../lib/dates";
 import { graphCollections, sessionLabels, siteConfig } from "../../site-config";
+import "../../styles/system.css";
 
 export async function getStaticPaths() {
   const sessions = await getPublishedCollection("sessions");
@@ -24,7 +25,9 @@ const { Content } = await render(session);
 >
   <p class="at-eyebrow">{sessionLabels.singular}</p>
   <p><strong>{formatCourseDate(session.data.date)}</strong></p>
-  <Content />
+  <div class="field-manual">
+    <Content />
+  </div>
   <SpecList spec={session.data.spec}>
     What you bring to the session. Written so a reader can tell whether it has
     been met without asking you.

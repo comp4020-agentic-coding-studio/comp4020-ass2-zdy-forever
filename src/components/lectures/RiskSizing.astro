@@ -1,0 +1,260 @@
+---
+/**
+ * Week 5 — "what a diagram would show": a single horizontal bar split into
+ * a risk segment (entry to stop) and a reward segment (entry to target),
+ * with the 1%-account-risk-to-position-size arithmetic labelled on it.
+ * Defaults match the lecture's own worked example exactly: a simulated
+ * $10,000 account, 1% risk, entry $48, stop $45.
+ */
+const WIDTH = 640;
+const HEIGHT = 120;
+
+function computeInitial() {
+  const account = 10000;
+  const riskPct = 1;
+  const entry = 48;
+  const stop = 45;
+  const target = 54;
+  const dollarRisk = account * (riskPct / 100);
+  const stopDistance = Math.abs(entry - stop);
+  const shares = Math.floor(dollarRisk / stopDistance);
+  const actualRisk = shares * stopDistance;
+  const rewardDistance = Math.abs(target - entry);
+  const rewardAtTarget = shares * rewardDistance;
+  const rr = rewardDistance / stopDistance;
+  return { account, riskPct, entry, stop, target, dollarRisk, stopDistance, shares, actualRisk, rewardAtTarget, rr };
+}
+
+const initial = computeInitial();
+---
+
+<div class="viz-panel viz-panel--wide" data-risk-sizing>
+  <div class="viz-panel-head">
+    <span class="viz-panel-title">Position size & risk/reward</span>
+    <span class="sim-tag">Simulated account</span>
+  </div>
+  <div class="viz-panel-body">
+    <div class="risk-controls">
+      <div>
+        <label for="rs-account">Account size</label>
+        <input id="rs-account" type="range" min="2000" max="50000" step="500" value={initial.account} data-rs-account />
+      </div>
+      <div>
+        <label for="rs-risk">Risk per trade</label>
+        <input id="rs-risk" type="range" min="0.25" max="3" step="0.25" value={initial.riskPct} data-rs-risk />
+      </div>
+      <div>
+        <label for="rs-entry">Entry price</label>
+        <input id="rs-entry" type="range" min="20" max="100" step="1" value={initial.entry} data-rs-entry />
+      </div>
+      <div>
+        <label for="rs-stop">Stop (invalidation)</label>
+        <input id="rs-stop" type="range" min="10" max="99" step="1" value={initial.stop} data-rs-stop />
+      </div>
+      <div>
+        <label for="rs-target">Target</label>
+        <input id="rs-target" type="range" min="11" max="150" step="1" value={initial.target} data-rs-target />
+      </div>
+    </div>
+
+    <svg class="risk-svg" viewBox={`0 0 ${WIDTH} ${HEIGHT}`} role="img" aria-label="Risk and reward segments around the entry price" data-rs-svg>
+      <line x1="24" x2={WIDTH - 24} y1={HEIGHT - 28} y2={HEIGHT - 28} class="risk-axis" />
+      <rect class="risk-segment risk-segment--risk" data-rs-risk-rect x="0" y={HEIGHT / 2 - 14} width="0" height="28" />
+      <rect class="risk-segment risk-segment--reward" data-rs-reward-rect x="0" y={HEIGHT / 2 - 14} width="0" height="28" />
+      <line class="risk-marker" data-rs-stop-marker x1="0" x2="0" y1="10" y2={HEIGHT - 10} />
+      <line class="risk-marker risk-marker--entry" data-rs-entry-marker x1="0" x2="0" y1="10" y2={HEIGHT - 10} />
+      <line class="risk-marker" data-rs-target-marker x1="0" x2="0" y1="10" y2={HEIGHT - 10} />
+      <text class="risk-label" data-rs-stop-label x="0" y="8" text-anchor="middle">stop</text>
+      <text class="risk-label risk-label--entry" data-rs-entry-label x="0" y="8" text-anchor="middle">entry</text>
+      <text class="risk-label" data-rs-target-label x="0" y="8" text-anchor="middle">target</text>
+    </svg>
+
+    <p class="calc-line" data-rs-calc>
+      {initial.account.toLocaleString()} × {(initial.riskPct / 100).toFixed(3)} = ${initial.dollarRisk.toFixed(0)}
+      risked · stop distance ${initial.stopDistance.toFixed(2)} → {initial.shares} shares (${initial.actualRisk.toFixed(0)} actually at risk)
+    </p>
+
+    <dl class="viz-readout">
+      <div><dt>Dollar risk</dt><dd data-rs-out="dollarRisk">${initial.dollarRisk.toFixed(0)}</dd></div>
+      <div><dt>Stop distance</dt><dd data-rs-out="stopDistance">${initial.stopDistance.toFixed(2)}</dd></div>
+      <div><dt>Position size</dt><dd data-rs-out="shares">{initial.shares} sh</dd></div>
+      <div><dt>Actual $ at risk</dt><dd data-rs-out="actualRisk">${initial.actualRisk.toFixed(0)}</dd></div>
+      <div><dt>Reward : risk</dt><dd data-rs-out="rr">{initial.rr.toFixed(2)}:1</dd></div>
+    </dl>
+  </div>
+</div>
+
+<style>
+  .risk-controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: 0.75rem 1.25rem;
+    margin-block-end: 1rem;
+  }
+
+  .risk-controls label {
+    display: block;
+    margin-block-end: 0.25rem;
+  }
+
+  .risk-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-block: 0.5rem;
+  }
+
+  .risk-axis {
+    stroke: var(--at-divider);
+    stroke-width: 1;
+  }
+
+  .risk-segment {
+    opacity: 0.85;
+  }
+
+  .risk-segment--risk {
+    fill: none;
+    stroke: var(--at-secondary);
+    stroke-width: 2;
+    stroke-dasharray: 5 4;
+  }
+
+  .risk-segment--reward {
+    fill: var(--at-primary);
+    opacity: 0.18;
+  }
+
+  .risk-marker {
+    stroke: var(--at-text-secondary);
+    stroke-width: 1.5;
+    stroke-dasharray: 2 4;
+  }
+
+  .risk-marker--entry {
+    stroke: var(--at-primary);
+    stroke-width: 2;
+    stroke-dasharray: none;
+  }
+
+  .risk-label {
+    font-family: var(--rm-mono);
+    font-size: 9px;
+    fill: var(--at-text-secondary);
+    text-transform: uppercase;
+  }
+
+  .risk-label--entry {
+    fill: var(--at-primary);
+    font-weight: 700;
+  }
+
+  /*
+   * .risk-svg is width:100%/height:auto against a fixed viewBox, so its
+   * rendered CSS-pixel size (and everything scaled with it, including
+   * this in-SVG font-size) tracks the panel's width, not the 9px number
+   * above. Below 640px the panel is narrower than the viewBox, so the
+   * declared 9px would otherwise render at well under half that size --
+   * this override keeps the on-screen size close to what it is at
+   * desktop widths. See CLAUDE.md's SVG scaling note.
+   */
+  @media (width < 640px) {
+    .risk-label {
+      font-size: 25px;
+    }
+  }
+
+  .calc-line {
+    font-family: var(--rm-mono);
+    font-size: 0.85rem;
+    color: var(--at-text-secondary);
+    background: var(--at-bg-elevated);
+    border: 1px solid var(--at-divider);
+    border-radius: var(--at-border-radius);
+    padding: 0.6rem 0.9rem;
+    margin-block: 0.5rem;
+  }
+</style>
+
+<script>
+  function setupRiskSizing() {
+    const panels = document.querySelectorAll<HTMLElement>("[data-risk-sizing]");
+    for (const panel of panels) {
+      if (panel.dataset.rsInit === "true") continue;
+      panel.dataset.rsInit = "true";
+
+      const $ = <T extends Element>(sel: string) => panel.querySelector<T>(sel)!;
+      const accountInput = $<HTMLInputElement>("[data-rs-account]");
+      const riskInput = $<HTMLInputElement>("[data-rs-risk]");
+      const entryInput = $<HTMLInputElement>("[data-rs-entry]");
+      const stopInput = $<HTMLInputElement>("[data-rs-stop]");
+      const targetInput = $<HTMLInputElement>("[data-rs-target]");
+
+      const svg = $<SVGSVGElement>("[data-rs-svg]");
+      const width = svg.viewBox.baseVal.width || 640;
+      const marginX = 24;
+      const plotWidth = width - marginX * 2;
+
+      function update() {
+        const account = Number(accountInput.value);
+        const riskPct = Number(riskInput.value);
+        let entry = Number(entryInput.value);
+        let stop = Number(stopInput.value);
+        let target = Number(targetInput.value);
+        if (stop >= entry) stop = entry - 1;
+        if (target <= entry) target = entry + 1;
+
+        const dollarRisk = account * (riskPct / 100);
+        const stopDistance = entry - stop;
+        const shares = Math.floor(dollarRisk / stopDistance);
+        const actualRisk = shares * stopDistance;
+        const rewardDistance = target - entry;
+        const rewardAtTarget = shares * rewardDistance;
+        const rr = rewardDistance / stopDistance;
+
+        const domainMin = stop - stopDistance * 0.3;
+        const domainMax = target + rewardDistance * 0.3;
+        const x = (price: number) => marginX + ((price - domainMin) / (domainMax - domainMin)) * plotWidth;
+
+        const riskRect = $<SVGRectElement>("[data-rs-risk-rect]");
+        riskRect.setAttribute("x", String(x(stop)));
+        riskRect.setAttribute("width", String(Math.max(0, x(entry) - x(stop))));
+
+        const rewardRect = $<SVGRectElement>("[data-rs-reward-rect]");
+        rewardRect.setAttribute("x", String(x(entry)));
+        rewardRect.setAttribute("width", String(Math.max(0, x(target) - x(entry))));
+
+        for (const [key, price, labelText] of [
+          ["stop", stop, `stop $${stop.toFixed(0)}`],
+          ["entry", entry, `entry $${entry.toFixed(0)}`],
+          ["target", target, `target $${target.toFixed(0)}`],
+        ] as [string, number, string][]) {
+          $<SVGLineElement>(`[data-rs-${key}-marker]`).setAttribute("x1", String(x(price)));
+          $<SVGLineElement>(`[data-rs-${key}-marker]`).setAttribute("x2", String(x(price)));
+          const label = $<SVGTextElement>(`[data-rs-${key}-label]`);
+          label.setAttribute("x", String(x(price)));
+          label.textContent = labelText;
+        }
+
+        $('[data-rs-out="dollarRisk"]').textContent = `$${dollarRisk.toFixed(0)}`;
+        $('[data-rs-out="stopDistance"]').textContent = `$${stopDistance.toFixed(2)}`;
+        $('[data-rs-out="shares"]').textContent = `${shares} sh`;
+        $('[data-rs-out="actualRisk"]').textContent = `$${actualRisk.toFixed(0)}`;
+        $('[data-rs-out="rr"]').textContent = `${rr.toFixed(2)}:1`;
+
+        $("[data-rs-calc]").textContent =
+          `${account.toLocaleString()} × ${(riskPct / 100).toFixed(3)} = $${dollarRisk.toFixed(0)} risked · ` +
+          `stop distance $${stopDistance.toFixed(2)} → ${shares} shares ($${actualRisk.toFixed(0)} actually at risk, ` +
+          `reward at target $${rewardAtTarget.toFixed(0)})`;
+      }
+
+      for (const input of [accountInput, riskInput, entryInput, stopInput, targetInput]) {
+        input.addEventListener("input", update);
+      }
+      update();
+    }
+  }
+
+  setupRiskSizing();
+  document.addEventListener("astro:page-load", setupRiskSizing);
+</script>

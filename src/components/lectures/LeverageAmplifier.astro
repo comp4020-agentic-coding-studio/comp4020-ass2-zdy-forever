@@ -1,0 +1,373 @@
+---
+/**
+ * Week 8 — makes the amplification physically apparent: one price move,
+ * shown as an equity swing at four fixed leverage multiples, with each
+ * bar visually flagged once its own margin-call threshold has been
+ * crossed at the chosen maintenance-margin requirement. A second, compact
+ * block reproduces the lecture's own long-vs-short comparison ("what a
+ * diagram would show": capped loss vs uncapped loss).
+ *
+ * Formula, derived from the lecture's own worked numbers (leverage 2x,
+ * maintenance 25% -> 33.3% trigger drop) and verified against them:
+ *   equity change %  = move% * leverage
+ *   trigger price drop % (fraction f of original position value at call) =
+ *     f = (1 - 1/leverage) / (1 - maintenanceMargin); trigger = (1 - f) * 100
+ */
+const LEVERAGES = [1, 2, 5, 10];
+const BAR_WIDTH = 640;
+const BAR_HEIGHT = 220;
+
+const initialMove = -5;
+const initialMaintenance = 0.25;
+const initialMultiple = 2;
+---
+
+<div class="viz-panel viz-panel--wide" data-leverage-amp>
+  <div class="viz-panel-head">
+    <span class="viz-panel-title">Leverage: one move, amplified</span>
+    <span class="sim-tag">Simulated position</span>
+  </div>
+  <div class="viz-panel-body">
+    <div class="lev-controls">
+      <div>
+        <label for="lev-move">Price move</label>
+        <input id="lev-move" type="range" min="-40" max="10" step="1" value={initialMove} data-lev-move />
+      </div>
+      <div>
+        <label for="lev-maintenance">Maintenance margin</label>
+        <input
+          id="lev-maintenance"
+          type="range"
+          min="10"
+          max="40"
+          step="1"
+          value={initialMaintenance * 100}
+          data-lev-maintenance
+        />
+      </div>
+    </div>
+
+    <svg
+      class="lev-svg"
+      viewBox={`0 0 ${BAR_WIDTH} ${BAR_HEIGHT}`}
+      role="img"
+      aria-label="Equity change at 1x, 2x, 5x and 10x leverage for the chosen price move"
+      data-lev-svg
+    >
+      <line x1="0" x2={BAR_WIDTH} y1={BAR_HEIGHT / 2} y2={BAR_HEIGHT / 2} class="lev-zero" />
+      {
+        LEVERAGES.map((lev, i) => {
+          const colW = BAR_WIDTH / LEVERAGES.length;
+          const cx = colW * i + colW / 2;
+          return (
+            <g data-lev-col={lev}>
+              <rect data-lev-bar class="lev-bar" x={cx - 34} y={BAR_HEIGHT / 2} width="68" height="0" />
+              <text data-lev-pct class="lev-pct" x={cx} y={BAR_HEIGHT / 2 - 10} text-anchor="middle" />
+              <text class="lev-multiple" x={cx} y={BAR_HEIGHT - 6} text-anchor="middle">
+                {lev}×
+              </text>
+              <text data-lev-call class="lev-call" x={cx} y={12} text-anchor="middle" />
+            </g>
+          );
+        })
+      }
+    </svg>
+
+    <p class="calc-line" data-lev-calc></p>
+
+    <dl class="viz-readout">
+      <div><dt>Selected move</dt><dd data-lev-out="move">{initialMove}%</dd></div>
+      <div><dt>2× equity change</dt><dd data-lev-out="equity2x">{initialMove * 2}%</dd></div>
+      <div><dt>2× call trigger</dt><dd data-lev-out="trigger2x">—</dd></div>
+    </dl>
+  </div>
+
+  <div class="viz-panel-head lev-subhead">
+    <span class="viz-panel-title">Long vs short: does the loss have a ceiling?</span>
+  </div>
+  <div class="viz-panel-body">
+    <label for="lev-multiple">Price at expiry, as a multiple of entry ($20 entry, 100 shares)</label>
+    <input id="lev-multiple" type="range" min="0" max="5" step="0.1" value={initialMultiple} data-lev-multiple />
+
+    <div class="lev-compare" data-lev-compare>
+      <div class="lev-compare-row">
+        <span class="lev-compare-label">Long</span>
+        <div class="lev-compare-track">
+          <div class="lev-compare-fill lev-compare-fill--long" data-lev-long-fill></div>
+          <div class="lev-compare-floor" aria-hidden="true"></div>
+        </div>
+        <span class="lev-compare-value" data-lev-long-value></span>
+      </div>
+      <div class="lev-compare-row">
+        <span class="lev-compare-label">Short</span>
+        <div class="lev-compare-track">
+          <div class="lev-compare-fill lev-compare-fill--short" data-lev-short-fill></div>
+        </div>
+        <span class="lev-compare-value" data-lev-short-value></span>
+      </div>
+    </div>
+    <p class="calc-line" data-lev-compare-calc></p>
+  </div>
+</div>
+
+<style>
+  .lev-controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: 0.75rem 1.25rem;
+    margin-block-end: 1rem;
+  }
+
+  .lev-controls label {
+    display: block;
+    margin-block-end: 0.25rem;
+  }
+
+  .lev-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-block: 0.5rem;
+  }
+
+  .lev-zero {
+    stroke: var(--at-divider);
+    stroke-width: 1;
+  }
+
+  .lev-bar {
+    fill: var(--at-primary);
+    opacity: 0.75;
+    transition: fill 0.15s;
+  }
+
+  .lev-bar.is-called {
+    fill: var(--at-secondary);
+    opacity: 0.5;
+  }
+
+  .lev-pct {
+    font-family: var(--rm-mono);
+    font-size: 13px;
+    font-weight: 700;
+    fill: var(--at-heading);
+  }
+
+  .lev-multiple {
+    font-family: var(--rm-mono);
+    font-size: 11px;
+    fill: var(--at-text-secondary);
+  }
+
+  .lev-call {
+    font-family: var(--rm-mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    fill: var(--at-secondary);
+  }
+
+  /*
+   * .lev-svg is width:100%/height:auto against a fixed viewBox, so its
+   * rendered CSS-pixel size (and everything scaled with it, including
+   * these in-SVG font-sizes) tracks the panel's width, not the px
+   * numbers above. Below 640px the panel is narrower than the viewBox,
+   * so the declared sizes would otherwise render at under half their
+   * size -- this override keeps the on-screen size close to what it is
+   * at desktop widths. See CLAUDE.md's SVG scaling note.
+   */
+  @media (width < 640px) {
+    .lev-pct {
+      font-size: 36px;
+    }
+
+    .lev-multiple {
+      font-size: 30.5px;
+    }
+
+    .lev-call {
+      font-size: 25px;
+    }
+  }
+
+  .calc-line {
+    font-family: var(--rm-mono);
+    font-size: 0.85rem;
+    color: var(--at-text-secondary);
+    background: var(--at-bg-elevated);
+    border: 1px solid var(--at-divider);
+    border-radius: var(--at-border-radius);
+    padding: 0.6rem 0.9rem;
+    margin-block: 0.5rem;
+  }
+
+  .lev-subhead {
+    border-block-start: 1px solid var(--at-divider);
+  }
+
+  #lev-multiple {
+    display: block;
+    margin-block: 0.5rem 1.25rem;
+  }
+
+  .lev-compare {
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .lev-compare-row {
+    display: grid;
+    grid-template-columns: 4rem 1fr 5.5rem;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .lev-compare-label {
+    font-family: var(--rm-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--at-text-secondary);
+  }
+
+  .lev-compare-track {
+    position: relative;
+    height: 1.4rem;
+    background: var(--at-bg-elevated);
+    border: 1px solid var(--at-divider);
+    border-radius: var(--at-border-radius);
+    overflow: hidden;
+  }
+
+  .lev-compare-fill {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    max-width: 100%;
+  }
+
+  .lev-compare-fill--long {
+    background: var(--at-primary);
+    opacity: 0.6;
+  }
+
+  .lev-compare-fill--short {
+    background: var(--at-secondary);
+    opacity: 0.6;
+  }
+
+  .lev-compare-floor {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    inline-size: 100%;
+    border-inline-end: 2px dashed var(--at-text-muted);
+  }
+
+  .lev-compare-value {
+    font-family: var(--rm-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-align: end;
+  }
+</style>
+
+<script>
+  function setupLeverageAmplifier() {
+    const panels = document.querySelectorAll<HTMLElement>("[data-leverage-amp]");
+    for (const panel of panels) {
+      if (panel.dataset.levInit === "true") continue;
+      panel.dataset.levInit = "true";
+
+      const $ = <T extends Element>(sel: string) => panel.querySelector<T>(sel)!;
+      const $all = <T extends Element>(sel: string) => Array.from(panel.querySelectorAll<T>(sel));
+
+      const moveInput = $<HTMLInputElement>("[data-lev-move]");
+      const maintenanceInput = $<HTMLInputElement>("[data-lev-maintenance]");
+      const multipleInput = $<HTMLInputElement>("[data-lev-multiple]");
+
+      const svg = $<SVGSVGElement>("[data-lev-svg]");
+      const barHeight = svg.viewBox.baseVal.height || 220;
+      const maxSwing = barHeight / 2 - 20;
+
+      function triggerDropPct(leverage: number, maintenance: number): number | null {
+        if (leverage <= 1) return null;
+        const f = (1 - 1 / leverage) / (1 - maintenance);
+        return (1 - f) * 100;
+      }
+
+      function updateAmplifier() {
+        const move = Number(moveInput.value);
+        const maintenance = Number(maintenanceInput.value) / 100;
+
+        for (const col of $all<SVGGElement>("[data-lev-col]")) {
+          const leverage = Number(col.dataset.levCol);
+          const equityChange = move * leverage;
+          const clamped = Math.max(-100, Math.min(100, equityChange));
+          const barLen = (Math.abs(clamped) / 100) * maxSwing;
+
+          const bar = col.querySelector<SVGRectElement>("[data-lev-bar]")!;
+          if (equityChange >= 0) {
+            bar.setAttribute("y", String(barHeight / 2 - barLen));
+          } else {
+            bar.setAttribute("y", String(barHeight / 2));
+          }
+          bar.setAttribute("height", String(barLen));
+
+          const pctLabel = col.querySelector<SVGTextElement>("[data-lev-pct]")!;
+          pctLabel.textContent = `${equityChange >= 0 ? "+" : ""}${equityChange.toFixed(0)}%`;
+          pctLabel.setAttribute("y", String(equityChange >= 0 ? barHeight / 2 - barLen - 8 : barHeight / 2 + barLen + 16));
+
+          const trigger = triggerDropPct(leverage, maintenance);
+          const called = trigger !== null && move < 0 && Math.abs(move) >= trigger;
+          bar.classList.toggle("is-called", called);
+
+          const callLabel = col.querySelector<SVGTextElement>("[data-lev-call]")!;
+          callLabel.textContent = called ? "margin call" : trigger !== null ? `calls at −${trigger.toFixed(1)}%` : "";
+        }
+
+        $("[data-lev-calc]").textContent =
+          `A ${move}% move on a 2× position: equity moves ${(move * 2).toFixed(0)}% ` +
+          `(move × leverage). At ${(maintenance * 100).toFixed(0)}% maintenance margin, 2× calls at a ` +
+          `${(triggerDropPct(2, maintenance) ?? 0).toFixed(1)}% drop; 10× calls at a ` +
+          `${(triggerDropPct(10, maintenance) ?? 0).toFixed(1)}% drop.`;
+
+        $('[data-lev-out="move"]').textContent = `${move}%`;
+        $('[data-lev-out="equity2x"]').textContent = `${(move * 2).toFixed(0)}%`;
+        const t2 = triggerDropPct(2, maintenance);
+        $('[data-lev-out="trigger2x"]').textContent = t2 !== null ? `−${t2.toFixed(1)}%` : "—";
+      }
+
+      function updateCompare() {
+        const multiple = Number(multipleInput.value);
+        const longPct = (multiple - 1) * 100;
+        const shortPct = (1 - multiple) * 100;
+
+        const longFill = $<HTMLElement>("[data-lev-long-fill]");
+        const shortFill = $<HTMLElement>("[data-lev-short-fill]");
+        const scaleMax = 300; // widest value the track visually represents before clipping
+
+        longFill.style.width = `${Math.min(100, (Math.max(0, longPct) / scaleMax) * 100)}%`;
+        longFill.style.opacity = longPct < 0 ? "0.9" : "0.6";
+        shortFill.style.width = `${Math.min(100, (Math.max(0, Math.abs(Math.min(0, shortPct))) / scaleMax) * 100)}%`;
+
+        $('[data-lev-long-value]').textContent = `${longPct >= 0 ? "+" : ""}${longPct.toFixed(0)}%`;
+        $('[data-lev-short-value]').textContent = `${shortPct >= 0 ? "+" : ""}${shortPct.toFixed(0)}%${shortPct < -scaleMax ? " ↑" : ""}`;
+
+        $("[data-lev-compare-calc]").textContent =
+          `Price at ${multiple.toFixed(1)}× entry ($${(multiple * 20).toFixed(0)}): long P/L ${longPct >= 0 ? "+" : ""}${longPct.toFixed(0)}%, ` +
+          `short P/L ${shortPct >= 0 ? "+" : ""}${shortPct.toFixed(0)}%. Long's loss can't pass −100% (price floors at $0); ` +
+          `short's loss keeps growing as the multiple rises — there's no equivalent ceiling.`;
+      }
+
+      moveInput.addEventListener("input", updateAmplifier);
+      maintenanceInput.addEventListener("input", updateAmplifier);
+      multipleInput.addEventListener("input", updateCompare);
+      updateAmplifier();
+      updateCompare();
+    }
+  }
+
+  setupLeverageAmplifier();
+  document.addEventListener("astro:page-load", setupLeverageAmplifier);
+</script>

@@ -1,0 +1,559 @@
+/* Site-wide design system for SLOP1007: "Retail Market Survival."
+ *
+ * Loaded unlayered (see PageLayout.astro), so every rule here beats the
+ * theme's own @layer at.tokens/at.base/at.components without touching
+ * node_modules or the brand hex file. --at-primary/secondary/tertiary keep
+ * exactly the hex values astro-theme-slop/slop.css assigns them — nothing
+ * here changes what "the brand colour" is. What changes is how much of the
+ * page is allowed to wear it.
+ *
+ * Concept: a retail-market field manual — a ledger of weeks, worked
+ * numbers and risk notes — not a university landing page and not a
+ * Bloomberg-style terminal. Headings and prose read as ink on paper; gold
+ * is spent only where a reader is meant to notice something specific (a
+ * live number, an active link, the one CTA), never as the colour of
+ * headings, table headers or the rule that runs down every page.
+ *
+ * Two type registers, used deliberately rather than everywhere: prose,
+ * nav, buttons and headings stay in the body face. Only a genuinely
+ * tabular value — a price, a percentage, a week number, a date, a status
+ * chip — switches to the monospace face, so that switch stays a signal
+ * instead of becoming the site's whole personality.
+ */
+
+:root {
+  --at-border-radius: 0.125rem;
+  --at-nav-height: 3.75rem;
+
+  --rm-mono: var(--at-font-mono);
+  --rm-grid-line: light-dark(rgb(0 0 0 / 5%), rgb(255 255 255 / 6%));
+
+  /* Headings read as ink, not brand gold — gold is spent on a handful of
+     small, deliberate accents instead of saturating every heading, table
+     header and divider on the site. */
+  --at-heading: var(--at-text);
+
+  /* A solid brand-colour table header reads as a marketing template; a
+     hairline rule plus ink text reads as a ledger. */
+  --at-table-header-bg: var(--at-bg-alt);
+  --at-table-header-text: var(--at-text);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Typography register                                                    */
+/* ---------------------------------------------------------------------- */
+
+.field-label,
+.status-tag,
+.sim-tag,
+.masthead-code,
+.masthead-contents-num,
+.masthead-contents-range,
+.roster-row-week,
+.roster-row-date,
+.assessment-weight,
+.assessment-meta,
+.at-meta-item dt,
+.viz-panel-head,
+.viz-panel-body :is(label),
+.viz-readout,
+.stage-week-num,
+[data-index]::before {
+  font-family: var(--rm-mono);
+  letter-spacing: 0.02em;
+}
+
+h1,
+h2,
+h3 {
+  letter-spacing: -0.01em;
+}
+
+/* Prose headings keep a small monospace index number when one is supplied
+   via a `data-index` attribute — used by the stage narrative, not ordinary
+   markdown content. */
+[data-index]::before {
+  content: attr(data-index) " / ";
+  font-size: 0.7em;
+  font-weight: 400;
+  color: var(--at-text-muted);
+  letter-spacing: 0.05em;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Structural motifs                                                      */
+/* ---------------------------------------------------------------------- */
+
+/* The theme's full-height accent rule (base.css `body::after`) is gold by
+   default. Kept — a vertical rule down every page reads as a ledger's
+   binding margin — but recoloured to a hairline instead of a gold stripe. */
+body::after {
+  background: var(--at-divider);
+}
+
+/* Nav: a calmer, compact register. Links and the wordmark read as ordinary
+   UI text rather than an uppercase-mono marquee, and the bar itself is
+   shallower, so the required Slop mark shares the top of the page with a
+   small course-code badge instead of dominating it. */
+.at-nav-inner {
+  padding-block: 0.85rem;
+}
+
+.at-nav-logo {
+  height: 1.65rem;
+}
+
+.at-nav-wordmark {
+  font-size: 1.05rem;
+}
+
+.at-nav-brand {
+  display: inline-flex;
+  align-items: center;
+}
+
+.at-nav-brand::after {
+  content: "SLOP1007";
+  font-family: var(--rm-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
+  color: var(--at-text-muted);
+  margin-inline-start: 0.65rem;
+  padding-inline-start: 0.65rem;
+  border-inline-start: 1px solid var(--at-divider);
+  white-space: nowrap;
+}
+
+@media (width < 640px) {
+  .at-nav-brand::after {
+    display: none;
+  }
+}
+
+.at-nav-links a {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Card: hairline top rule + sharp corners instead of a soft bordered box
+   with hover shadow — reused across every card-shaped surface in the site. */
+.at-card {
+  border: none;
+  border-block-start: 2px solid var(--at-divider);
+  border-radius: 0;
+  background: var(--at-bg-alt);
+  transition:
+    border-color 0.15s,
+    background-color 0.15s;
+}
+
+a.at-card:hover {
+  border-block-start-color: var(--at-primary);
+  background-color: var(--at-bg-alt);
+  box-shadow: none;
+}
+
+.at-card-grid {
+  gap: 1px;
+  background: var(--at-divider);
+  border: 1px solid var(--at-divider);
+}
+
+.at-card-grid > .at-card {
+  border-block-start: 2px solid var(--at-divider);
+}
+
+/* Buttons: a stamped instruction, not a marketing CTA — ink fill by
+   default, gold spent only on hover and on the outline/ghost variants. */
+.at-button {
+  border-radius: var(--at-border-radius);
+  background: var(--at-text);
+  border-color: var(--at-text);
+  color: var(--at-bg);
+}
+
+.at-button:hover {
+  background: var(--at-primary);
+  border-color: var(--at-primary);
+  color: var(--at-on-primary);
+}
+
+.at-button:active {
+  background: var(--at-primary-active);
+  border-color: var(--at-primary-active);
+}
+
+.at-button--outline,
+.at-button--ghost {
+  background: transparent;
+  color: var(--at-text);
+}
+
+.at-button--outline {
+  border-color: var(--at-divider);
+}
+
+.at-button--ghost {
+  border-color: transparent;
+}
+
+.at-button--outline:hover,
+.at-button--ghost:hover {
+  border-color: var(--at-primary);
+  color: var(--at-primary);
+  background: var(--at-accent-soft);
+}
+
+.at-button--large {
+  padding-inline: var(--at-spacing-2xl);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Field-manual components (shared by homepage + lecture visualizations)  */
+/* ---------------------------------------------------------------------- */
+
+.field-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--at-text-muted);
+}
+
+.status-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15em 0.55em;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  border: 1px solid var(--at-divider);
+  color: var(--at-text-secondary);
+  border-radius: var(--at-border-radius);
+}
+
+/* Every simulated dataset in the site — never real prices, returns, or
+   market data — carries this same tag so the convention reads as a single
+   visual language rather than ad hoc "note: this is fake" prose. */
+.sim-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.15em 0.6em;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: var(--at-secondary);
+  border: 1px dashed var(--at-secondary);
+  border-radius: var(--at-border-radius);
+}
+
+.sim-tag::before {
+  content: "";
+  width: 0.4em;
+  height: 0.4em;
+  border-radius: 50%;
+  background: var(--at-secondary);
+}
+
+/* A bordered panel for an interactive visualization: hairline frame, mono
+   meta strip along the top, full content-column width by default. Full
+   width is opted into via .viz-panel--wide, which breaks out of the prose
+   column using the same named subgrid lines .at-nav/.at-footer use. */
+.viz-panel {
+  margin-block: var(--at-spacing-xl);
+  border: 1px solid var(--at-divider);
+  border-radius: var(--at-border-radius);
+  background: var(--at-bg-alt);
+}
+
+.viz-panel--wide {
+  grid-column: inset-start / content-end;
+}
+
+.viz-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  border-block-end: 1px solid var(--at-divider);
+}
+
+.viz-panel-title {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--at-text-secondary);
+}
+
+.viz-panel-body {
+  padding: 1.25rem 1.25rem 1.5rem;
+}
+
+.viz-panel-body :is(label) {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--at-text-secondary);
+}
+
+.viz-readout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+  gap: 1px;
+  background: var(--at-divider);
+  border: 1px solid var(--at-divider);
+  margin-block: 1rem;
+}
+
+.viz-readout div {
+  margin: 0;
+  padding: 0.6rem 0.85rem;
+  background: var(--at-bg-elevated);
+  display: grid;
+  gap: 0.15rem;
+}
+
+.viz-readout dt {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--at-text-muted);
+}
+
+.viz-readout dd {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+  /* The one deliberate spot of accent colour in a panel — this number is
+     the thing the reader dragged a slider to change. */
+  color: var(--at-primary);
+}
+
+.viz-panel input[type="range"] {
+  width: 100%;
+  accent-color: var(--at-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rm-motion-only {
+    display: none !important;
+  }
+}
+
+/* ---------------------------------------------------------------------- */
+/* Field-manual body — numbers a lecture/session/assessment's own top-level */
+/* sections like pages in a manual, without touching the markdown content. */
+/* ---------------------------------------------------------------------- */
+
+.field-manual {
+  counter-reset: fm-section;
+}
+
+.field-manual > h2 {
+  counter-increment: fm-section;
+  margin-block-start: 2.75rem;
+  padding-block-start: 0.85rem;
+  border-block-start: 1px solid var(--at-divider);
+}
+
+.field-manual > h2::before {
+  content: counter(fm-section, decimal-leading-zero) "  ";
+  font-family: var(--rm-mono);
+  font-size: 0.7em;
+  font-weight: 400;
+  color: var(--at-text-muted);
+  letter-spacing: 0.05em;
+}
+
+.field-manual table th {
+  text-align: start;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Stage roster (lectures/sessions index) — the five homepage stages,     */
+/* reused as the listing structure instead of a flat repeated card grid.  */
+/* ---------------------------------------------------------------------- */
+
+.stage-roster {
+  display: grid;
+  gap: var(--at-spacing-2xl);
+  margin-block-start: var(--at-spacing-xl);
+}
+
+.stage-roster-section {
+  padding-block-start: var(--at-spacing-lg);
+  border-block-start: 1px solid var(--at-divider);
+}
+
+.stage-roster-head h2 {
+  margin-block: 0.2em 0.3em;
+}
+
+.stage-roster-summary {
+  color: var(--at-text-secondary);
+  max-width: 48rem;
+  margin-block-end: 0;
+}
+
+.roster-rows {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+}
+
+.roster-rows li + li {
+  border-block-start: 1px solid var(--at-divider);
+}
+
+.roster-row {
+  display: flex;
+  align-items: baseline;
+  gap: 1.25rem;
+  padding-block: 1rem;
+  text-decoration: none;
+  color: var(--at-text);
+  transition:
+    padding-inline-start 0.15s,
+    color 0.15s;
+}
+
+.roster-row:hover {
+  padding-inline-start: 0.5rem;
+  color: var(--at-primary);
+}
+
+.roster-row-week {
+  flex-shrink: 0;
+  font-size: 0.8rem;
+  color: var(--at-text-muted);
+  min-width: 2.4em;
+}
+
+.roster-row-body {
+  display: grid;
+  gap: 0.2rem;
+  flex: 1;
+}
+
+.roster-row-title {
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: inherit;
+}
+
+.roster-row-desc {
+  color: var(--at-text-secondary);
+  font-size: 0.9rem;
+}
+
+.roster-row-date {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  color: var(--at-text-muted);
+  text-align: end;
+  white-space: nowrap;
+}
+
+@media (width < 640px) {
+  .roster-row {
+    flex-wrap: wrap;
+  }
+
+  .roster-row-date {
+    order: 1;
+    margin-inline-start: calc(2.4em + 1.25rem);
+  }
+}
+
+/* ---------------------------------------------------------------------- */
+/* Assessment dossiers — three items only, so each gets a full block       */
+/* rather than a card, with weight read as a stat instead of small print.  */
+/* ---------------------------------------------------------------------- */
+
+.assessment-list {
+  list-style: none;
+  margin: var(--at-spacing-xl) 0 0;
+  padding: 0;
+  display: grid;
+  gap: 1px;
+  background: var(--at-divider);
+  border: 1px solid var(--at-divider);
+}
+
+.assessment-item {
+  background: var(--at-bg);
+  padding: var(--at-spacing-lg);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.4rem 1.5rem;
+}
+
+.assessment-weight {
+  grid-row: 1 / 4;
+  text-align: center;
+  align-self: start;
+  min-width: 5rem;
+}
+
+.assessment-weight .assessment-weight-num {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--at-primary);
+  line-height: 1;
+}
+
+.assessment-weight .assessment-weight-label {
+  display: block;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--at-text-muted);
+  margin-block-start: 0.3em;
+}
+
+.assessment-item h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.assessment-item h2 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.assessment-item h2 a:hover {
+  color: var(--at-primary);
+}
+
+.assessment-desc {
+  margin: 0;
+  color: var(--at-text-secondary);
+}
+
+.assessment-meta {
+  font-size: 0.8rem;
+  color: var(--at-text-muted);
+  margin: 0;
+}
+
+@media (width < 560px) {
+  .assessment-item {
+    grid-template-columns: 1fr;
+  }
+
+  .assessment-weight {
+    grid-row: auto;
+    text-align: start;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+}

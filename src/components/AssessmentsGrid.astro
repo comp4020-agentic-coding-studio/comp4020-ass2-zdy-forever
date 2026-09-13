@@ -1,26 +1,29 @@
 ---
 import { getPublishedCollection } from "astro-course-university/content";
-import Card from "astro-theme-university/components/Card.astro";
-import CardGrid from "astro-theme-university/components/CardGrid.astro";
+import { withBase } from "astro-theme-university/url";
 import { formatCourseDate } from "../lib/dates";
+import "../styles/system.css";
 
 const assessments = await getPublishedCollection("assessments");
 const visible = assessments.sort((a, b) => a.data.week - b.data.week);
 ---
 
-<CardGrid columns={2}>
+<ol class="assessment-list">
   {
     visible.map((assessment) => (
-      <Card headingLevel="h2" title={assessment.data.title} href={`/assessments/${assessment.id}/`}>
-        {assessment.data.description && <p>{assessment.data.description}</p>}
+      <li class="assessment-item">
         {assessment.data.weight != null && (
-          <p>
-            <small>
-              Due {formatCourseDate(assessment.data.due)} · Weight: {assessment.data.weight}%{assessment.data.draft && " · Draft"}
-            </small>
-          </p>
+          <div class="assessment-weight">
+            <span class="assessment-weight-num">{assessment.data.weight}%</span>
+            <span class="assessment-weight-label">of grade</span>
+          </div>
         )}
-      </Card>
+        <h2>
+          <a href={withBase(`/assessments/${assessment.id}/`)}>{assessment.data.title}</a>
+        </h2>
+        {assessment.data.description && <p class="assessment-desc">{assessment.data.description}</p>}
+        <p class="assessment-meta">Due {formatCourseDate(assessment.data.due)} · from Week {assessment.data.week}</p>
+      </li>
     ))
   }
-</CardGrid>
+</ol>

@@ -1,0 +1,133 @@
+---
+import { withBase } from "astro-theme-university/url";
+import { stages } from "../../lib/stages";
+---
+
+<section class="stage-progression" data-stage-progression aria-label="The course, as five stages">
+  <ol class="stage-list">
+    {
+      stages.map((stage) => (
+        <li class="stage-block" id={`stage-${stage.key}`} data-stage-index={stage.index}>
+          <p class="field-label">{stage.range}</p>
+          <h2 data-index={String(stage.index + 1).padStart(2, "0")}>{stage.label}</h2>
+          <p class="stage-standing">{stage.standing}</p>
+          <p>{stage.summary}</p>
+          <ul class="stage-weeks" aria-label={`${stage.label} lectures`}>
+            {stage.weeks.map((w) => (
+              <li>
+                <a href={withBase(`/lectures/${w.slug}/`)}>
+                  <span class="stage-week-num">W{String(w.week).padStart(2, "0")}</span>
+                  {w.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  .stage-progression {
+    margin-block: var(--at-spacing-xl) 0;
+  }
+
+  .stage-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .stage-block {
+    padding-block: var(--at-spacing-2xl);
+    border-block-start: 1px solid var(--at-divider);
+    background: var(--at-bg);
+    scroll-margin-block-start: var(--at-nav-height);
+    transition: border-color 0.2s;
+  }
+
+  .stage-block:first-child {
+    border-block-start: none;
+  }
+
+  .stage-block h2 {
+    margin-block-start: 0.2em;
+    font-size: var(--at-font-size-h2);
+  }
+
+  .stage-standing {
+    color: var(--at-text-secondary);
+    font-style: italic;
+    margin-block-end: 1em;
+  }
+
+  .stage-block.is-active {
+    border-inline-start: 2px solid var(--at-primary);
+    padding-inline-start: calc(var(--at-spacing-lg) - 2px);
+  }
+
+  .stage-weeks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .stage-weeks a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.35em 0.75em;
+    border: 1px solid var(--at-divider);
+    border-radius: var(--at-border-radius);
+    color: var(--at-text);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition:
+      border-color 0.15s,
+      color 0.15s;
+  }
+
+  .stage-weeks a:hover {
+    border-color: var(--at-primary);
+    color: var(--at-primary);
+  }
+
+  .stage-week-num {
+    font-family: var(--rm-mono);
+    font-size: 0.7rem;
+    color: var(--at-text-muted);
+  }
+
+</style>
+
+<script>
+  function setupStageProgression() {
+    const container = document.querySelector<HTMLElement>("[data-stage-progression]");
+    if (!container || container.dataset.stageInit === "true") return;
+    container.dataset.stageInit = "true";
+
+    const blocks = Array.from(container.querySelectorAll<HTMLElement>(".stage-block"));
+    if (blocks.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const target = entry.target as HTMLElement;
+          for (const block of blocks) block.classList.toggle("is-active", block === target);
+        }
+      },
+      { rootMargin: "-40% 0px -40% 0px", threshold: 0 },
+    );
+
+    for (const block of blocks) observer.observe(block);
+    blocks[0]?.classList.add("is-active");
+  }
+
+  setupStageProgression();
+  document.addEventListener("astro:page-load", setupStageProgression);
+</script>
