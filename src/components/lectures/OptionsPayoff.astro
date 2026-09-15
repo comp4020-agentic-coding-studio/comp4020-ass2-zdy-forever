@@ -64,12 +64,20 @@ const initialBreakeven = initial.strike + initial.premium;
       <line x1="0" x2={WIDTH} y1={HEIGHT / 2} y2={HEIGHT / 2} class="opt-zero" />
       <line class="opt-marker" data-opt-strike-line x1="0" x2="0" y1="0" y2={HEIGHT} />
       <line class="opt-marker opt-marker--breakeven" data-opt-breakeven-line x1="0" x2="0" y1="0" y2={HEIGHT} />
-      <text class="opt-marker-label" data-opt-strike-label x="0" y="14" text-anchor="middle">strike</text>
+      {/*
+        14 units apart was enough room for two 9px rows at desktop, but the
+        narrow-viewport font-size override below (25px) needs close to one
+        full line of vertical space per row — at the old spacing the strike
+        and breakeven rows overlapped there even though they're on separate
+        y values, since a 25px line is taller than the gap between them.
+        34 units clears a 25px line with room to spare.
+      */}
+      <text class="opt-marker-label" data-opt-strike-label x="0" y="16" text-anchor="middle">strike</text>
       <text
         class="opt-marker-label opt-marker-label--breakeven"
         data-opt-breakeven-label
         x="0"
-        y="28"
+        y="50"
         text-anchor="middle"
       >
         breakeven
@@ -151,6 +159,18 @@ const initialBreakeven = initial.strike + initial.premium;
     width: 100%;
     height: auto;
     margin-block: 0.5rem;
+    /*
+     * The strike label sits at y=16 so its baseline leaves headroom for the
+     * two-row stagger below it, but a glyph's ascender extends *above* its
+     * baseline by roughly the font's ascent metric -- at the mobile 25px
+     * override that's ~19-20px, enough to push the top of "strike" above
+     * y=0 and into the region an <svg> clips by default (overflow: hidden
+     * is the UA default on the outermost svg element). overflow: visible
+     * lets that overflow render into the empty margin around the diagram
+     * instead of getting sliced off, without needing to keep re-tuning y
+     * against a specific font's exact ascent.
+     */
+    overflow: visible;
   }
 
   .opt-zero {

@@ -15,7 +15,10 @@
  */
 const LEVERAGES = [1, 2, 5, 10];
 const BAR_WIDTH = 640;
-const BAR_HEIGHT = 220;
+// Tall enough that the swing-% label never has to share vertical space with
+// the fixed call/multiple label rows even at the narrow-viewport font-size
+// override below (36px/30.5px) — see the maxSwing comment in the script.
+const BAR_HEIGHT = 300;
 
 const initialMove = -5;
 const initialMaintenance = 0.25;
@@ -128,6 +131,17 @@ const initialMultiple = 2;
     width: 100%;
     height: auto;
     margin-block: 0.5rem;
+    /*
+     * The call-trigger label sits at a fixed y=12, and the ×-multiple label
+     * sits close to the bottom edge (y=BAR_HEIGHT-6) -- both fine for their
+     * small desktop fonts, but the mobile overrides (25px / 30.5px) give
+     * those glyphs an ascender/descender that can land above y=0 or below
+     * BAR_HEIGHT, which an <svg> clips by default (overflow: hidden is the
+     * UA default on the outermost svg element). overflow: visible lets
+     * that render into the empty margin around the diagram instead of
+     * slicing the label off. See the same fix in OptionsPayoff.astro.
+     */
+    overflow: visible;
   }
 
   .lev-zero {
@@ -287,8 +301,27 @@ const initialMultiple = 2;
       const multipleInput = $<HTMLInputElement>("[data-lev-multiple]");
 
       const svg = $<SVGSVGElement>("[data-lev-svg]");
-      const barHeight = svg.viewBox.baseVal.height || 220;
-      const maxSwing = barHeight / 2 - 20;
+      const barWidth = svg.viewBox.baseVal.width || 640;
+      const columnCount = $all<SVGGElement>("[data-lev-col]").length || 1;
+      // Budget for the call-trigger label's rendered width, in the same
+      // viewBox units its font-size lives in. Its text ("margin call",
+      // "calls at −34.0%") is long enough, and the four columns narrow
+      // enough, that the label can overflow into a neighbour column even
+      // before the narrow-viewport font bump is applied -- unlike the
+      // pct/multiple labels, which stay short at any leverage. Compressed
+      // to fit via textLength below rather than shrinking its font-size,
+      // so it stays legible at the same size as the other override labels.
+      const maxCallLabelWidth = barWidth / columnCount - 16;
+      const barHeight = svg.viewBox.baseVal.height || 300;
+      // A fixed budget, not barHeight/2 minus a small constant: the swing-%
+      // label at full swing sits right next to the call label (top) or the
+      // N× label (bottom), and those two are set in CSS px that the narrow-
+      // viewport override enlarges (36px/30.5px/25px) without the geometry
+      // knowing — a margin sized for the small desktop font left them
+      // overlapping once that override kicked in. 80 leaves a ~45-48 unit
+      // gap on both ends at the largest override size, comfortably more
+      // than one line of 36px text in viewBox units.
+      const maxSwing = 80;
 
       function triggerDropPct(leverage: number, maintenance: number): number | null {
         if (leverage <= 1) return null;
@@ -316,7 +349,7 @@ const initialMultiple = 2;
 
           const pctLabel = col.querySelector<SVGTextElement>("[data-lev-pct]")!;
           pctLabel.textContent = `${equityChange >= 0 ? "+" : ""}${equityChange.toFixed(0)}%`;
-          pctLabel.setAttribute("y", String(equityChange >= 0 ? barHeight / 2 - barLen - 8 : barHeight / 2 + barLen + 16));
+          pctLabel.setAttribute("y", String(equityChange >= 0 ? barHeight / 2 - barLen - 10 : barHeight / 2 + barLen + 18));
 
           const trigger = triggerDropPct(leverage, maintenance);
           const called = trigger !== null && move < 0 && Math.abs(move) >= trigger;
@@ -324,6 +357,13 @@ const initialMultiple = 2;
 
           const callLabel = col.querySelector<SVGTextElement>("[data-lev-call]")!;
           callLabel.textContent = called ? "margin call" : trigger !== null ? `calls at −${trigger.toFixed(1)}%` : "";
+          if (callLabel.textContent && callLabel.getComputedTextLength() > maxCallLabelWidth) {
+            callLabel.setAttribute("textLength", String(maxCallLabelWidth));
+            callLabel.setAttribute("lengthAdjust", "spacingAndGlyphs");
+          } else {
+            callLabel.removeAttribute("textLength");
+            callLabel.removeAttribute("lengthAdjust");
+          }
         }
 
         $("[data-lev-calc]").textContent =

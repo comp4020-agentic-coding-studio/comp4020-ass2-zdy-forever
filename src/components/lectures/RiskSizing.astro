@@ -64,8 +64,18 @@ const initial = computeInitial();
       <line class="risk-marker" data-rs-stop-marker x1="0" x2="0" y1="10" y2={HEIGHT - 10} />
       <line class="risk-marker risk-marker--entry" data-rs-entry-marker x1="0" x2="0" y1="10" y2={HEIGHT - 10} />
       <line class="risk-marker" data-rs-target-marker x1="0" x2="0" y1="10" y2={HEIGHT - 10} />
+      {/*
+        Entry sits between stop and target on the axis by construction (see
+        the clamps in the update() script below), so its label is the one
+        most likely to sit close to a neighbour. Same fix as the strike/
+        breakeven pair in OptionsPayoff.astro: put it on its own row rather
+        than trust horizontal gap alone — gap is a viewBox-space distance
+        that doesn't grow with the narrow-viewport font-size override below,
+        so relying on it caused real overlap at 390px with this lecture's
+        own default prices (stop $45 / entry $48).
+      */}
       <text class="risk-label" data-rs-stop-label x="0" y="8" text-anchor="middle">stop</text>
-      <text class="risk-label risk-label--entry" data-rs-entry-label x="0" y="8" text-anchor="middle">entry</text>
+      <text class="risk-label risk-label--entry" data-rs-entry-label x="0" y="20" text-anchor="middle">entry</text>
       <text class="risk-label" data-rs-target-label x="0" y="8" text-anchor="middle">target</text>
     </svg>
 
@@ -102,6 +112,16 @@ const initial = computeInitial();
     width: 100%;
     height: auto;
     margin-block: 0.5rem;
+    /*
+     * stop/target labels sit at y=8 -- fine for a 9px desktop font, but the
+     * mobile 25px override gives the glyph an ascender of ~19-20px above
+     * its baseline, pushing the top of the text above y=0 into the region
+     * an <svg> clips by default (overflow: hidden is the UA default on the
+     * outermost svg element). overflow: visible lets that render into the
+     * empty margin around the diagram instead of slicing the label's top
+     * off. See the same fix in OptionsPayoff.astro.
+     */
+    overflow: visible;
   }
 
   .risk-axis {
