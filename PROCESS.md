@@ -41,18 +41,17 @@ at its own week's deck and no other's.
 The second went in half, on purpose. `CLAUDE.md` names the dependencies — Week 6
 uses Weeks 4–5, Week 8 introduces leverage before the leveraged derivatives in
 9–11, Week 12 synthesises — but only their scaffolding is asserted. Whether Week
-10 genuinely picks up Week 9's contrast between an obligation and a right is a
-reading judgement.
+10 picks up Week 9's contrast between an obligation and a right is a reading
+judgement.
 
 Difficulty I left out deliberately. The twelve lectures do share one
 eight-section spine and four or five outcomes each, but I hold that by hand: a
-person reads the week, judges the load, then tells the agent what to change. The
-machine holds a structure steady once I set it; it does not set it. That is a
-standing `CLAUDE.md` rule — no fake automated measures for subjective
-qualities — and it governs the redesign in
+person reads the week and judges the load. That is a standing `CLAUDE.md`
+rule — no fake automated measures for subjective qualities — and it governs the
+redesign in
 [`2565c4b`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-zdy-forever/commit/2565c4b),
-which rebuilt the site as a market terminal rather than a COMP4020 reskin and
-forbids any test claiming to measure whether it "looks different enough".
+which rebuilt the site as a market terminal, not a reskin, and forbids any test
+claiming to measure whether it "looks different enough".
 
 Because this is a curriculum, structure preceded content throughout: one shared
 deck visual system
@@ -76,7 +75,7 @@ It did. Three interactive diagrams were garbled at the 390px marking viewport
 while the suite stayed green, from one cause: a narrow-viewport font-size
 override grows a label's footprint without growing the geometry tuned around it.
 
-![Week 5 risk diagram at 390px, before and after the fix](docs/label-overlap-390.png)
+![Label overlap fix at 390px](docs/label-overlap-390.png)
 
 Per `CLAUDE.md`'s triage rule — content, missing rule, or missing check — the
 four failure shapes it produces went into the harness
