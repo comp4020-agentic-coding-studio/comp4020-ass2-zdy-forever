@@ -65,6 +65,36 @@
   color: var(--at-on-primary);
 }
 
+/* astromotion's own `.astromotion-deck-pager` circles are pinned to the
+ * viewport's vertical center and horizontal edges, on the assumption that
+ * the 1280x720 canvas always has side margin to sit in at narrow viewports.
+ * Reveal's scale-to-fit (`min(vw/1280, vh/720)`) is width-limited on every
+ * portrait phone, though, so the canvas actually runs edge-to-edge with
+ * *zero* side margin there — the circles land inside the slide's own text
+ * padding instead of beside it (confirmed at 390x844, the phone marking
+ * viewport: canvas renders ~219px tall, so the fixed-centered buttons sit
+ * across the vertical middle of almost every slide's text).
+ *
+ * That same width-limited scaling leaves a wide, permanently empty
+ * letterbox strip above and below the canvas on any portrait phone (at
+ * 390x844: canvas top/bottom edges land ~312px in from each side of an
+ * 844px-tall viewport) — anchoring the buttons to the viewport's bottom
+ * edge instead of its vertical center moves them into that strip, clear of
+ * the canvas regardless of what any slide's content is. `6rem` keeps them
+ * clear of `.deck-footer` below (bottom: 1.25rem, ~30px tall) with margin
+ * to spare, verified by screenshot at the phone marking viewport rather
+ * than computed blind. This selector's specificity matches astromotion's
+ * own, so import order alone (this file loads after
+ * `astromotion/theme/deck-nav.css`, see the import comment at the top of
+ * this file) is enough to win the cascade without `!important`. */
+@media (width < 640px) {
+  .astromotion-deck-pager {
+    top: auto;
+    bottom: 6rem;
+    transform: none;
+  }
+}
+
 /* Shared slide primitives for this course's decks. Every rule below derives
  * its colour from the same --at-* tokens the import above already resolves,
  * so nothing here restates the palette — only layout and structure. None of
