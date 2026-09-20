@@ -329,6 +329,19 @@ const initialMultiple = 2;
         return (1 - f) * 100;
       }
 
+      // At high enough leverage relative to the maintenance margin, the
+      // account's initial margin is already below what maintenance requires
+      // — trigger is zero or negative, meaning it's under margin from the
+      // moment the position opens, not at some future drop. Treated as
+      // already called regardless of move direction, otherwise a non-negative
+      // move fell into the "calls at −N%" branch below with an already-
+      // negative N, rendering as a garbled double minus sign ("calls at
+      // −-6.7%").
+      function describeTrigger(trigger: number | null): string {
+        if (trigger === null) return "n/a";
+        return trigger <= 0 ? "already under margin at 0% move" : `calls at a ${trigger.toFixed(1)}% drop`;
+      }
+
       function updateAmplifier() {
         const move = Number(moveInput.value);
         const maintenance = Number(maintenanceInput.value) / 100;
@@ -352,7 +365,7 @@ const initialMultiple = 2;
           pctLabel.setAttribute("y", String(equityChange >= 0 ? barHeight / 2 - barLen - 10 : barHeight / 2 + barLen + 18));
 
           const trigger = triggerDropPct(leverage, maintenance);
-          const called = trigger !== null && move < 0 && Math.abs(move) >= trigger;
+          const called = trigger !== null && (trigger <= 0 || (move < 0 && Math.abs(move) >= trigger));
           bar.classList.toggle("is-called", called);
 
           const callLabel = col.querySelector<SVGTextElement>("[data-lev-call]")!;
@@ -368,9 +381,8 @@ const initialMultiple = 2;
 
         $("[data-lev-calc]").textContent =
           `A ${move}% move on a 2× position: equity moves ${(move * 2).toFixed(0)}% ` +
-          `(move × leverage). At ${(maintenance * 100).toFixed(0)}% maintenance margin, 2× calls at a ` +
-          `${(triggerDropPct(2, maintenance) ?? 0).toFixed(1)}% drop; 10× calls at a ` +
-          `${(triggerDropPct(10, maintenance) ?? 0).toFixed(1)}% drop.`;
+          `(move × leverage). At ${(maintenance * 100).toFixed(0)}% maintenance margin, 2× ` +
+          `${describeTrigger(triggerDropPct(2, maintenance))}; 10× ${describeTrigger(triggerDropPct(10, maintenance))}.`;
 
         $('[data-lev-out="move"]').textContent = `${move}%`;
         $('[data-lev-out="equity2x"]').textContent = `${(move * 2).toFixed(0)}%`;
