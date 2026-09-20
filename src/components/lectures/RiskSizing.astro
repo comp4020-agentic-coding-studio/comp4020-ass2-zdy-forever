@@ -7,7 +7,7 @@
  * $10,000 account, 1% risk, entry $48, stop $45.
  */
 const WIDTH = 640;
-const HEIGHT = 120;
+const HEIGHT = 140;
 
 function computeInitial() {
   const account = 10000;
@@ -67,15 +67,21 @@ const initial = computeInitial();
       {/*
         Entry sits between stop and target on the axis by construction (see
         the clamps in the update() script below), so its label is the one
-        most likely to sit close to a neighbour. Same fix as the strike/
-        breakeven pair in OptionsPayoff.astro: put it on its own row rather
-        than trust horizontal gap alone — gap is a viewBox-space distance
-        that doesn't grow with the narrow-viewport font-size override below,
-        so relying on it caused real overlap at 390px with this lecture's
-        own default prices (stop $45 / entry $48).
+        most likely to sit close to a neighbour. Putting it on its own row
+        (rather than trusting horizontal gap alone, which is a viewBox-space
+        distance that doesn't grow with the narrow-viewport font-size
+        override below) isn't enough by itself: at a 12-unit row gap, entry's
+        label still overlapped stop's or target's whenever the underlying
+        prices were numerically close (e.g. stop $99/entry $100, or entry
+        $20/target $21) — those cases collapse the *horizontal* gap between
+        the two labels, which then exposes how thin the *vertical* gap
+        between their rows already was, at both marking viewports. Same
+        lesson as the strike/breakeven pair in OptionsPayoff.astro: widened
+        to 34 units, the same gap verified there to clear a full 25px override
+        line regardless of how close the two labels land horizontally.
       */}
       <text class="risk-label" data-rs-stop-label x="0" y="8" text-anchor="middle">stop</text>
-      <text class="risk-label risk-label--entry" data-rs-entry-label x="0" y="20" text-anchor="middle">entry</text>
+      <text class="risk-label risk-label--entry" data-rs-entry-label x="0" y="42" text-anchor="middle">entry</text>
       <text class="risk-label" data-rs-target-label x="0" y="8" text-anchor="middle">target</text>
     </svg>
 

@@ -1,71 +1,85 @@
 ---
-title: Reading Price
+title: Reading Price for Risk, Not Prediction
 description:
-  Week 4 — candlesticks, volume, trends, support/resistance and ranges, the
-  shared vocabulary later weeks build on
+  Week 4 — candlesticks, volume, trend and support/resistance as tools for
+  defining where a plan is wrong, not for predicting the next move
 ---
 
 import Candles from "./components/Candles.astro";
+import DeckChrome from "./components/DeckChrome.astro";
+
+<DeckChrome week={4} />
 
 {/* _class: hero */}
 
-# Reading Price
+# Reading Price for Risk, Not Prediction
 
-## Week 4 · Candlesticks, volume, trends, support and resistance
+## Week 4 · Candlesticks, volume and support/resistance as risk-boundary tools
+
+<div class="course-lens">
+  <span class="course-lens-label">Course lens</span>
+  <p>
+    How can a small retail trading account survive execution friction,
+    drawdowns, leverage, and increasingly complex instruments?
+  </p>
+</div>
 
 ---
 
 ## The question this week answers
 
-What is a candlestick chart actually recording —
+What can a chart honestly tell us about where risk boundaries might sit —
+without pretending that past patterns predict the next move?
 
-and what can honestly be said about a pattern in one, as distinct from
-what a lot of trading content implies about it?
+The point is not to find a "best" trading style or instrument. It is to
+understand what can make the account fail.
 
 ---
 
 ## By the end of this lecture
 
-- read what a single candlestick records: open, high, low, close
-- explain what volume adds that price alone doesn't show
-- define trend, range, support and resistance
-- explain the difference between observing a pattern and treating it as a
-  signal
+<ol class="objective-list">
+  <li>read open, high, low and close from a candlestick</li>
+  <li>explain what volume adds to price alone</li>
+  <li>define trend, range, support and resistance as observations, not predictions</li>
+  <li>use chart structure to define invalidation, while separating a planned stop from its guaranteed execution</li>
+</ol>
 
 ---
 
-## What one candlestick records
+## Chart language the risk plan can actually use
 
-Four numbers for one time period — this course mostly uses daily candles:
-
-- **open** and **close** — the "body"
-- **high** and **low** — how far price moved beyond that before settling,
-  the "wicks"
-
-A compression of a lot of individual trades into one shape. Nothing more.
-
----
-
-## Volume: what price alone doesn't show
-
-**Volume** is how many shares changed hands in the period.
-
-The same price move on high volume reflects a lot of agreement. On low
-volume, it might reflect very little. Neither guarantees the move
-continues.
+<div class="comparison-grid">
+  <div class="comparison-card">
+    <h3>Candlestick</h3>
+    <p>A compressed record of open, high, low and close for one period.</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Volume</h3>
+    <p>How much trading activity accompanied the price move.</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Trend / range</h3>
+    <p>Descriptions of how price has behaved — not predictions of what comes next.</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Support / resistance</h3>
+    <p>Observed zones where price previously paused or reversed — useful for invalidation, not a promise.</p>
+  </div>
+</div>
 
 ---
 
 {/* _class: impact */}
 
-## Trend, range, support and resistance describe what already happened. They are observations, never reliable standalone buy or sell signals
+## A chart can define where a plan is wrong. It cannot guarantee where a stop will fill
 
 ---
 
 ## A worked example
 
 A **simulated** five-day close sequence for "Meridian Supply":
-$51, 53, 52, 55, 54 — a mild uptrend with one down day.
+$51, 53, 52, 55, 54.
 
 <Candles
   caption="Simulated daily candles, Meridian Supply"
@@ -80,6 +94,24 @@ $51, 53, 52, 55, 54 — a mild uptrend with one down day.
 
 ---
 
+## Observation before assumption
+
+<div class="comparison-grid">
+  <div class="comparison-card">
+    <h3>Reasonable observation</h3>
+    <p>A mild uptrend with one down day.</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Unsupported leap</h3>
+    <p>"Therefore the next day must continue higher."</p>
+  </div>
+</div>
+
+The risk-useful question is a different one: what future price action would
+invalidate the current interpretation?
+
+---
+
 ## The numbers
 
 <div class="calc-block">
@@ -88,27 +120,18 @@ $51, 53, 52, 55, 54 — a mild uptrend with one down day.
   (51 + 53 + 52 + 55 + 54) ÷ 5 = 265 ÷ 5 = $53
 </div>
 
-That $53 is a **lagging** summary — it always sits behind the most recent
-move, which is why Week 6 is explicit that a moving average confirms a
-trend after the fact rather than calling one in advance.
+That $53 is a **lagging** summary — built from past closes, so it confirms a
+trend only after that trend has already been forming.
 
 ---
 
-## Observation, not prediction
+## A boundary, not a guarantee
 
-<div class="comparison-grid">
-  <div class="comparison-card">
-    <h3>Observation</h3>
-    <p>Price paused near $51 on this chart.</p>
-  </div>
-  <div class="comparison-card">
-    <h3>Assumption (unsupported)</h3>
-    <p>Therefore price will pause there again.</p>
-  </div>
-</div>
+A chart can help define "this idea is wrong below here." It cannot guarantee
+"my stop will fill here."
 
-Support and resistance describe zones where price has previously paused or
-reversed — not exact lines, and not a promise about what happens next.
+That distinction matters most when price gaps or liquidity disappears — the
+planned exit level and the executed exit price can diverge.
 
 ---
 
@@ -134,19 +157,19 @@ reversed — not exact lines, and not a promise about what happens next.
   ]}
 />
 
-Mark where you observe possible support and resistance zones. Then write
-one sentence about what you'd need to see happen next before treating
-either zone as meaningful.
+Mark one possible support zone and one resistance zone. Then write: (1)
+what observation supports each zone, (2) what would invalidate it, and
+(3) why an actual stop fill could differ from the planned level.
 
 ---
 
 ## The takeaway
 
 <ol class="recap-list">
-  <li>A candlestick is a compression of one period's trading — four numbers, nothing mystical.</li>
-  <li>Volume adds how much agreement backed a move.</li>
-  <li>Trend, range, support and resistance are a shared vocabulary, not a rulebook.</li>
-  <li>Weeks 5–7 build risk and entries on top of this vocabulary.</li>
+  <li>Candlesticks and volume describe what happened; they do not predict the next candle.</li>
+  <li>Support and resistance are zones that can help define invalidation.</li>
+  <li>A planned stop price is a risk boundary, not a guaranteed execution price.</li>
+  <li>Week 5 turns these boundaries into position sizes and account-level risk.</li>
 </ol>
 
 ---
@@ -155,5 +178,4 @@ either zone as meaningful.
 
 ## Next week
 
-Week 5 — risk before strategy: drawdowns, stops, position sizing and
-expected value.
+Week 5 — drawdowns, position sizing, expected value and risk of ruin.

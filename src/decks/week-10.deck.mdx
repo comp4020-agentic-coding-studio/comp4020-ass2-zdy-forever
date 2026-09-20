@@ -1,72 +1,86 @@
 ---
 title: Options
 description:
-  Week 10 — a right instead of an obligation, and the kinked payoff that
-  comes with it, contrasted against Week 9's linear futures payoff
+  Week 10 — options as a case study in nonlinear risk, bounded loss and
+  total premium loss, contrasted against Week 9's linear futures payoff
 ---
 
 import Payoff from "./components/Payoff.astro";
+import DeckChrome from "./components/DeckChrome.astro";
+
+<DeckChrome week={10} />
 
 {/* _class: hero */}
 
 # Options
 
-## Week 10 · A right, not an obligation
+## Week 10 · Nonlinear risk and premium loss
+
+<div class="course-lens">
+  <span class="course-lens-label">Course lens</span>
+  <p>
+    How can a small retail trading account survive execution friction,
+    drawdowns, leverage, and increasingly complex instruments?
+  </p>
+</div>
 
 ---
 
 ## The question this week answers
 
-How does trading a *right* instead of an *obligation* change both the payoff
-shape and the risk, compared to Week 9's futures contract?
+How does a payoff that bends around strike and expiry change what "risk"
+means for a small account?
+
+The point is not to find a "best" trading style or instrument. It is to
+understand what can make the account fail.
 
 ---
 
 ## By the end of this lecture
 
-- distinguish a call option and a put option as rights, not requirements, to
-  act
-- define premium, strike price and expiry
-- calculate a call option's payoff and breakeven price at expiry
-- compare an option's payoff shape to Week 9's linear futures payoff
-- identify where intuition carried over from stocks or futures tends to
-  mislead with options
+<ol class="objective-list">
+  <li>distinguish calls and puts as rights, not obligations, to act</li>
+  <li>define premium, strike and expiry</li>
+  <li>calculate payoff and breakeven at expiry</li>
+  <li>explain why bounded loss does not mean low risk</li>
+</ol>
 
 ---
 
 {/* _class: impact */}
 
-## A futures contract obligates both sides. An option's buyer can simply let it expire unused
+## "Maximum loss is capped" can sound safe — losing 100% of the option premium is still a complete loss of the capital committed to that position
 
 ---
 
-## Calls, puts, and the cost of a right
+## Three ideas that change the risk intuition
 
-A **call option** — the right, not the obligation, to buy an underlying at a
-set **strike price** on or before **expiry**.
+<div class="comparison-grid">
+  <div class="comparison-card">
+    <h3>Right, not obligation</h3>
+    <p>The buyer can let the option expire unused, unlike a futures obligation</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Premium</h3>
+    <p>Paid upfront; for the buyer it is the maximum possible loss — and can be lost entirely</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Nonlinear payoff</h3>
+    <p>The relationship between underlying price and option P/L changes around the strike and expiry</p>
+  </div>
+</div>
 
-A **put option** — the same right, to sell instead.
-
-That right isn't free: it costs a **premium**, paid upfront — also the
-buyer's maximum possible loss.
-
----
-
-## A genuine structural difference, at a cost
-
-If the option expires with no value, the premium is gone and nothing further
-is owed — a bounded loss, unlike Week 8's short position, which had no
-ceiling at all.
-
-The premium is still a real, certain expense regardless of outcome. A
-smaller price move than expected can still mean losing all of it.
+Options change the shape of risk rather than removing it. The size of the
+premium position still has to fit the account's survival rules.
 
 ---
 
 ## A worked example
 
 A **simulated** trader buys one call option contract (100 shares) on a
-stock, strike price $50, premium $2 per share ($200 total).
+stock, strike price $50, premium $2 per share ($200 total). At expiry, the
+option only has intrinsic value above the strike — the premium must also be
+recovered before the position is profitable.
 
 ---
 
@@ -89,16 +103,16 @@ stock, strike price $50, premium $2 per share ($200 total).
 
 <div class="risk-callout">
   <span class="risk-callout-label">Stock at $48 at expiry</span>
-  <p>The option has no value — the loss is simply the $200 premium paid</p>
+  <p>The option expires worthless — the loss is the full $200 premium</p>
   <p>The same loss as if the stock had fallen to $30, or to $1</p>
 </div>
 
-Unlike Week 8's short position, the loss doesn't grow as price moves further
-against it — capped at what was paid upfront.
+Bounded loss is structurally different from an uncapped short — but the
+option buyer can still lose every dollar of premium paid.
 
 ---
 
-## Two payoffs, side by side
+## The payoff bends at the strike
 
 <Payoff
   kind="call"
@@ -106,11 +120,8 @@ against it — capped at what was paid upfront.
   premium={2}
   domainMin={40}
   domainMax={60}
-  caption="Simulated call option payoff — flat at the premium's cost below the strike, rising above it"
+  caption="Bounded loss does not mean small loss: an option buyer can still lose 100% of the premium, while the payoff changes nonlinearly around the strike and expiry."
 />
-
-Flat below the strike, bending upward above it — the kink is the structural
-difference from Week 9's straight futures line.
 
 ---
 
@@ -120,22 +131,21 @@ difference from Week 9's straight futures line.
 
 <p class="activity-label">Compare payoffs</p>
 
-A **simulated** put option, strike $40, premium $1.50 per share.
+A **simulated** put option has strike $40 and premium $1.50 per share.
 
-Calculate the payoff and profit if the stock is at $35 at expiry, and the
-breakeven price below which the position turns a profit. Then say what part
-of the shape would look identical to Week 9's futures line, and what part
-would not.
+Calculate the profit at expiry if the stock is $35, and the breakeven
+price. Then explain why "bounded loss" is not enough to decide an
+appropriate position size.
 
 ---
 
 ## The takeaway
 
 <ol class="recap-list">
-  <li>An option is a right; a futures contract is an obligation — the buyer can let an option expire unused.</li>
-  <li>The premium is a certain cost, paid whether or not the option is ever exercised.</li>
-  <li>A bounded loss is a real structural difference from a short position — not a reason to treat options as automatically lower-risk.</li>
-  <li>Week 11 applies this same leverage-and-payoff thinking to a market with its own custody and exchange structure.</li>
+  <li>Options are rights; futures are obligations.</li>
+  <li>The premium is a certain upfront cost and can be lost entirely.</li>
+  <li>The payoff is nonlinear, so stock intuition does not transfer cleanly.</li>
+  <li>For a small account, the premium still needs a size limit just like any other risk budget.</li>
 </ol>
 
 ---
@@ -144,5 +154,5 @@ would not.
 
 ## Next week
 
-Week 11 — cryptocurrency markets: the same leverage mathematics, at ratios
-and custody arrangements a stock broker never offers.
+Week 11 — crypto as an extreme case of leverage, liquidation and
+market-structure risk.

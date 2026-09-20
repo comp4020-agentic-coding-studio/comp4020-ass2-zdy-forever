@@ -1,59 +1,92 @@
 ---
-title: Welcome to the Market
+title: The Small Account Problem
 description:
-  Week 1 — what a market is, the five asset classes this course covers, and
-  why the semester moves from simplest to most complex
+  Week 1 — why limited capital changes execution, drawdown and survival
+  before any trading strategy even begins
 ---
+
+import DeckChrome from "./components/DeckChrome.astro";
+
+<DeckChrome week={1} />
 
 {/* _class: hero */}
 
-# Welcome to the Market
+# The Small Account Problem
 
-## Week 1 · Market overview and basic asset classes
+## Week 1 · Why limited capital changes execution, drawdown and survival before strategy even begins
+
+<div class="course-lens">
+  <span class="course-lens-label">Course lens</span>
+  <p>
+    How can a small retail trading account survive execution friction,
+    drawdowns, leverage, and increasingly complex instruments?
+  </p>
+</div>
 
 ---
 
 ## The question this week answers
 
-What is a market actually doing when it "sets a price" —
+What changes when the account is small enough that every spread, sizing
+decision, drawdown and forced exit materially reduces the room to keep
+trading?
 
-and why does this course spend twelve weeks moving from a single stock
-order to leveraged derivatives, instead of teaching every instrument at
-once?
+The point is not to find a "best" trading style or instrument. It is to
+understand what can make the account fail.
 
 ---
 
 ## By the end of this lecture
 
-- describe a market as a matching mechanism, not a force with opinions
-- name the five asset classes this course covers, in order
-- explain the one variable the whole semester tracks
-- know what to have ready before Session 1
+<ol class="objective-list">
+  <li>describe a market as a matching mechanism, not an oracle</li>
+  <li>explain why account size changes the importance of fixed frictions and drawdowns</li>
+  <li>connect whole-share sizing and leftover cash to capital efficiency</li>
+  <li>preview how each later instrument adds a new survival risk</li>
+</ol>
 
 ---
 
-## A market, defined
+## Why "small account" is its own problem
 
-A **market** is any standing way for buyers and sellers to meet and agree
-on a price.
-
-- a stock exchange
-- a futures or options venue
-- a cryptocurrency app
-
-None of them guarantee a "correct" price. Each only produces the price the
-last willing buyer and seller agreed to.
+<div class="comparison-grid">
+  <div class="comparison-card">
+    <h3>Execution friction</h3>
+    <p>Spread, fees and slippage consume a larger share of small expected gains.</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Drawdown asymmetry</h3>
+    <p>Losses shrink the capital base; recovery requires a disproportionately larger gain.</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Sizing constraints</h3>
+    <p>Whole shares, contract sizes and minimum margins create unused cash or oversized positions.</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Forced exits</h3>
+    <p>Leverage can close a position before the market view has time to recover.</p>
+  </div>
+</div>
 
 ---
 
-{/* _class: centered */}
+{/* _class: impact */}
 
-## Watching a price get made
+## The first objective is not maximising return — it is preserving enough capital to remain able to act
+
+---
+
+## A market still just matches buyers and sellers
+
+A market is any standing way for buyers and sellers to meet and agree on a
+price — a stock exchange, a futures or options venue, a crypto app. None of
+them guarantee a "correct" price; each only produces the price the last
+willing buyer and seller agreed to.
 
 <div class="timeline">
   <div class="timeline-step">
     <h3>Seller</h3>
-    <p>Will sell "Northbank Traders" for $37.50</p>
+    <p>Simulated "Northbank Traders" — will sell for $37.50</p>
   </div>
   <div class="timeline-step">
     <h3>Buyer</h3>
@@ -65,31 +98,12 @@ last willing buyer and seller agreed to.
   </div>
 </div>
 
-Simulated prices. No committee set $37.50 — and it says nothing yet about
-whether $37.50 is good value.
+Simulated prices. Nothing about that match says whether $37.50 is "good
+value" — only that two sides agreed.
 
 ---
 
-## Five asset classes, in order
-
-1. **Stocks** — Weeks 2–7
-2. **Leveraged stock positions** (margin, short selling) — Week 8
-3. **Futures** — Week 9
-4. **Options** — Week 10
-5. **Cryptocurrency** — Week 11
-
-Each week adds exactly one new piece of complexity on top of what's already
-covered — that's why later weeks keep referring back to earlier ones.
-
----
-
-{/* _class: impact */}
-
-## As holding periods shorten and instruments get more complex, which direction the price moves matters less — execution, sizing and risk matter more
-
----
-
-## The numbers
+## Whole-share constraints show up immediately
 
 <div class="calc-block">
   $1,000 budget ÷ $37.50 a share = 26.67 shares
@@ -104,8 +118,41 @@ covered — that's why later weeks keep referring back to earlier ones.
   $1,000 − $975.00 = $25.00 left over, uninvested
 </div>
 
-That leftover cash is an unglamorous, recurring fact of trading whole
-shares — it comes back properly when Week 5 covers position sizing.
+That leftover cash is small here. Later weeks show how contract sizes and
+margin can make sizing constraints much larger.
+
+---
+
+## One progression, five different survival pressures
+
+The semester still moves through stocks, margin, futures, options and
+crypto — each is now a case study in a different failure mechanism. The
+instrument changes; the course keeps asking the same question: how much
+room does the account have before friction, loss or forced closure takes
+control?
+
+<div class="comparison-grid">
+  <div class="comparison-card">
+    <h3>Stocks · Weeks 2-7</h3>
+    <p>Execution friction</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Margin · Week 8</h3>
+    <p>Forced exit</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Futures · Week 9</h3>
+    <p>Embedded leverage</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Options · Week 10</h3>
+    <p>Nonlinearity</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Crypto · Week 11</h3>
+    <p>Extreme leverage</p>
+  </div>
+</div>
 
 ---
 
@@ -118,18 +165,18 @@ shares — it comes back properly when Week 5 covers position sizing.
 Pick a **simulated** share price between $10 and $200, and a **simulated**
 budget between $200 and $2,000.
 
-Work out: how many whole shares that budget buys, the total cost, and the
-leftover cash.
+Work out: how many whole shares that budget buys, the total cost, the
+leftover cash, and the percentage of the budget that remains idle.
 
 ---
 
 ## The takeaway
 
 <ol class="recap-list">
-  <li>A market is a matching mechanism, not an oracle.</li>
-  <li>Five asset classes, one semester, increasing complexity.</li>
-  <li>Holding period and instrument complexity are what this course tracks.</li>
-  <li>Everything from here is about what happens around that matched price.</li>
+  <li>A market sets a matched price; it does not protect a trader from bad sizing or execution.</li>
+  <li>Small accounts feel frictions and drawdowns more quickly because there is less capital buffer.</li>
+  <li>The course now follows one question across every instrument: what reduces the account's ability to survive?</li>
+  <li>Stocks are the baseline; later weeks add leverage, contract obligations, nonlinear payoffs and liquidation risk.</li>
 </ol>
 
 ---
@@ -138,5 +185,5 @@ leftover cash.
 
 ## Next week
 
-Week 2 — how a stock trade actually happens: exchanges, brokers, and order
+Week 2 — execution friction: exchanges, brokers, bid/ask spreads and order
 types.

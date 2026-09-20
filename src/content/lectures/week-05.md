@@ -35,7 +35,14 @@ trading style?
 
 A **drawdown** is a decline from a peak account value. Drawdowns are
 asymmetric: losing a given percentage requires a larger percentage gain to
-get back to even, which is exactly what the numbers below show.
+get back to even, which is exactly what the numbers below show. That
+asymmetry compounds across a sequence of losses, not just one — a string of
+losing trades doesn't erode capital in a straight line, it erodes the base
+the next loss is measured against, which is why a small account can survive
+several ordinary losing trades and still be one more away from a drawdown
+it can't recover from. Position sizing exists specifically to keep any
+single loss, or a bad run of them, away from that point — what's sometimes
+called **risk of ruin**.
 
 A **stop** is a price at which a position is closed to limit further loss.
 An **invalidation** is the reason the original idea is wrong — the stop
@@ -60,7 +67,11 @@ losses.
 A **simulated** $10,000 account loses 50% in a bad stretch, down to $5,000.
 To get back to $10,000, that $5,000 now needs to grow by 100%, not by the
 50% that was lost — the same percentage loss and gain are not mirror images
-of each other.
+of each other. Five consecutive 10% losses compound to the same place: each
+10% is taken off a smaller base than the last, so the account ends near
+$5,905, not $5,000 — smaller individual losses, reached faster than a
+single number would suggest, and every one of them makes the next loss
+proportionally more expensive to recover from.
 
 ## The numbers
 
@@ -107,5 +118,7 @@ actually at risk once the share count is rounded down.
 
 Position size and stops don't depend on which trading style produced the
 idea — they depend on account size and the distance to the point that proves
-the idea wrong. Everything Weeks 6 and 7 do with entries and charts sits on
-top of this risk toolkit; none of it works without it.
+the idea wrong. The reason to get that right isn't tidiness: it's that
+drawdown asymmetry and compounding losses turn an undersized position, or a
+bad run of them, into risk of ruin. Everything Weeks 6 and 7 do with entries
+and charts sits on top of this risk toolkit; none of it works without it.

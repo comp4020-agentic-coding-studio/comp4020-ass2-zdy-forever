@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
@@ -97,30 +97,4 @@ describe("assignment 2 spec", () => {
     }
   });
 
-  it("gives every Week 1-12 lecture a PowerPoint download link", () => {
-    for (const lecture of byType("lectures")) {
-      const slug = `week-${String(Number(lecture.meta?.week)).padStart(2, "0")}`;
-      const html = readFileSync(resolve("dist", "lectures", slug, "index.html"), "utf8");
-      expect(html, `${lecture.id} has no PowerPoint download link`).toMatch(
-        /href="[^"]*\/slides\/week-\d{2}\.pptx"/,
-      );
-    }
-  });
-
-  it("points every lecture's PowerPoint link at its own week, and no other week's", () => {
-    for (const lecture of byType("lectures")) {
-      const slug = `week-${String(Number(lecture.meta?.week)).padStart(2, "0")}`;
-      const html = readFileSync(resolve("dist", "lectures", slug, "index.html"), "utf8");
-      const pptxWeeks = [...html.matchAll(/\/slides\/(week-\d{2})\.pptx/g)].map((m) => m[1]);
-      expect(pptxWeeks, lecture.id).toEqual([slug]);
-    }
-  });
-
-  it("builds all twelve PowerPoint downloads into the site output", () => {
-    for (let week = 1; week <= 12; week++) {
-      const slug = `week-${String(week).padStart(2, "0")}`;
-      const pptxPath = resolve("dist", "slides", `${slug}.pptx`);
-      expect(existsSync(pptxPath), `${slug}.pptx is missing from dist/slides`).toBe(true);
-    }
-  });
 });

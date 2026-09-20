@@ -1,8 +1,8 @@
 ---
 title: Futures
 description:
-  The first derivative instrument, introduced before the more complex payoff
-  structure of options in Week 10
+  A case study in embedded leverage and forced liquidation — futures margin
+  is set by the exchange, not chosen, and usually far higher by default
 week: 9
 date: 2027-04-19
 teachers:
@@ -14,15 +14,19 @@ related:
 
 Futures are introduced as a contract, not a stock: an obligation to buy or
 sell at a set price on a set date, built on top of the margin and leverage
-mechanics from Week 8. Deliberately covered before options, since a futures
-contract's payoff is a straight line — the simplest possible setup for the
-kinked payoff options introduce next week to be compared against.
+mechanics from Week 8 — except here the leverage isn't a choice the trader
+makes, it's built into the contract by the exchange, usually far higher
+than a broker would ever offer against a stock. Deliberately covered before
+options, since a futures contract's payoff is a straight line — the
+simplest possible setup for the kinked payoff options introduce next week
+to be compared against.
 
 ## The question this week answers
 
-What is a futures contract actually obligating a trader to do, and how does
-the leverage from Week 8 show up here without a separate margin account
-decision?
+Week 8's leverage was an account setting a trader chose. Here it's embedded
+in the contract itself, and usually much higher — what is a futures
+contract actually obligating a trader to do, and how much closer does that
+embedded leverage put the account to a forced liquidation?
 
 ## By the end of this lecture
 
@@ -77,7 +81,10 @@ P/L = 100 × $2 = $200
 
 That $200 is 200 ÷ 500 = 40% of the margin actually put up — a 4%
 move in the underlying produced a 40% move relative to the trader's own
-capital, which is the leverage multiple doing exactly what it says.
+capital, which is the leverage multiple doing exactly what it says. A
+losing streak of that size, several sessions in a row, reaches the same
+forced-liquidation territory Week 8 covered — just faster, because the
+exchange set the leverage, not the trader.
 
 ## What a diagram would show
 
@@ -99,5 +106,7 @@ leverage multiple, and the dollar P/L from a $3 move in the underlying.
 A futures contract's leverage is fixed by its margin requirement, not chosen
 account-by-account the way Week 8's stock margin was — and its payoff is a
 straight line, moving by a constant amount per unit of price change in
-either direction. Week 10 keeps the obligation-versus-right distinction in
-view while introducing a payoff that bends.
+either direction. That fixed, usually-high leverage is exactly what makes
+futures a forced-liquidation risk that arrives faster than a stock margin
+call would, for the same size account. Week 10 keeps the obligation-versus-
+right distinction in view while introducing a payoff that bends.

@@ -1,0 +1,36 @@
+---
+// Persistent per-slide chrome (a "WEEK NN" kicker, top-left, and a footer
+// bar with the course title / week number), shared across all 12 decks.
+// astromotion's deck route renders every slide's content
+// inside `.reveal .slides`, with no slot for anything outside it, and
+// reveal is configured `display: "grid"` + `transition: "none"` (no
+// transform on `.slides` or its sections) — so a `position: fixed` element
+// survives every slide change as long as it's a DOM sibling of `.slides`,
+// not nested inside any one `<section>`. There's no way to render that
+// sibling from MDX content directly, so this component's only job is a
+// script, included once per deck, that appends the chrome as a direct
+// child of `.reveal` after the page loads.
+import { courseMeta } from "../../course-config";
+
+interface Props {
+  week: number;
+}
+
+const { week } = Astro.props;
+const label = `Week ${String(week).padStart(2, "0")}`;
+const courseTitle = courseMeta.title;
+---
+
+<script is:inline define:vars={{ label, courseTitle }}>
+  const reveal = document.querySelector(".reveal");
+  if (reveal) {
+    reveal.insertAdjacentHTML(
+      "beforeend",
+      `<div class="deck-kicker">${label}</div>
+       <div class="deck-footer">
+         <span>${courseTitle}</span>
+         <span>${label}</span>
+       </div>`,
+    );
+  }
+</script>

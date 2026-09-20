@@ -1,86 +1,76 @@
 ---
 title: Cryptocurrency Markets
 description:
-  Week 11 — applying Weeks 1-10's market-mechanics and leverage ideas to
-  cryptocurrency, rather than starting over
+  Week 11 — the course's most extreme survival case, 24/7 markets, custody
+  risk, and leverage far beyond a stock broker's
 ---
+
+import DeckChrome from "./components/DeckChrome.astro";
+
+<DeckChrome week={11} />
 
 {/* _class: hero */}
 
 # Cryptocurrency Markets
 
-## Week 11 · Same mechanics, different details
+## Week 11 · An extreme case of leverage, custody and market structure
+
+<div class="course-lens">
+  <span class="course-lens-label">Course lens</span>
+  <p>
+    How can a small retail trading account survive execution friction,
+    drawdowns, leverage, and increasingly complex instruments?
+  </p>
+</div>
 
 ---
 
 ## The question this week answers
 
-Which of this semester's ideas about markets, leverage and risk carry
-straight over to cryptocurrency, and which details actually change?
+Which risks from the semester stay the same in crypto — and which new
+market-structure details shrink the buffer for error even further?
 
 ---
 
 ## By the end of this lecture
 
-- compare a cryptocurrency exchange's structure to Week 2's stock exchange
-- explain what custody means and why it matters differently here than for
-  stocks
-- explain how leverage in crypto markets relates to Weeks 8-9's margin and
-  leverage mechanics
-- calculate a liquidation price for a simulated leveraged crypto position
+<ol class="objective-list">
+  <li>compare a cryptocurrency exchange's structure to Week 2's stock exchange</li>
+  <li>explain exchange custody versus self-custody</li>
+  <li>connect crypto leverage to Weeks 8-9's margin and leverage mechanics</li>
+  <li>estimate a simplified liquidation price for a leveraged crypto position</li>
+</ol>
 
 ---
 
-## The same job, different hours
+## Same core mechanics, harsher edge cases
 
-A cryptocurrency exchange performs the same core job as Week 2's stock
-exchange — matching buyers and sellers.
+**24/7 market** — no scheduled close; exposure and liquidity conditions can
+change continuously.
 
-It typically operates 24/7 with no scheduled close, and often with far less
-standardisation between platforms than regulated stock exchanges have.
+**Custody** — holding an asset "in the app" can mean the exchange controls
+it, not the trader.
+
+**High leverage** — larger ratios shrink the adverse move required to force
+a closure.
+
+**Liquidation** — the same forced-exit logic as a margin call, often
+automated by the exchange.
 
 ---
 
 {/* _class: impact */}
 
-## An asset held "in the app" is often controlled by the exchange, not by the trader — that has no stock-market equivalent
-
----
-
-## Custody, made concrete
-
-<div class="comparison-grid">
-  <div class="comparison-card">
-    <h3>Exchange custody</h3>
-    <p>The exchange legally and technically controls the asset, not the trader</p>
-  </div>
-  <div class="comparison-card">
-    <h3>Self-custody</h3>
-    <p>The trader alone controls the keys to a wallet holding the asset</p>
-  </div>
-</div>
-
-This distinction changes what "the position is safe" actually means — before
-any question of price.
-
----
-
-## The same leverage mechanism, a different name
-
-Leverage on crypto exchanges is often offered at ratios far beyond a stock
-broker's margin account — same underlying logic as Weeks 8-9: more leverage
-means a smaller price move triggers forced closure.
-
-Here that forced closure is usually called a **liquidation**, not a margin
-call — the identical mechanism, a new label.
+## Higher leverage turns ordinary volatility into a forced-exit problem. Crypto isn't a new set of finance laws — it's a venue where this semester's execution, leverage and custody risks show up in more extreme form
 
 ---
 
 ## A worked example
 
 A **simulated** trader opens a long position on a cryptocurrency priced at
-$30,000, using 10x leverage — required margin is one-tenth of the position's
-value.
+$30,000, using 10x leverage — margin is one-tenth of the notional exposure.
+Ignoring fees and maintenance buffers, a simplified teaching estimate places
+liquidation near $27,000.
 
 ---
 
@@ -97,16 +87,13 @@ A simplified estimate, ignoring fees and funding costs.
 
 ---
 
-## Ten times more leverage, a much smaller margin for error
+## Higher leverage shrinks the survival distance
 
 <div class="risk-callout">
-  <span class="risk-callout-label">A 10% drop liquidates this 10x position</span>
-  <p>Week 8's 2x-leveraged stock example needed a 33.3% drop to trigger a margin call</p>
-  <p>The leverage ratio here is five times larger — the required move is much smaller</p>
+  <span class="risk-callout-label">Entry $30,000 → liquidation ≈ $27,000</span>
+  <p>10x leverage leaves only about a 10% adverse move before forced closure, in this simplified example</p>
+  <p>Real platforms add maintenance margins, fees and funding — the structural relationship still holds: more leverage means less room for error</p>
 </div>
-
-Real platforms' formulas include fees and maintenance-margin buffers this
-simplified version leaves out — the core relationship holds regardless.
 
 ---
 
@@ -118,9 +105,9 @@ simplified version leaves out — the core relationship holds regardless.
 
 A **simulated** long position entered at $2,000 with 5x leverage.
 
-Calculate the approximate liquidation price using the formula above, and
-compare the percentage drop required to the 10x example just worked
-through.
+Estimate the approximate liquidation price using the formula above, and
+compare the percentage buffer to the 10x example just worked through. Then
+name one non-price risk unique to crypto market structure.
 
 ---
 
@@ -130,7 +117,7 @@ through.
   <li>A cryptocurrency exchange matches buyers and sellers like Week 2's stock exchange, but runs 24/7 with less standardisation.</li>
   <li>Custody — who actually controls the asset — has no stock-market equivalent and changes what "safe" means.</li>
   <li>Liquidation is the same forced-closure mechanism as a margin call, at leverage ratios a stock broker rarely offers.</li>
-  <li>Week 12 turns every instrument from this semester, crypto included, into a personal set of rules.</li>
+  <li>Every survival mechanism this course covers shows up here at its most extreme.</li>
 </ol>
 
 ---

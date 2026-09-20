@@ -311,7 +311,12 @@ const initialMultiple = 2;
       // pct/multiple labels, which stay short at any leverage. Compressed
       // to fit via textLength below rather than shrinking its font-size,
       // so it stays legible at the same size as the other override labels.
-      const maxCallLabelWidth = barWidth / columnCount - 16;
+      // Leaves 48 units of margin, not 16: at the mobile font override two
+      // adjacent columns both compressed to a 16-unit-margin budget still
+      // read as one run-on line -- a label needs headroom *between* itself
+      // and its neighbour, not just enough to avoid overflowing its own
+      // column.
+      const maxCallLabelWidth = barWidth / columnCount - 48;
       const barHeight = svg.viewBox.baseVal.height || 300;
       // A fixed budget, not barHeight/2 minus a small constant: the swing-%
       // label at full swing sits right next to the call label (top) or the

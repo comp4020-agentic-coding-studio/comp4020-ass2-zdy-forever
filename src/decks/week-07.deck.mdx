@@ -6,6 +6,9 @@ description:
 ---
 
 import Candles from "./components/Candles.astro";
+import DeckChrome from "./components/DeckChrome.astro";
+
+<DeckChrome week={7} />
 
 {/* _class: hero */}
 
@@ -13,23 +16,31 @@ import Candles from "./components/Candles.astro";
 
 ## Week 7 · Liquidity, slippage and VWAP
 
+<div class="course-lens">
+  <span class="course-lens-label">Course lens</span>
+  <p>
+    How can a small retail trading account survive execution friction,
+    drawdowns, leverage, and increasingly complex instruments?
+  </p>
+</div>
+
 ---
 
 ## The question this week answers
 
-What actually changes, mechanically, when a position is held for hours
-instead of days or weeks?
+When a position is held for hours instead of days, how large a share of
+the outcome can spread, liquidity and slippage consume?
 
 ---
 
 ## By the end of this lecture
 
-- explain what changes about execution costs when holding periods shrink
-  to intraday
-- define liquidity and slippage, and how they relate to Week 2's bid/ask
-  spread
-- calculate VWAP from a simulated sequence of intraday prices and volumes
-- build a structured day-trade plan and spot common beginner mistakes
+<ol class="objective-list">
+  <li>explain what changes about execution costs when holding periods shrink to intraday</li>
+  <li>define liquidity and slippage, and how they relate to Week 2's bid/ask spread</li>
+  <li>calculate VWAP from a simulated sequence of intraday prices and volumes</li>
+  <li>keep the same six-part risk plan intact as turnover increases</li>
+</ol>
 
 ---
 
@@ -42,11 +53,14 @@ even modest ones can.
 **Slippage** — the gap between the expected price and the price actually
 filled. It grows exactly when liquidity is thin.
 
+Day trading avoids overnight gaps, but it pays for that immediacy through
+more frequent execution and greater sensitivity to liquidity.
+
 ---
 
 {/* _class: impact */}
 
-## Week 2's few cents of spread becomes a much bigger factor once it's paid dozens of times in one session
+## Week 2's few cents of spread can become the whole economics of a trade once the target move is small and turnover is high
 
 ---
 
@@ -127,8 +141,8 @@ is "correct."
 <p class="activity-label">Critique a plan</p>
 
 A **simulated** day-trade plan enters purely because "price is above the
-20-day moving average" — with no stated liquidity check, no VWAP reference,
-and no invalidation.
+20-day moving average" — with no liquidity check, no invalidation, no
+stated size, and no execution assumption.
 
 Using this week's concepts, identify what's missing before this counts as
 a complete plan.

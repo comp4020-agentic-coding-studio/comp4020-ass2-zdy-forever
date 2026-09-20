@@ -32,9 +32,12 @@ related:
 The Personal Market Rulebook is where the semester's weights concentrate,
 because it is the one piece of work that asks you to commit to a position on
 every instrument covered — stocks, short selling and leverage, futures,
-options and crypto — rather than describe each in the abstract. It should
-visibly draw on the calculations and plans you built across the whole
-semester, not restate the lectures.
+options and crypto — rather than describe each in the abstract. Each rule is
+really an answer to the same question the course has been asking since
+Week 1: what would keep a small account from losing capital, or being
+forced to stop trading, on this particular instrument. It should visibly
+draw on the calculations and plans you built across the whole semester, not
+restate the lectures.
 
 ## What you submit
 

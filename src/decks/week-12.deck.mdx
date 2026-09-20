@@ -1,62 +1,77 @@
 ---
-title: Build Your Own Market Rulebook
+title: Build Your Small-Account Survival Rulebook
 description:
-  Week 12 — the synthesis lecture, pulling every instrument and risk idea
-  from the semester into a personal set of rules
+  Week 12 — the synthesis lecture, turning every survival mechanism from
+  the semester into explicit, checkable rules
 ---
+
+import DeckChrome from "./components/DeckChrome.astro";
+
+<DeckChrome week={12} />
 
 {/* _class: hero */}
 
-# Build Your Own Market Rulebook
+# Build Your Small-Account Survival Rulebook
 
-## Week 12 · What survives contact with real money
+## Week 12 · Rules that keep one bad position from ending the account
+
+<div class="course-lens">
+  <span class="course-lens-label">Course lens</span>
+  <p>
+    How can a small retail trading account survive execution friction,
+    drawdowns, leverage, and increasingly complex instruments?
+  </p>
+</div>
 
 ---
 
 ## The question this week answers
 
-Of everything covered this semester, what would actually survive being
-turned into a rule you'd follow with real money on the line?
+Which rules are specific enough to protect the account when execution,
+drawdown, leverage or instrument complexity turns against it?
+
+The point is not to find a "best" trading style or instrument. It is to
+understand what can make the account fail.
 
 ---
 
 ## By the end of this lecture
 
-- revisit every instrument covered this semester with a stated personal
-  stance on each
-- write a risk rule specific enough to be checked, not just aspirational
-- identify a style or instrument that isn't a good fit for yourself, and say
-  why
-- structure a personal rulebook, ready to turn into the Personal Market
-  Rulebook assessment
+<ol class="objective-list">
+  <li>write risk rules that are checkable, not just aspirational</li>
+  <li>set both a per-trade risk cap and an account-level risk cap</li>
+  <li>define limits on leverage and which instruments the account can use</li>
+  <li>state the conditions under which trading stops altogether</li>
+</ol>
+
+---
+
+## A survival rulebook is a set of constraints
+
+<div class="comparison-grid">
+  <div class="comparison-card">
+    <h3>Per-trade risk cap</h3>
+    <p>The maximum account capital that can be lost on one planned position</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Account-level cap</h3>
+    <p>The maximum combined risk across every open position at once</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Execution rules</h3>
+    <p>When a market or limit order is acceptable, and when liquidity is too thin</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Leverage / instrument limits</h3>
+    <p>The maximum leverage, and which products the account is allowed to use</p>
+  </div>
+</div>
 
 ---
 
 {/* _class: impact */}
 
-## A rule that can't be checked against a specific situation isn't finished yet
-
----
-
-## What a rulebook actually is
-
-Not a summary of what was taught — a set of decisions:
-
-- which instruments from Weeks 1-11 you'd actually use
-- how you'd size a position — Week 5's method still applies, regardless of
-  instrument
-- what would invalidate a position
-- under what conditions you'd stop trading altogether, even temporarily
-
----
-
-## Rules have to work together, not just individually
-
-A risk budget usually caps total risk across every open position at once —
-not just risk per trade.
-
-Several individually-reasonable position sizes can add up to an
-account-level risk nobody actually intended.
+## A rule only matters if someone else could look at a trade and say whether it was followed or broken
 
 ---
 
@@ -88,34 +103,10 @@ risking $100, simultaneously.
   <p>$450 &gt; $400 — the account-level cap is breached</p>
 </div>
 
-The rule requires closing or resizing something first — regardless of how
-good the third setup looks on its own.
-
----
-
-## Every instrument this semester, one table
-
-<div class="comparison-grid">
-  <div class="comparison-card">
-    <h3>Stocks (Weeks 2-7)</h3>
-    <p>Ownership; max loss capped at 100%</p>
-  </div>
-  <div class="comparison-card">
-    <h3>Margin / short (Week 8)</h3>
-    <p>Borrowed capital; a short's loss is uncapped</p>
-  </div>
-  <div class="comparison-card">
-    <h3>Futures / options (Weeks 9-10)</h3>
-    <p>Obligation vs. right; linear vs. kinked payoff</p>
-  </div>
-  <div class="comparison-card">
-    <h3>Crypto (Week 11)</h3>
-    <p>Same leverage mechanics, often larger ratios</p>
-  </div>
-</div>
-
-A blank "personal rule" column is what the assessment asks you to fill in —
-not pre-filled with an answer here.
+With just the first two positions, $150 of the $400 budget sat unused — that
+headroom is what the rule is built around, not a mistake. The rule requires
+closing or resizing something before the third position can open, regardless
+of how good that setup looks on its own.
 
 ---
 
@@ -125,28 +116,28 @@ not pre-filled with an answer here.
 
 <p class="activity-label">Draft a rule</p>
 
-Pick one instrument covered this semester that you have not yet written a
-rule for.
+Pick one instrument covered this semester.
 
-Draft a single risk rule for it, specific enough that another person could
-check — from a description of a trade — whether the rule was followed.
+Write one rule for position size, one for execution, and one condition
+that stops trading altogether. Each rule must be precise enough that
+another person could mark it "followed" or "broken."
 
 ---
 
 ## The takeaway
 
 <ol class="recap-list">
-  <li>A rulebook is a set of decisions, not a summary of what was taught.</li>
-  <li>Risk rules need to work together — an account-level cap, not just a per-trade one.</li>
-  <li>A rule's value is in being specific enough to fail — an aspiration isn't a rule yet.</li>
-  <li>The Personal Market Rulebook assessment is where this gets written down properly, instrument by instrument, for the whole semester at once.</li>
+  <li>A rulebook is a set of constraints, not a summary of the course.</li>
+  <li>Per-trade risk isn't enough — open positions interact at the account level.</li>
+  <li>Leverage, execution and instrument access should all have explicit limits.</li>
+  <li>The goal isn't eliminating losses. It's stopping ordinary mistakes from ending the account's ability to continue.</li>
 </ol>
 
 ---
 
 {/* _class: centered */}
 
-## That's the semester
+## Semester complete
 
-From a first stock order to leveraged, derivative, and crypto markets — one
-progression, not twelve separate topics.
+Twelve weeks, one progression: from the first cost a stock order absorbs to
+an integrated small-account survival framework.

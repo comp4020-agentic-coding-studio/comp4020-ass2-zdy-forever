@@ -38,7 +38,9 @@ the position (and other account equity) as collateral. **Leverage** is the
 resulting ratio between the total position size and the trader's own money
 in it — a $10,000 position bought with $5,000 of own money and $5,000
 borrowed is 2x leveraged. Leverage does not change the underlying instrument;
-it changes how much a given price move affects the trader's own capital.
+it changes how much a given price move affects the trader's own capital —
+and, more to the point, it shortens the distance between an account and a
+forced exit it doesn't get to choose the timing of.
 
 **Short selling** means borrowing shares, selling them, and later buying
 them back to return them — profiting if the price falls. Its risk profile is

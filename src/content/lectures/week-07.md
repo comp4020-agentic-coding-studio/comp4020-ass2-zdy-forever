@@ -1,7 +1,8 @@
 ---
 title: Day Trading
 description:
-  Builds on Weeks 4–6 to cover day trading, liquidity, slippage and VWAP
+  Day trading, liquidity, slippage and VWAP — where execution friction
+  becomes a large share of expected return, not a rounding error
 week: 7
 date: 2027-04-05
 teachers:
@@ -14,8 +15,11 @@ related:
 Day trading compresses everything Weeks 4–6 covered into a much shorter
 holding period, which is why liquidity, slippage and VWAP matter here in a way
 they didn't yet at swing-trading speed: a bid/ask spread that was noise over a
-week can be the whole trade over an hour. This lecture also bridges into
-Week 8, where leverage raises the stakes on everything covered here.
+week can be the whole trade over an hour. This week's thesis, stated
+plainly: as holding periods shorten and turnover rises, execution friction
+stops being a rounding error and becomes a real share of expected return.
+This lecture also bridges into Week 8, where leverage raises the stakes on
+everything covered here.
 
 ## The question this week answers
 

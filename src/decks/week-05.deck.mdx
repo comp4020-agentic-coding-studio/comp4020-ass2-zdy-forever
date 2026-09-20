@@ -5,83 +5,76 @@ description:
   before any trading style on purpose
 ---
 
+import DeckChrome from "./components/DeckChrome.astro";
+
+<DeckChrome week={5} />
+
 {/* _class: hero */}
 
 # Risk Before Strategy
 
-## Week 5 · Risk, drawdowns, stops, position sizing and expected value
+## Week 5 · Drawdowns, stops, position sizing and expected value
+
+<div class="course-lens">
+  <span class="course-lens-label">Course lens</span>
+  <p>
+    How can a small retail trading account survive execution friction,
+    drawdowns, leverage, and increasingly complex instruments?
+  </p>
+</div>
 
 ---
 
 ## The question this week answers
 
-Why teach risk management before teaching any actual trading style?
+Why should a small account decide how much it can lose before it decides
+how it wants to trade?
 
 ---
 
 ## By the end of this lecture
 
-- explain what a drawdown does to the gain needed to recover from it
-- distinguish a stop from an invalidation
-- calculate a position size from account size, risk tolerance and stop
-  distance
-- calculate the expected value of a simulated trading plan
+<ol class="objective-list">
+  <li>explain drawdown asymmetry</li>
+  <li>distinguish a stop from an invalidation</li>
+  <li>calculate position size from account risk and stop distance</li>
+  <li>calculate expected value and connect repeated losses to survival</li>
+</ol>
 
 ---
 
-## A drawdown isn't symmetric
+## Four pieces of the survival toolkit
 
-<div class="risk-callout">
-  <span class="risk-callout-label">Simulated account</span>
-  <p>$10,000 → loses 50% → $5,000</p>
-  <p>To get back to $10,000, that $5,000 must now grow by <strong>100%</strong>, not 50%.</p>
-</div>
+**Drawdown** — a loss measured from a previous account peak. Larger losses
+require a disproportionately larger recovery.
 
-The same percentage loss and gain are not mirror images of each other — the
-larger the loss, the more disproportionate the recovery.
+**Invalidation** — the reason a trade idea is no longer valid; a stop is
+simply where you exit once that reason is confirmed.
+
+**Position sizing** — sets the number of shares from the risk budget and
+the stop distance, not from conviction.
+
+**Expected value** — combines win rate with win/loss size; win rate alone
+is not enough to judge a plan.
 
 ---
 
 {/* _class: impact */}
 
-## A stop is where you exit. An invalidation is why
+## The smaller the account, the less room there is for a large drawdown before future opportunities become mechanically harder to size
 
 ---
 
-## Six parts, every plan, from here on
+## A 50% drawdown is not repaired by a 50% gain
 
-<div class="timeline">
-  <div class="timeline-step">
-    <h3>Observation</h3>
-    <p>What was noticed</p>
-  </div>
-  <div class="timeline-step">
-    <h3>Assumption</h3>
-    <p>What it's taken to imply</p>
-  </div>
-  <div class="timeline-step">
-    <h3>Entry</h3>
-    <p>When a position opens</p>
-  </div>
+Risk management isn't something bolted onto a strategy afterwards — it
+determines whether the account remains able to take the next trade at all.
+
+<div class="risk-callout">
+  <span class="risk-callout-label">Simulated account</span>
+  <p>Starts at $10,000 → a 50% loss reduces it to $5,000</p>
+  <p>Returning from $5,000 to $10,000 requires a <strong>100%</strong> gain on the remaining capital.</p>
 </div>
-
-<div class="timeline">
-  <div class="timeline-step">
-    <h3>Invalidation</h3>
-    <p>What proves the idea wrong</p>
-  </div>
-  <div class="timeline-step">
-    <h3>Risk</h3>
-    <p>How much, and the size behind it</p>
-  </div>
-  <div class="timeline-step">
-    <h3>Exit</h3>
-    <p>What closes it, win or lose</p>
-  </div>
-</div>
-
-Skipping any one of these is an incomplete plan, not a shortcut — every
-strategy lecture from here assumes all six are present.
 
 ---
 
@@ -101,8 +94,7 @@ strategy lecture from here assumes all six are present.
   Actual risk: 33 × $3 = $99, not the full $100
 </div>
 
-Position size answers "how many shares" from the account and the stop —
-never a gut feeling.
+Sizing controls the loss on any single attempt — never a gut feeling.
 
 ---
 
@@ -114,30 +106,34 @@ never a gut feeling.
   EV = (0.40 × 150) − (0.60 × 80) = 60 − 48 = <strong>$12</strong>
   <br />
   <br />
-  Same win rate, sizes flipped: wins 40% for $80, loses 60% for $150
-  <br />
-  EV = (0.40 × 80) − (0.60 × 150) = 32 − 90 = <strong>−$58</strong>
+  The same 40% win rate, with larger losses relative to wins, can still
+  produce a negative EV.
 </div>
 
-Win rate alone says almost nothing about whether a plan is worth trading.
+Sizing controls the loss per attempt; expected value describes the
+long-run average of the plan.
 
 ---
 
-## Same win rate, opposite outcome
+## Drawdown changes the recovery problem
 
 <div class="comparison-grid">
   <div class="comparison-card">
-    <h3>Plan A: +$12 EV</h3>
-    <p>40% win rate. Average win $150, average loss $80.</p>
+    <h3>Start</h3>
+    <p>$10,000</p>
   </div>
   <div class="comparison-card">
-    <h3>Plan B: −$58 EV</h3>
-    <p>40% win rate. Average win $80, average loss $150.</p>
+    <h3>After 50% loss</h3>
+    <p>$5,000</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Required recovery</h3>
+    <p>+100%</p>
   </div>
 </div>
 
-Identical win rate. Opposite sign. The size of wins versus losses is what
-decides it.
+Survival is path-dependent: avoiding a deep drawdown can matter more than
+finding a slightly better entry.
 
 ---
 
@@ -147,20 +143,22 @@ decides it.
 
 <p class="activity-label">Calculate</p>
 
-A **simulated** $20,000 account risks 0.5% per trade. Entry $72, stop $69.
+A **simulated** $20,000 account risks 0.5% per trade. Entry $72,
+invalidation-based stop $69.
 
-Calculate the position size, and the dollar amount actually at risk once the
-share count is rounded down.
+Calculate the share count and the actual dollar risk once it's rounded
+down. Then explain why doubling the position size would change survival
+even if the setup itself is unchanged.
 
 ---
 
 ## The takeaway
 
 <ol class="recap-list">
-  <li>A drawdown demands a disproportionately larger gain to recover from.</li>
-  <li>A stop is where you exit; an invalidation is why.</li>
-  <li>Position size comes from account size and stop distance, not instinct.</li>
-  <li>Win rate alone doesn't determine expected value — win/loss size does.</li>
+  <li>Large drawdowns are disproportionately hard to recover from.</li>
+  <li>A stop is where you exit; invalidation is why the idea is wrong.</li>
+  <li>Position size comes from account risk and stop distance, not conviction.</li>
+  <li>Expected value and loss size matter more to survival than win rate alone.</li>
 </ol>
 
 ---
@@ -169,5 +167,5 @@ share count is rounded down.
 
 ## Next week
 
-Week 6 — swing trading: the first named style, built on this week's risk
-toolkit and Week 4's chart vocabulary.
+Week 6 — swing trading as a case study in overnight exposure and gap risk,
+built on this week's position-sizing toolkit.

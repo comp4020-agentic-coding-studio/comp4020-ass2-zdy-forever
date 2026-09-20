@@ -1,52 +1,108 @@
 ---
-title: Short Selling, Margin and Leverage
+title: Margin, Leverage and Forced Exit
 description:
-  Week 8 — leverage enters the course on an ordinary stock, before Weeks
-  9-10 apply it to futures and options
+  Week 8 — leverage arrives through an ordinary stock's margin loan and
+  short sale, shortening the distance to a forced exit before Weeks 9-11
+  embed it directly into futures, options and crypto
 ---
+
+import DeckChrome from "./components/DeckChrome.astro";
+
+<DeckChrome week={8} />
 
 {/* _class: hero */}
 
-# Short Selling, Margin and Leverage
+# Margin, Leverage and Forced Exit
 
-## Week 8 · Leverage arrives, on the simplest instrument it applies to
+## Week 8 · Borrowed capital shortens the distance to a forced closure
+
+<div class="course-lens">
+  <span class="course-lens-label">Course lens</span>
+  <p>
+    How can a small retail trading account survive execution friction,
+    drawdowns, leverage, and increasingly complex instruments?
+  </p>
+</div>
 
 ---
 
 ## The question this week answers
 
-What does it mean, mechanically, to trade with borrowed money — and at
-what exact price does that borrowing force you out of a position?
+When the account controls more exposure than it can fully fund, how small
+can an adverse price move be before the broker takes control?
+
+The point is not to find a "best" trading style or instrument. It is to
+understand what can make the account fail.
 
 ---
 
 ## By the end of this lecture
 
-- explain how a margin loan works on an ordinary stock position
-- explain why a short position's risk profile differs from a long
-  position's
-- describe leverage as a multiplier applied to both gains and losses
-- calculate the price at which a simulated margin account triggers a
-  margin call
+<ol class="objective-list">
+  <li>explain how a margin loan works on an ordinary stock position</li>
+  <li>explain why a short position's risk profile differs from a long position's</li>
+  <li>describe leverage as a multiplier applied to both gains and losses</li>
+  <li>calculate the price at which a simulated margin account triggers a margin call</li>
+</ol>
 
 ---
 
-## Margin and leverage
+## Borrowing changes the account, not the stock
 
-**Margin** — borrowing part of a position's cost from a broker, using the
-position (and other account equity) as collateral.
-
-**Leverage** — the ratio between total position size and the trader's own
-money in it. $10,000 position, $5,000 own + $5,000 borrowed = 2x leverage.
-
-Leverage doesn't change the instrument — it changes how much a given price
-move affects the trader's own capital.
+<div class="comparison-grid">
+  <div class="comparison-card">
+    <h3>Margin</h3>
+    <p>Borrowing part of a position's cost, using account equity as collateral.</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Leverage</h3>
+    <p>Total position size divided by the trader's own capital in it.</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Short selling</h3>
+    <p>Borrow, sell, buy back later — the loss has no theoretical ceiling.</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Margin call</h3>
+    <p>Forced action once equity falls below the broker's maintenance requirement.</p>
+  </div>
+</div>
 
 ---
 
 {/* _class: impact */}
 
-## A long position's maximum loss is capped at 100%. A short position's is not
+## Leverage doesn't just magnify losses — it shortens how much adverse movement the account can survive before a broker closes the position for it
+
+---
+
+## A worked example
+
+A **simulated** $10,000 stock position, split $5,000 trader capital and
+$5,000 margin loan (2x leverage), against a 25% maintenance margin
+requirement. The loan stays fixed while equity shrinks as the position
+falls — the position doesn't need to reach zero for the account to be in
+trouble.
+
+---
+
+## The numbers: a margin call trigger
+
+<div class="calc-block">
+  equity = position value − $5,000 loan
+  <br />
+  margin call when equity = 25% × position value
+  <br />
+  <br />
+  position − 5,000 = 0.25 × position
+  <br />
+  0.75 × position = 5,000 → position = $6,666.67
+</div>
+
+$6,666.67 ÷ $10,000 = 66.7% of the original value — a **33.3% price drop**
+triggers this call, well before the position is worth zero. The exact
+threshold depends on the broker's own rules; the example isolates the
+leverage mechanism.
 
 ---
 
@@ -68,26 +124,6 @@ price falls; the loss has no ceiling if it rises instead.
 
 ---
 
-## The numbers: a margin call trigger
-
-<div class="calc-block">
-  $10,000 position: $5,000 own money + $5,000 margin loan (2x leverage)
-  <br />
-  Maintenance margin requirement: 25% of position value
-  <br />
-  <br />
-  Equity = position − 5,000 (the loan stays fixed)
-  <br />
-  Call triggers when: position − 5,000 = 0.25 × position
-  <br />
-  0.75 × position = 5,000 → position = $6,666.67
-</div>
-
-$6,666.67 ÷ $10,000 = 66.7% of the original value — a **33.3% price drop**
-triggers this call, well before the position is worth zero.
-
----
-
 ## The numbers: an uncapped short loss
 
 <div class="risk-callout">
@@ -98,6 +134,25 @@ triggers this call, well before the position is worth zero.
 
 There is no price at which the loss stops growing — unlike a long position
 bought outright.
+
+---
+
+## More leverage means less room for error
+
+<div class="comparison-grid">
+  <div class="comparison-card">
+    <h3>No leverage · 1x</h3>
+    <p>Price has to fall 100%, to zero, to wipe out the position.</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Stock margin · 2x</h3>
+    <p>33.3% to a margin call, using this week's simulated example.</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Futures-like · 10x</h3>
+    <p>Small moves in the underlying dominate the posted margin.</p>
+  </div>
+</div>
 
 ---
 
@@ -121,7 +176,7 @@ at which a margin call triggers.
   <li>Leverage multiplies both gains and losses relative to the trader's own capital.</li>
   <li>A margin call is the mechanical consequence of leverage, not an edge case.</li>
   <li>A short position's loss has no ceiling, unlike a long position's 100% cap.</li>
-  <li>Weeks 9 and 10 apply this same logic to instruments where leverage is built in.</li>
+  <li>Weeks 9 through 11 keep this same forced-exit logic, just embedded in different instruments and venues.</li>
 </ol>
 
 ---
@@ -130,5 +185,5 @@ at which a margin call triggers.
 
 ## Next week
 
-Week 9 — futures: leverage built into the contract itself, before the more
-complex payoff structure of options.
+Week 9 — futures as a case study in embedded leverage and forced
+liquidation, before options' more complex payoff structure.

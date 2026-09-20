@@ -12,6 +12,59 @@
  * background. */
 @import url("astro-theme-university/styles/deck.css");
 
+/* Persistent chrome (kicker + footer), inserted by DeckChrome.astro as a
+ * sibling of `.slides` rather than content inside any one slide — see that
+ * component for why. Fixed position, so it survives every slide change;
+ * z-index above the slide canvas but below reveal's own overlays (help
+ * hint, whiteboard) which use higher values in astromotion's own theme.
+ * The kicker sits below astromotion's own "← Back" pill
+ * (`.astromotion-deck-back`, top: 1rem; left: 1rem — its box runs roughly
+ * to 3.1rem from the top), rather than at the same top-left corner. */
+.deck-kicker {
+  position: fixed;
+  top: 3.75rem;
+  left: 2rem;
+  z-index: 5;
+  font-family: var(--rm-mono, var(--r-code-font));
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--at-primary);
+  pointer-events: none;
+}
+
+.deck-footer {
+  position: fixed;
+  inset-inline: 2rem;
+  bottom: 1.25rem;
+  z-index: 5;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block-start: 0.6rem;
+  border-block-start: 1px solid var(--at-divider);
+  font-family: var(--rm-mono, var(--r-code-font));
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  color: var(--at-text-secondary);
+  pointer-events: none;
+}
+
+/* `.impact` slides (see astro-theme-university/styles/deck.css) flip to a
+ * flat --at-primary fill with --at-on-primary text — the same gold the
+ * kicker's default colour is, so on that slide it renders gold-on-gold and
+ * disappears. Swap both to the slide's own ink whenever the present slide
+ * is `.impact`, rather than hard-coding a slide-specific colour here. */
+.reveal:has(.slides section.present.impact) .deck-kicker {
+  color: var(--at-on-primary);
+}
+
+.reveal:has(.slides section.present.impact) .deck-footer {
+  border-block-start-color: rgb(from var(--at-on-primary) r g b / 30%);
+  color: var(--at-on-primary);
+}
+
 /* Shared slide primitives for this course's decks. Every rule below derives
  * its colour from the same --at-* tokens the import above already resolves,
  * so nothing here restates the palette — only layout and structure. None of
@@ -150,6 +203,68 @@
     color: var(--at-primary);
     font-weight: 600;
     margin-block-end: 0.4rem;
+  }
+
+  /* The hero slide's standing central question — the one piece of content
+     that repeats, word for word, on every deck's title slide. A solid
+     border (never the .activity slide's dashed one, so the two read as
+     different things at a glance: a fixed reference vs. a call to act). */
+  .course-lens {
+    display: grid;
+    gap: 0.4rem;
+    margin-block-start: 1.5rem;
+    border: 1px solid var(--at-divider);
+    border-radius: var(--at-border-radius);
+    padding: 1.25rem 1.5rem;
+    max-width: 44rem;
+  }
+
+  .course-lens-label {
+    display: block;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--at-primary);
+    font-weight: 600;
+  }
+
+  .course-lens p {
+    font-size: 1.3rem;
+    margin: 0;
+    color: var(--at-text-secondary);
+  }
+
+  /* The objectives slide's list: filled chips, distinct from .recap-list's
+     outlined ones, so "what you'll be able to do" and "what we covered"
+     don't read as the same list style repeated twice in one deck. */
+  .objective-list {
+    list-style: none;
+    margin-inline-start: 0 !important;
+    display: grid;
+    gap: 0.75rem;
+    counter-reset: objective-item;
+
+    li {
+      counter-increment: objective-item;
+      padding-inline-start: 2.75rem;
+      position: relative;
+
+      &::before {
+        content: counter(objective-item);
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1.9rem;
+        height: 1.9rem;
+        border-radius: 50%;
+        background: var(--at-primary);
+        color: var(--at-on-primary);
+        display: grid;
+        place-content: center;
+        font-size: 1rem;
+        font-weight: 600;
+      }
+    }
   }
 
   /* A recap slide's list: numbered chips, so a deck's final slide reads as a

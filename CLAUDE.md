@@ -180,17 +180,24 @@ behind. `spec/README.md` draws the line.
 
 The course I am building is:
 
-**Retail Market Survival: From Your First Stock Order to Leveraged Markets**
+**Retail Market Survival: Risk, Leverage and Execution for Small Accounts**
 
-It is a beginner-friendly course about how retail financial markets work, starting
-from buying a first stock and gradually moving toward trading, leverage, futures,
-options, and cryptocurrency markets.
+It is a beginner-friendly course about why and how a small retail trading
+account can lose capital or be forced to stop trading — starting from the
+first cost a stock order absorbs and moving through drawdowns, leverage, and
+the increasingly complex instruments (futures, options, crypto) that shorten
+the distance to a forced exit.
 
-The central idea is:
+The central question is:
 
-> As holding periods become shorter and financial instruments become more complex,
-> price direction becomes only one part of the problem. Execution, leverage,
-> position sizing, and risk become increasingly important.
+> How can a small retail trading account survive execution friction,
+> drawdowns, leverage, and increasingly complex instruments?
+
+This was deliberately narrowed from an earlier, broader framing — "from your
+first stock order to leveraged markets," a tour of retail-trading instruments
+in order — to a single sustained investigation of account survival. Each week
+is now a mechanism through which capital is lost or trading is forced to
+stop, not one stop on a tour of instruments.
 
 Assume students have no previous finance or trading knowledge.
 
@@ -204,18 +211,18 @@ I explicitly ask for a curriculum/content change.
 
 The course has exactly 12 teaching weeks:
 
-1. Market overview and basic asset classes
-2. Stocks, exchanges, brokers, cash/margin accounts, and order types
-3. Investing and trading styles
-4. Candlesticks, volume, trends, support/resistance, and ranges
-5. Risk, drawdowns, stops, position sizing, and expected value
-6. Swing trading and moving averages
-7. Day trading, liquidity, slippage, and VWAP
-8. Short selling, margin, and leverage
-9. Futures
-10. Options
-11. Cryptocurrency markets
-12. Building a personal market rulebook
+1. The small-account problem — limited capital, drawdowns, costs and forced exits (basic market/asset-class orientation is supporting material, not the subject)
+2. Exchanges, brokers, and order types, framed as the first source of execution friction (displayed price vs. executable price)
+3. How holding period changes which risks and costs dominate, from investing through swing to day trading
+4. Chart structure as a way to define entries, invalidation and risk boundaries — not a prediction tool
+5. Risk, drawdowns, stops, position sizing, expected value, and risk of ruin — the course's center of gravity
+6. Swing trading as a case study in multi-day exposure: gaps, event risk, stop-execution uncertainty
+7. Day trading, liquidity, slippage and VWAP, where execution friction becomes a real share of expected return
+8. Short selling, margin and leverage, framed as shortening the distance to a forced exit
+9. Futures as a case study in embedded leverage, notional exposure and forced liquidation
+10. Options as a case study in nonlinear risk — bounded loss, total premium loss, and misjudged payoffs
+11. Cryptocurrency markets as the course's most extreme survival case: 24/7, custody, high leverage/liquidation
+12. A small-account survival rulebook, synthesising sizing, leverage limits, instrument restrictions and when to stop trading altogether
 
 Treat this as one semester-long progression, not twelve independent finance topics.
 
@@ -481,13 +488,14 @@ There are exactly 12 decks, one for each Week 1–12 lecture.
 Each lecture must link to the matching deck, and deck numbering must match the
 lecture week.
 
-The final presentation content will be produced separately after the website
-lecture content is complete.
+Final presentation content has been delivered for all 12 weeks as an online
+preview only (`src/decks/week-NN.deck.mdx`, rendered at `/decks/week-NN/`,
+linked from the matching lecture page). Decks are no longer scaffolds.
 
-Until then, deck files may contain only the minimum scaffold required for routing
-and build verification.
-
-Do not treat scaffolds as completed presentations.
+There used to also be a downloadable PowerPoint per week
+(`public/slides/week-NN.pptx`); that download feature and the files behind it
+have been removed. Do not reintroduce a pptx download link or regenerate
+`public/slides/*.pptx` unless explicitly asked.
 
 Do not independently redesign deck styling from week to week. All twelve final
 decks should share one visual system derived from the finished course website.

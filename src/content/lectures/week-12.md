@@ -1,8 +1,8 @@
 ---
-title: Build Your Own Market Rulebook
+title: The Small-Account Survival Rulebook
 description:
-  The synthesis lecture — pulling every instrument and risk idea from the
-  semester into a personal set of rules
+  The synthesis lecture — turning every survival mechanism from the
+  semester into rules a small account would actually hold to
 week: 12
 date: 2027-05-10
 teachers:
@@ -14,15 +14,18 @@ related:
 ---
 
 The closing lecture doesn't introduce new mechanics — it asks what to do with
-all of the previous eleven weeks. It walks through what a personal rulebook
-needs to cover (instrument choice, position sizing, invalidation, and a rule
-for when to stop trading altogether) and previews the shape of the Personal
-Market Rulebook assessment.
+all of the previous eleven weeks, each of which introduced another way a
+small account can lose capital or be forced to stop trading. It walks
+through what a survival rulebook needs to cover (instrument choice,
+position sizing, invalidation, leverage limits, and a rule for when to stop
+trading altogether) and previews the shape of the Personal Market Rulebook
+assessment.
 
 ## The question this week answers
 
-Of everything covered this semester, what would actually survive being
-turned into a rule you'd follow with real money on the line?
+Of every way this semester showed a small account losing capital or being
+forced out of a position, what would actually survive being turned into a
+rule you'd follow with real money on the line?
 
 ## By the end of this lecture
 
@@ -38,11 +41,12 @@ turned into a rule you'd follow with real money on the line?
 
 A **rulebook**, in the sense this course uses the word, is not a summary of
 what was taught — it's a set of decisions: which instruments from Weeks
-1–11 you'd actually use, how you'd size a position (Week 5's method still
-applies unchanged, regardless of instrument), what would invalidate a
-position, and under what conditions you'd stop trading altogether, even
-temporarily. A rule that can't be checked against a specific situation isn't
-finished yet.
+1–11 you'd actually use (and which you'd restrict or avoid), how you'd
+size a position (Week 5's method still applies unchanged, regardless of
+instrument), what maximum leverage you'd allow yourself on the instruments
+that carry it (Weeks 8–11), what would invalidate a position, and under
+what conditions you'd stop trading altogether, even temporarily. A rule
+that can't be checked against a specific situation isn't finished yet.
 
 Rules also need to work **together**, not just individually — a risk budget
 usually caps total risk across every open position at once, not just risk

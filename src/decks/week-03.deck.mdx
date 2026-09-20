@@ -1,60 +1,65 @@
 ---
-title: There Is More Than One Way to Trade
+title: Holding Period Changes the Risk
 description:
-  Week 3 — separates investing from trading by holding period and goal,
-  before the course commits to any one style
+  Week 3 — investing, swing trading and day trading as different
+  exposure regimes, not a ranking
 ---
+
+import DeckChrome from "./components/DeckChrome.astro";
+
+<DeckChrome week={3} />
 
 {/* _class: hero */}
 
-# There Is More Than One Way to Trade
+# Holding Period Changes the Risk
 
-## Week 3 · Investing and trading styles
+## Week 3 · Investing, swing trading and day trading as different exposure regimes
+
+<div class="course-lens">
+  <span class="course-lens-label">Course lens</span>
+  <p>
+    How can a small retail trading account survive execution friction,
+    drawdowns, leverage, and increasingly complex instruments?
+  </p>
+</div>
 
 ---
 
 ## The question this week answers
 
-What actually separates "investing" from "trading" —
+How does the same $10,000 account face a different survival problem when
+positions are held for years, days, or hours?
 
-and why isn't one of them simply the correct approach?
+The point is not to find a "best" trading style or instrument. It is to
+understand what can make the account fail.
 
 ---
 
 ## By the end of this lecture
 
-- use holding period as the organising axis for the rest of the course
-- compare investing, swing trading and day trading on the same two axes
-- explain why a style is a fit-to-goals question, not a best-versus-worst
-  one
-- locate where each style reappears later in the semester
+<ol class="objective-list">
+  <li>use holding period as the organising axis for the rest of the course</li>
+  <li>compare investing, swing trading and day trading without ranking them</li>
+  <li>connect shorter holding periods to higher turnover and repeated friction</li>
+  <li>identify which risks grow when positions stay open overnight or compress intraday</li>
+</ol>
 
 ---
 
-## Holding period, the axis this course tracks most
-
-How long a position is typically kept changes which costs matter, which
-risks dominate, and how much attention a position needs.
-
-A position held for years behaves differently, mechanically, from one held
-for hours — independent of which one is "smarter."
-
----
-
-## Three styles, three horizons
+## Three horizons, three dominant concerns
 
 <div class="comparison-grid">
   <div class="comparison-card">
-    <h3>Investing</h3>
-    <p>Years. Goal: long-run growth or income.</p>
+    <h3>Investing · years</h3>
+    <p>Low turnover; spread is usually small relative to the horizon, but long-run market and concentration risk remain.</p>
   </div>
   <div class="comparison-card">
-    <h3>Swing trading</h3>
-    <p>Days to weeks. Week 6.</p>
+    <h3>Swing trading · days–weeks</h3>
+    <p>Overnight gaps, event risk and capital being tied up across several sessions become important.</p>
   </div>
   <div class="comparison-card">
-    <h3>Day trading</h3>
-    <p>Opened and closed same day. Week 7.</p>
+    <h3>Day trading · hours</h3>
+    <p>No overnight exposure, but turnover, liquidity and slippage can dominate the economics.</p>
   </div>
 </div>
 
@@ -62,11 +67,11 @@ for hours — independent of which one is "smarter."
 
 {/* _class: impact */}
 
-## Style is a fit question — goals, time available, temperament — not a ranking
+## Holding period doesn't tell you whether a trade is smart — it tells you which failure mechanisms deserve the most attention
 
 ---
 
-## A worked example
+## Same capital, different exposure
 
 Three **simulated** students each start with $10,000:
 
@@ -116,29 +121,33 @@ many times Week 2's execution costs get paid.
   </div>
 </div>
 
+Shorter holds mean more entries and exits — the same spread, fees and
+slippage get paid more often.
+
 ---
 
 {/* _class: activity */}
 
 ## Try it yourself
 
-<p class="activity-label">Classify</p>
+<p class="activity-label">Classify + diagnose</p>
 
 A **simulated** trade log entry reads: "bought Monday, sold the following
 Wednesday."
 
 Classify it as investing, swing trading or day trading using holding
-period alone. Then note what else you'd need — goal, position size, how
-it fits a broader plan — before judging whether it was sensible.
+period alone. Then name one risk that matters more than it would for a
+same-day trade, and one execution cost that matters less.
 
 ---
 
 ## The takeaway
 
 <ol class="recap-list">
-  <li>Holding period is the axis, not a proxy for skill.</li>
-  <li>Investing, swing trading and day trading suit different goals and time budgets.</li>
-  <li>Shorter holds mean Week 2's costs and Week 5's risk tools get applied more often.</li>
+  <li>Holding period changes the mix of risks; it is not a proxy for skill.</li>
+  <li>Shorter holding periods multiply how often Week 2's execution friction is paid.</li>
+  <li>Swing trading adds overnight exposure; day trading removes that exposure but magnifies intraday friction.</li>
+  <li>Weeks 4-8 build a survival toolkit around these changing risk regimes.</li>
 </ol>
 
 ---
@@ -147,5 +156,5 @@ it fits a broader plan — before judging whether it was sensible.
 
 ## Next week
 
-Week 4 — reading price: candlesticks, volume, trends, support and
-resistance.
+Week 4 — reading price for invalidation and risk boundaries, not
+prediction.

@@ -1,8 +1,8 @@
 ---
 title: Options
 description:
-  Builds on Week 9's futures groundwork to introduce options and their more
-  complex, non-linear payoff structure
+  Why small accounts misjudge bounded loss, total premium loss and
+  non-linear payoffs — options built on Week 9's futures groundwork
 week: 10
 date: 2027-04-26
 teachers:
@@ -13,14 +13,20 @@ related:
 ---
 
 Options are introduced as a right, not an obligation — the distinction Week
-9's futures lecture set up by contrast. This lecture covers calls, puts,
-premium and the basic payoff shapes, and is explicit about where a beginner's
-intuition from stocks and futures stops transferring cleanly.
+9's futures lecture set up by contrast. A bounded maximum loss sounds like a
+safer instrument than the short position from Week 8 or the leveraged
+futures contract from Week 9, and in one narrow sense it is — but this
+lecture is explicit about where that intuition stops transferring: the
+premium is a certain cost paid regardless of outcome, a smaller price move
+than expected can still mean losing all of it, and the payoff bends rather
+than moving in a straight line.
 
 ## The question this week answers
 
-How does trading a *right* instead of an *obligation* change both the payoff
-shape and the risk, compared to the futures contract from Week 9?
+An option's loss is capped at the premium — so why do small accounts still
+misjudge how much they can lose trading them? How does trading a *right*
+instead of an *obligation* change the payoff shape and the risk, compared
+to the futures contract from Week 9?
 
 ## By the end of this lecture
 

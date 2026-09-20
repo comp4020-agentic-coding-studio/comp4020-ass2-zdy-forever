@@ -17,10 +17,11 @@ with the account every later session assumes exists.
 
 ## What you're given
 
-A tour of how the twelve weeks fit together — stocks first, then styles and
-risk, then leverage, futures, options and crypto — and access to the
-simulated/paper-trading platform the course uses throughout. No real money
-touches this course at any point.
+An orientation to how the twelve weeks fit together — each one another way
+a small account can lose capital or be forced to stop, starting from stocks
+and building through styles, risk, leverage, futures, options and crypto —
+and access to the simulated/paper-trading platform the course uses
+throughout. No real money touches this course at any point.
 
 ## What you do
 

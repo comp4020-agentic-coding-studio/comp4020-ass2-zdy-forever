@@ -1,69 +1,74 @@
 ---
-title: How a Stock Trade Actually Happens
+title: "Execution Friction: From Click to Fill"
 description:
-  Week 2 — exchanges, brokers, account types and order types, and what
-  happens between clicking buy and owning a share
+  Week 2 — exchanges, brokers, account types and order types, and the first
+  way a small account loses money before the market thesis is even tested
 ---
+
+import DeckChrome from "./components/DeckChrome.astro";
+
+<DeckChrome week={2} />
 
 {/* _class: hero */}
 
-# How a Stock Trade Actually Happens
+# Execution Friction: From Click to Fill
 
-## Week 2 · Stocks, exchanges, brokers, accounts, and order types
+## The first way a small account loses money before the market thesis is even tested
+
+<div class="course-lens">
+  <span class="course-lens-label">Course lens</span>
+  <p>
+    How can a small retail trading account survive execution friction,
+    drawdowns, leverage, and increasingly complex instruments?
+  </p>
+</div>
 
 ---
 
 ## The question this week answers
 
-Between clicking "buy" and actually owning a share, several separate
-systems do separate jobs.
+Between clicking "buy" and actually owning a share, where can execution
+differ from the price on screen — and why does that matter more when
+capital is limited?
 
-What are they — and why can the price you see when you click not be the
-price you pay?
+The point is not to find a "best" trading style or instrument. It is to
+understand what can make the account fail.
 
 ---
 
 ## By the end of this lecture
 
-- name the separate roles an exchange and a broker each play in a trade
-- distinguish a cash account from a margin account
-- explain why a market order and a limit order can fill at different
-  prices
-- trace a simulated order from click to fill
+<ol class="objective-list">
+  <li>separate the roles of broker and exchange</li>
+  <li>distinguish a cash account from a margin account</li>
+  <li>explain the trade-off between a market order and a limit order</li>
+  <li>calculate the cost created by bid/ask spread and execution choice</li>
+</ol>
 
 ---
 
-## Two different jobs
+## Two jobs, two account types
 
 <div class="comparison-grid">
   <div class="comparison-card">
     <h3>Broker</h3>
-    <p>Who a trader deals with directly. Takes the order and routes it
-    onward.</p>
+    <p>Takes the order from the trader and routes it onward.</p>
   </div>
   <div class="comparison-card">
     <h3>Exchange</h3>
-    <p>Where the order actually meets other orders and gets matched.</p>
+    <p>Matches the order against other orders in the market.</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Cash account</h3>
+    <p>Can only spend capital already in the account.</p>
+  </div>
+  <div class="comparison-card">
+    <h3>Margin account</h3>
+    <p>Can borrow against account equity — leverage appears in full in Week 8.</p>
   </div>
 </div>
 
 A single app can make these feel like one step. They aren't.
-
----
-
-## Two account types
-
-<div class="comparison-grid">
-  <div class="comparison-card">
-    <h3>Cash account</h3>
-    <p>Can only spend money already in it.</p>
-  </div>
-  <div class="comparison-card">
-    <h3>Margin account</h3>
-    <p>Can borrow against what's already held — what makes leverage and
-    short selling possible. Full mechanics in Week 8.</p>
-  </div>
-</div>
 
 ---
 
@@ -84,6 +89,12 @@ A single app can make these feel like one step. They aren't.
 
 The **bid** is the highest price a buyer currently offers; the **ask** is
 the lowest a seller currently accepts.
+
+---
+
+{/* _class: impact */}
+
+## The quoted price is information — the executable price is what changes the account
 
 ---
 
@@ -153,10 +164,10 @@ and what has to happen for it to ever fill?
 ## The takeaway
 
 <ol class="recap-list">
-  <li>An exchange matches; a broker routes. Different jobs.</li>
-  <li>A margin account can borrow; a cash account can't.</li>
-  <li>Market orders trade price certainty for execution certainty — limit orders trade the reverse.</li>
-  <li>Neither order type says anything about whether the stock is a good idea.</li>
+  <li>Broker and exchange are different parts of the execution chain.</li>
+  <li>Market orders exchange price certainty for immediacy; limit orders do the reverse.</li>
+  <li>The spread is paid before the market direction has had any chance to help.</li>
+  <li>For a small account, execution quality is part of risk management, not an administrative detail.</li>
 </ol>
 
 ---
@@ -165,5 +176,5 @@ and what has to happen for it to ever fill?
 
 ## Next week
 
-Week 3 — there is more than one way to trade: investing, swing trading and
-day trading, compared.
+Week 3 — how holding period changes which risks and costs dominate, from
+investing through swing to day trading.

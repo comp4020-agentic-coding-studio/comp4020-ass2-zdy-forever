@@ -46,16 +46,17 @@ export const slopCourseMetaSchema = z
 // chosen for a course that assumes no prior finance or trading knowledge.
 export const courseMeta = slopCourseMetaSchema.parse({
   code: "SLOP1007",
-  title: "Retail Market Survival: From Your First Stock Order to Leveraged Markets",
+  title: "Retail Market Survival: Risk, Leverage and Execution for Small Accounts",
   session: "Semester 1",
   year: 2027,
   level: 1,
   startDate: "2027-02-22",
   endDate: "2027-05-28",
   description:
-    "A beginner's course in retail financial markets, from placing a first stock " +
-    "order through to short-term trading, leverage, futures, options and " +
-    "cryptocurrency, where execution, position sizing and risk matter more as " +
-    "holding periods shorten and instruments grow more complex.",
+    "A beginner's course on how a small retail trading account survives, or " +
+    "doesn't. Twelve weeks trace what can end a position early — execution " +
+    "friction, drawdowns, margin calls, and the leverage built into futures, " +
+    "options and crypto — each one another way capital is lost or trading is " +
+    "forced to stop.",
   tags: ["stock trading", "risk management", "leverage"],
 }) satisfies CourseMetaInput;

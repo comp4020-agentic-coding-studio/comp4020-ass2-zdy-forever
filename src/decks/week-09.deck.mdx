@@ -1,65 +1,67 @@
 ---
 title: Futures
 description:
-  Week 9 — the first derivative instrument, introduced as a linear payoff
-  before Week 10's kinked options payoff
+  Week 9 — futures as a case study in notional exposure, initial margin and
+  leverage built into the contract, and why small moves can dominate small
+  accounts
 ---
 
 import Payoff from "./components/Payoff.astro";
+import DeckChrome from "./components/DeckChrome.astro";
+
+<DeckChrome week={9} />
 
 {/* _class: hero */}
 
 # Futures
 
-## Week 9 · The first derivative instrument
+## Week 9 · Leverage built into the contract
+
+<div class="course-lens">
+  <span class="course-lens-label">Course lens</span>
+  <p>
+    How can a small retail trading account survive execution friction,
+    drawdowns, leverage, and increasingly complex instruments?
+  </p>
+</div>
 
 ---
 
 ## The question this week answers
 
-What is a futures contract actually obligating a trader to do, and how does
-Week 8's leverage show up here without a separate margin account decision?
+What happens when leverage is not an optional account setting, but a
+structural feature of the contract itself?
+
+The point is not to find a "best" trading style or instrument. It is to
+understand what can make the account fail.
 
 ---
 
 ## By the end of this lecture
 
-- define a futures contract as an obligation, not a choice to act
-- explain how Week 8's margin and leverage concepts apply to a futures
-  position
-- explain contract size, expiry and rollover in plain terms
-- calculate the leverage multiple implied by a futures contract's margin
-  requirement
-- explain why a futures payoff is linear
+<ol class="objective-list">
+  <li>define a futures contract as an obligation</li>
+  <li>explain contract size, expiry and rollover</li>
+  <li>calculate notional exposure and implied leverage</li>
+  <li>connect linear payoff and margin to small-account survival</li>
+</ol>
 
 ---
 
-## A contract, not a stock
-
-A **futures contract** — a standardised agreement to buy or sell a set
-quantity of something at a set price on a set future date. No ownership
-changes hands today, only an obligation that settles later or is closed out
-before then.
-
-This course treats futures generically, as a contract shape — not a
-commodities course.
-
----
-
-## Three terms this week needs
+## The mechanics we need — and no more
 
 <div class="comparison-grid">
   <div class="comparison-card">
     <h3>Contract size</h3>
-    <p>The quantity one contract represents</p>
+    <p>The quantity represented by one standardised futures contract</p>
   </div>
   <div class="comparison-card">
     <h3>Expiry</h3>
-    <p>The date the obligation settles</p>
+    <p>The date the contract obligation settles</p>
   </div>
   <div class="comparison-card">
     <h3>Rollover</h3>
-    <p>Closing before expiry, opening an equivalent later contract</p>
+    <p>Close the current contract and open a later one to keep exposure without settlement</p>
   </div>
 </div>
 
@@ -67,15 +69,19 @@ commodities course.
 
 {/* _class: impact */}
 
-## Futures don't use a margin *setting* the way Week 8's stock example did — the exchange sets it, and it's usually a much smaller fraction of the position
+## With futures, a small margin deposit can control a much larger notional position — the account can move far more than the underlying price does
 
 ---
 
 ## A worked example
 
+The course uses futures as an embedded-leverage case study, not as a survey
+of commodities or trading strategies.
+
 A **simulated** futures contract represents 100 units of an underlying
 priced at $50 — a notional value of $5,000. The exchange requires $500 of
-initial margin to hold one contract.
+initial margin to hold one contract. The contract's payoff is linear: each
+unit of price movement changes P/L by a fixed amount.
 
 ---
 
@@ -98,22 +104,20 @@ initial margin to hold one contract.
 </div>
 
 A 4% move in the underlying produced a 40% move relative to the trader's own
-capital — the leverage multiple doing exactly what it says.
+capital — the same leverage principle from Week 8, now embedded in the
+contract design itself.
 
 ---
 
-## The payoff is a straight line
+## Linear payoff, leveraged account impact
 
 <Payoff
   kind="linear"
   reference={50}
   domainMin={35}
   domainMax={65}
-  caption="Simulated futures payoff — profit/loss moves by a fixed amount per unit of price change, in either direction, without limit"
+  caption="Linear exposure means every $1 move changes P/L by a fixed amount. With 10x notional-to-margin leverage, a modest move in the underlying becomes a large move relative to account capital."
 />
-
-The simplest payoff shape this course covers — the baseline Week 10 compares
-an option's payoff against.
 
 ---
 
@@ -121,23 +125,24 @@ an option's payoff against.
 
 ## Try it yourself
 
-<p class="activity-label">Size the leverage</p>
+<p class="activity-label">Size the exposure</p>
 
 A **simulated** contract represents 50 units of an underlying priced at $80,
 requiring $400 initial margin.
 
-Calculate the notional value, the leverage multiple, and the dollar P/L from
-a $3 move in the underlying.
+Calculate the notional value, the implied leverage, and the dollar P/L from
+a $3 move in the underlying. Then express that P/L as a percentage of the
+margin posted.
 
 ---
 
 ## The takeaway
 
 <ol class="recap-list">
-  <li>A futures contract is an obligation, not a choice — unlike an option, it can't simply be left unused.</li>
-  <li>Its leverage is fixed by the exchange's margin requirement, not chosen account-by-account like Week 8's stock margin.</li>
-  <li>Its payoff is a straight line, moving by a constant amount per unit of price change either way.</li>
-  <li>Week 10 keeps this obligation-versus-right distinction in view while introducing a payoff that bends.</li>
+  <li>A futures contract is an obligation, not a choice.</li>
+  <li>The exchange-set margin determines the leverage built into the exposure.</li>
+  <li>Linear payoff makes the P/L easy to calculate — but leverage makes the account impact large.</li>
+  <li>Week 10 adds nonlinear payoff and premium loss on top of the derivative framework.</li>
 </ol>
 
 ---
@@ -146,5 +151,4 @@ a $3 move in the underlying.
 
 ## Next week
 
-Week 10 — options: a right instead of an obligation, and the more complex,
-non-linear payoff that comes with it.
+Week 10 — options: bounded loss, total premium loss and nonlinear payoff.

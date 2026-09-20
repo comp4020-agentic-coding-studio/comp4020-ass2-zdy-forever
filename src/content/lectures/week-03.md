@@ -1,8 +1,8 @@
 ---
 title: There Is More Than One Way to Trade
 description:
-  Separates investing from trading by holding period and goal, before the
-  course commits to any one style
+  Why holding period decides which risks and costs dominate — comparing
+  investing, swing trading and day trading on that one axis
 week: 3
 date: 2027-03-08
 teachers:
@@ -13,15 +13,17 @@ related:
 ---
 
 Investing and trading are often talked about as if they were the same
-activity at different speeds. This lecture treats holding period and goal as
-the two things that actually distinguish them, and surveys the styles the
-rest of the semester will name explicitly — buy-and-hold investing, swing
-trading, day trading — without yet teaching how to do any of them.
+activity at different speeds. This lecture treats holding period as the
+variable that decides which costs and risks actually apply to a position,
+and surveys the styles the rest of the semester will name explicitly —
+buy-and-hold investing, swing trading, day trading — without yet teaching
+how to do any of them.
 
 ## The question this week answers
 
-What actually separates "investing" from "trading," and why isn't one of
-them simply the correct approach?
+Holding period isn't just a style label — it decides how often the
+execution friction from Week 2 gets paid and which risks from Week 5 apply
+at all. What actually separates "investing" from "trading" along that axis?
 
 ## By the end of this lecture
 
@@ -37,7 +39,9 @@ them simply the correct approach?
 variable this course tracks most closely, because so much else (which costs
 matter, which risks dominate, how much attention a position needs) changes
 with it. A position held for years behaves differently, mechanically, from
-one held for hours, independent of which one is "smarter."
+one held for hours, independent of which one is "smarter." Shorten the
+holding period and the spread from Week 2 gets paid more often; the account
+also spends more time exposed to the drawdown risk Week 5 quantifies.
 
 Three styles get named this semester: **investing** (long holding periods,
 usually years, goal is typically long-run growth or income), **swing
@@ -92,5 +96,6 @@ whether it was a sensible trade.
 
 Style is a fit question, answered by time available, goals and temperament —
 not a ranking. What holding period does settle, unambiguously, is how often
-the mechanical costs from Week 2 and the risk tools from Week 5 get applied,
-which is exactly why the rest of the course is organised around it.
+the mechanical costs from Week 2 and the risk tools from Week 5 get applied —
+shorter holds mean more frequent exposure to both, which is exactly why the
+rest of the course is organised around it.

@@ -1,8 +1,8 @@
 ---
 title: Cryptocurrency Markets
 description:
-  Applies the course's ideas about markets, leverage and risk to
-  cryptocurrency, rather than treating it as a separate topic
+  The course's most extreme survival case — 24/7 markets, custody risk, and
+  leverage far beyond what a stock broker offers
 week: 11
 date: 2027-05-03
 teachers:
@@ -15,8 +15,11 @@ related:
 Cryptocurrency markets get their own week not because the underlying ideas
 change, but because the details do: different exchange structures, different
 custody risks, and leverage that is often offered at levels a stock broker
-never would. The lecture applies Weeks 1–10's market-mechanics and
-risk-and-leverage ideas here rather than starting over.
+never would. Every survival mechanism the course has covered — execution
+friction, forced exits, leverage — shows up here at its most extreme, which
+is exactly why it's the last instrument before Week 12's synthesis. The
+lecture applies Weeks 1–10's market-mechanics and risk-and-leverage ideas
+here rather than starting over.
 
 ## The question this week answers
 

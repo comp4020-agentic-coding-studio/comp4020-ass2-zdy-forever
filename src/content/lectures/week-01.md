@@ -1,8 +1,9 @@
 ---
 title: Welcome to the Market
 description:
-  Opens the course — what a market actually is, the basic asset classes on
-  offer, and how the semester builds from here
+  Opens the course on the small-account problem — why limited capital,
+  drawdowns and forced exits matter more the smaller the account, with a
+  basic tour of markets and asset classes as supporting orientation
 week: 1
 date: 2027-02-22
 teachers:
@@ -12,28 +13,37 @@ related:
   - sessions/01-welcome-to-the-market
 ---
 
-An orientation lecture: what a financial market is (a place prices form from
-buyers and sellers meeting, nothing more mystical than that), a short tour of
-the asset classes the course will touch — stocks, futures, options,
-cryptocurrency — and why the semester moves from the slowest and simplest of
-those to the fastest and most complex.
+An orientation lecture, but on a specific problem: a small account doesn't
+just have less money, it has less room to be wrong — the same drawdown, cost
+or forced exit that a large account shrugs off can end a small one's ability
+to keep trading at all. Before that problem can be worked through in numbers,
+it needs the basic vocabulary of what a market is and which asset classes the
+semester will touch — stocks, futures, options, cryptocurrency — covered here
+as supporting orientation, not as the week's actual subject.
 
 ## The question this week answers
 
-What is a market actually doing when it "sets a price," and why does this
-course spend twelve weeks moving from a single stock order to leveraged
-derivatives instead of just teaching every instrument at once?
+Why does a small account need twelve weeks of its own course, rather than
+just "trading, but with less money" — and what is a market actually doing
+when it "sets a price" in the first place?
 
 ## By the end of this lecture
 
+- state the small-account problem: why limited capital narrows the room for
+  error that a drawdown, a cost, or a forced exit leaves behind
 - describe a market as a mechanism that matches buyers and sellers, not a
   force with opinions of its own
 - name the asset classes this course covers, in the order it covers them
-- explain why holding period and instrument complexity are the two variables
-  the whole semester tracks
 - list what to have ready before Session 1
 
 ## Key ideas
+
+The **small-account problem**: a $1,000 account and a $1,000,000 account can
+face the identical percentage drawdown, cost, or margin call, and come out in
+completely different positions — the smaller account has less buffer before a
+loss becomes unrecoverable or a broker forces a position closed. This course
+assumes a small account throughout, on purpose: it's the case where execution,
+sizing and risk mistakes show up fastest and matter most.
 
 A **market** exists wherever there's a standing way for buyers and sellers to
 meet and agree on a price — an exchange for stocks, a venue for futures and
@@ -49,11 +59,12 @@ That ordering isn't arbitrary — each week adds one new piece of complexity
 mechanics already covered, which is why later weeks keep referring back to
 earlier ones.
 
-The course's central claim, stated plainly: as holding periods get shorter
-and instruments get more complex, **which direction the price moves matters
-less on its own**, and execution, position sizing and risk management matter
-more. Week 1 can only state that claim; Weeks 5 onward are where it gets
-worked through in numbers.
+The course's central question, stated plainly: **how does a small account
+survive** execution friction, drawdowns, leverage and increasingly complex
+instruments — not just "which direction did the price go," but what
+mechanically ends a position, or an account, before that question even gets
+answered. Week 1 can only state that question; Weeks 5 onward are where it
+gets worked through in numbers.
 
 ## A worked example
 
@@ -97,8 +108,10 @@ with your own numbers.
 
 ## The takeaway
 
-A market is a matching mechanism, not an oracle. Everything else this
-semester covers is really a question of what happens around that one matched
-price: how it's reached (Week 2), what to do with the observations it
-produces (Weeks 3–4), and how much of your own money to risk on a view about
-where it goes next (Week 5 onward).
+A small account has less room to be wrong than a large one, and a market is
+a matching mechanism, not an oracle — neither fact is optional background.
+Everything else this semester is really a question of what happens around
+that one matched price: how it's reached and what it costs to reach (Week 2),
+what to do with the observations it produces (Weeks 3–4), and how much of
+your own capital to risk, and how, before that price can end your position
+for you (Week 5 onward).

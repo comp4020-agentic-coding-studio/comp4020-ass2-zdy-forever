@@ -20,6 +20,13 @@ import "../styles/system.css";
       </p>
       <h1>{courseMeta.title}</h1>
       <p class="masthead-thesis">{courseMeta.description}</p>
+      <p class="masthead-manifesto">
+        This isn't a personal-finance elective about diversified portfolios, and it isn't a
+        trading feed calling market direction. It's what changes mechanically as a position moves
+        from a single stock order toward shorter holding periods and more leveraged instruments —
+        execution, sizing, and the exact price a leveraged bet gets closed out from under you. The
+        mark reflects your reasoning, not your luck.
+      </p>
       <ul class="masthead-tags" aria-label="Course tags">
         {courseMeta.tags.map((tag) => <li class="status-tag">{tag}</li>)}
       </ul>
@@ -109,6 +116,14 @@ import "../styles/system.css";
     color: var(--at-text-secondary);
     max-width: 38rem;
     font-size: 1.05rem;
+  }
+
+  .masthead-manifesto {
+    margin-block: 1.1rem 0;
+    padding-inline-start: 1rem;
+    border-inline-start: 2px solid var(--at-primary);
+    max-width: 36rem;
+    font-size: 0.95rem;
   }
 
   .masthead-tags {

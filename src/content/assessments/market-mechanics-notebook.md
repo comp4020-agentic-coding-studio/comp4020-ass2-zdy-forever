@@ -30,8 +30,10 @@ related:
 This is the smallest piece of graded work in the course, and it stays that way
 on purpose: it exists to catch a shaky grasp of accounts, order types and
 exchange mechanics early, before Strategy Lab asks you to reason about risk on
-top of them. Marks are for explaining and applying these mechanics in your own
-example, not for restating definitions.
+top of them. Tracing that order is also tracing the course's first source of
+execution friction — the gap between the price you see and the price you get.
+Marks are for explaining and applying these mechanics in your own example,
+not for restating definitions.
 
 ## What you submit
 

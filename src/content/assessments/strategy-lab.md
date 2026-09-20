@@ -35,7 +35,8 @@ actual plans, tested against both the swing (Week 6) and day-trading (Week 7)
 styles rather than just one. The mark is not for picking setups that
 "worked" — all data here is simulated, and the task does not ask you to
 prove either plan would have made money — it is for showing the reasoning
-and the risk control around each one.
+and the risk control that would keep a small account intact regardless of
+outcome.
 
 ## What you submit
 

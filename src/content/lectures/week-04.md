@@ -1,8 +1,8 @@
 ---
 title: Reading Price
 description:
-  Candlesticks, volume, trends, support/resistance and ranges — a shared
-  vocabulary for describing price that later weeks build on
+  Candlesticks, volume, trends, support/resistance and ranges — how chart
+  structure sets entries, stops and invalidation, not predictions
 week: 4
 date: 2027-03-15
 teachers:
@@ -16,14 +16,15 @@ Introduces the vocabulary for describing what a price chart is showing:
 candlesticks as a compressed record of a period's trading, volume as a
 measure of participation, and trends, support and resistance as ways of
 describing where price has tended to pause or reverse. None of this is
-presented as a signal in itself — it is the language Weeks 5–7 reuse to talk
-about risk and entries.
+presented as a signal in itself — its real job is defining where an entry,
+a stop, and an invalidation level actually sit, which is what Week 5
+needs to size a position and what Weeks 6–7 need to place one.
 
 ## The question this week answers
 
-What is a candlestick chart actually recording, and what can honestly be
-said about a pattern in one — as distinct from what a lot of trading content
-implies about it?
+A small account can't just "wait and see" — a position needs a stop before
+it needs an opinion. What is a candlestick chart actually recording, and
+where in it does an entry, an invalidation level or a stop honestly belong?
 
 ## By the end of this lecture
 
@@ -52,7 +53,11 @@ direction; a **range** describes a period where it hasn't. **Support** and
 previously paused or reversed. All four of these are descriptions of what
 already happened on the chart — they are **observations**, not predictions,
 and this course will not present them as reliable standalone buy or sell
-signals at any point.
+signals at any point. What they're good for is more specific: a support
+zone is a candidate place to put a stop, and a break of it is a candidate
+place to decide a trade was simply wrong — boundaries a small account needs
+regardless of what happens to be quoted at that moment (Week 2) or how
+volatile the fill turns out to be.
 
 ## A worked example
 
@@ -93,7 +98,7 @@ meaningful — practising the observation/assumption distinction directly.
 ## The takeaway
 
 Candlesticks, volume, trend and support/resistance are a shared vocabulary
-for describing a chart, not a set of rules for predicting one. They matter
-this semester because Weeks 5–7 need a common language for the risk and
-entry ideas built on top of them — not because a pattern, by itself, is ever
-sufficient reason to trade.
+for describing a chart, not a set of rules for predicting one. What they
+settle isn't direction — it's where an entry, a stop and an invalidation
+level honestly sit, which is exactly what Week 5 needs to size a position
+before either one is decided.

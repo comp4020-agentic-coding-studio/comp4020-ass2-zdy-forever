@@ -4,7 +4,7 @@ From the brief to the harness behind it.
 
 ## What I built
 
-*Retail Market Survival: From Your First Stock Order to Leveraged Markets* —
+*Retail Market Survival: Risk, Leverage and Execution for Small Accounts* —
 twelve weeks running from a first stock order to futures, options and crypto,
 with one argument underneath: as holding periods shorten and instruments
 complicate, price direction stops being the whole problem, and execution,

@@ -1,5 +1,5 @@
 ---
-title: Build Your Own Market Rulebook
+title: The Small-Account Survival Rulebook
 description:
   A drafting session for the Personal Market Rulebook, synthesising the whole
   semester

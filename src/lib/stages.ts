@@ -29,9 +29,9 @@ export const stages: Stage[] = [
     index: 0,
     label: "Foundations",
     range: "Weeks 01–03",
-    standing: "Placing a first order",
+    standing: "Where a small account first leaks money",
     summary:
-      "What a market is, how a stock order actually fills, and the difference between investing and trading. Slow, mechanical, one instrument at a time.",
+      "Why limited capital and its costs bite harder than they look — how an order actually fills, why the displayed price isn't the executable one, and why holding period decides which costs and risks apply at all.",
     weeks: [
       { week: 1, slug: slug(1), title: "Welcome to the Market" },
       { week: 2, slug: slug(2), title: "How a Stock Trade Actually Happens" },
@@ -43,9 +43,9 @@ export const stages: Stage[] = [
     index: 1,
     label: "Reading Markets",
     range: "Weeks 04–05",
-    standing: "Reading the chart, sizing the risk",
+    standing: "Where the exit is decided before the entry",
     summary:
-      "A shared vocabulary for price — candlesticks, trend, support and resistance — paired with the risk toolkit taught before any trading style: stops, position sizing, expected value.",
+      "Chart structure exists here to set entries, invalidations and stop levels, not to predict direction. Paired with the risk toolkit every later week assumes: position sizing, drawdown asymmetry, and risk of ruin.",
     weeks: [
       { week: 4, slug: slug(4), title: "Reading Price" },
       { week: 5, slug: slug(5), title: "Risk Before Strategy" },
@@ -56,9 +56,9 @@ export const stages: Stage[] = [
     index: 2,
     label: "Trading and Execution",
     range: "Weeks 06–07",
-    standing: "Named styles, shorter holds",
+    standing: "Where shorter holds multiply the cost of getting in and out",
     summary:
-      "Swing trading and moving averages first, then day trading, liquidity, slippage and VWAP — holding periods shrink and execution quality starts to matter as much as direction.",
+      "Swing trading first, as a case study in multi-day exposure — gaps, event risk, capital tied up across days — then day trading, where liquidity and slippage turn execution friction into a real share of the outcome.",
     weeks: [
       { week: 6, slug: slug(6), title: "Swing Trading" },
       { week: 7, slug: slug(7), title: "Day Trading" },
@@ -69,9 +69,9 @@ export const stages: Stage[] = [
     index: 3,
     label: "Leverage and Derivatives",
     range: "Weeks 08–11",
-    standing: "Borrowed money, bent payoffs",
+    standing: "Where the account can be closed out from under you",
     summary:
-      "Margin and leverage enter on an ordinary stock, then apply to futures, options and crypto — each instrument layering more structure, and more ways to lose, on top of the last.",
+      "Margin and forced exits enter on an ordinary stock, then reappear built into futures, options and crypto — each instrument shortening, in its own way, the distance between an account and a liquidation.",
     weeks: [
       { week: 8, slug: slug(8), title: "Short Selling, Margin and Leverage" },
       { week: 9, slug: slug(9), title: "Futures" },
@@ -84,9 +84,9 @@ export const stages: Stage[] = [
     index: 4,
     label: "Personal Rulebook",
     range: "Week 12",
-    standing: "Everything, written down as rules",
+    standing: "Every way to lose, converted into a rule against it",
     summary:
-      "A synthesis week: every instrument and every risk idea from the semester, converted into the sizing and stop-trading rules you'd actually use before risking real money.",
-    weeks: [{ week: 12, slug: slug(12), title: "Build Your Own Market Rulebook" }],
+      "A synthesis week: every survival mechanism from the semester — sizing, leverage limits, instrument restrictions, and the conditions that stop trading altogether — converted into rules a small account would actually hold to.",
+    weeks: [{ week: 12, slug: slug(12), title: "The Small-Account Survival Rulebook" }],
   },
 ];

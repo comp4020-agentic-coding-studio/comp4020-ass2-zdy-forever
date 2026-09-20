@@ -1,8 +1,8 @@
 ---
 title: How a Stock Trade Actually Happens
 description:
-  The first mechanics lecture — exchanges, brokers, account types and order
-  types, and what happens between clicking buy and owning a share
+  The first source of execution friction — exchanges, brokers, account types
+  and order types, and why the displayed price isn't the executable one
 week: 2
 date: 2027-03-01
 teachers:
@@ -15,13 +15,15 @@ related:
 Walks through what actually happens between placing a stock order and owning
 the shares: the exchange that matches it, the broker that routes it, the
 difference between a cash and a margin account, and why a market order and a
-limit order can fill at different prices in the same second.
+limit order can fill at different prices in the same second. This is the
+course's first source of **execution friction** — a small, recurring cost a
+small account pays before any strategy has a chance to work.
 
 ## The question this week answers
 
 Between clicking "buy" and actually owning a share, several separate systems
-do separate jobs — what are they, and why can the price you see when you
-click not be the price you pay?
+do separate jobs — what are they, and why is the price you see when you click
+not necessarily the price you pay?
 
 ## By the end of this lecture
 
@@ -96,7 +98,9 @@ less) — and note that nothing guarantees one will show up.
 ## The takeaway
 
 The quoted price you see is an observation about where the market currently
-is, not a promise about what you'll pay. A market order trades certainty of
-execution for uncertainty of price; a limit order trades the reverse. Neither
-is a signal about whether the stock is a good idea — that's a different
-question, and Weeks 3–4 start building the vocabulary for it.
+is, not a promise about what you'll pay — the gap between the two is
+execution friction, and it's the first of several this course tracks. A
+market order trades certainty of execution for uncertainty of price; a limit
+order trades the reverse. Neither is a signal about whether the stock is a
+good idea — that's a different question, and Weeks 3–4 start building the
+vocabulary for it.
